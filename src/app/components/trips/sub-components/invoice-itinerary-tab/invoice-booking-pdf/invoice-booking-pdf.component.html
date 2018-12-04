@@ -1,0 +1,841 @@
+<div *ngIf="isLocal" style="width: 100%;padding: 0 !important;">
+        <div class="box box-primary" style="padding: 8px;   border-top-color: #3c8dbc;    border-radius: 0px;
+           border: 0;position: relative;    background: #ffffff;margin-bottom: 20px;    width: 100%;    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+           font-weight: 300;    font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;    line-height: 1.42857143;box-sizing: border-box;">
+           <div class="box-header" style="    padding: 12px 5px;    color: #444;
+              display: block;
+              position: relative;">
+              <img alt="Image" src="http://res.cloudinary.com/jst/image/upload/v1523605442/CupcakeCastlesLogo_jeitwc.png" id='company-img' class="company-img" style="float: left; height: 85px; width: 60px; margin-bottom: 10px;">
+
+              <h3 style="text-align: left; float: left; margin-top: 35px; font-size: 19px; color: #333; ">CupCake Castles Travel Company</h3>
+
+              <div class="box-tools txt-right" style="    position: absolute;
+                 right: 10px;
+                 top: -2px;text-align: right;">
+                 {{tripAgentObject['firstName'] + ' '+ tripAgentObject['lastName']}}
+                 <br>
+                 <span class="bluetxt" style="color: #46b7c7 !important;">{{tripAgentObject['email']}}</span>
+                 <br>
+                 <img *ngIf="tripAgentObject['phone1']" alt="Tel Image" src="http://res.cloudinary.com/jst/image/upload/v1523945430/cell-image_j4xzal.png" style="    vertical-align: middle; border: 0;height: 18px;width: auto;"> {{tripAgentObject['phone1']}}
+              </div>
+                  <hr style="width: 100%;">
+           </div>
+           <div class="box-body" style="border-top-left-radius: 0;
+              border-top-right-radius: 0;
+              border-bottom-right-radius: 3px;
+              border-bottom-left-radius: 3px;
+              padding: 10px;">
+              <div class="row" style=" margin-right: -15px;
+                 margin-left: -15px;">
+                 <div class="col-sm-12" style=" width: 100%; position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;">
+                    <h3 class="bigtxt" style="color: #7b8a97; font-weight: 300; font-family: 'sans-serif',sans-serif !important;font-size: 24px;    margin-top: 20px;
+                       margin-bottom: 10px;">INVOICE</h3>
+                 </div>
+                 <div class="col-sm-12" style="    width: 100%;float: left;    position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;">
+                    <table class="table" style="    width: 100%;
+                       max-width: 100%;
+                       margin-bottom: 20px;    border-spacing: 0;
+                       border-collapse: collapse;
+                       white-space: nowrap;    background-color: transparent;    -webkit-tap-highlight-color: transparent;">
+                       <tbody style="    display: table-row-group;
+                          vertical-align: middle;
+                          border-color: inherit;    border-collapse: collapse;
+                          white-space: nowrap;">
+                          <tr style="    display: table-row;
+                             vertical-align: inherit;
+                             border-color: inherit;">
+                             <th style="    padding: 2px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    text-align: left;font-weight: bold;    display: table-cell;    border-collapse: collapse;
+                                white-space: nowrap;    padding: 0px;border: 0px;">
+                              </th>
+                             <th style=" padding: 2px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    text-align: left;font-weight: bold;    display: table-cell;    border-collapse: collapse;
+                                white-space: nowrap;    padding-left: 8px;  border: 0px;">YOUR TRIP</th>
+                          </tr>
+                          <tr style="display: table-row;
+                             vertical-align: inherit;
+                             border-color: inherit;    border-collapse: collapse;
+                             white-space: nowrap;">
+                             <td class="bluetxt" style="    padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    display: table-cell;border-collapse: collapse;
+                                white-space: nowrap;    vertical-align: baseline;
+                                padding-top: 10px;    padding: 0px;    border: 0px; margin-bottom: 5px;">
+                                    <ng-container *ngFor="let item of travelerDetails">
+                                          <span style="color: #000 !important; font-size: 14px; margin-bottom: 3px; display: block;">{{item.firstName}} {{item.lastName}}</span>
+                                          <span style="color: #46b7c7 !important; font-size: 14px; display: block;"> {{item.emails}}</span>
+                                          <br>
+                                    </ng-container>
+                                </td>
+                             <td style=" padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    -webkit-tap-highlight-color: transparent;box-sizing: border-box;    display: table-cell;    border-spacing: 0;
+                                border-collapse: collapse;
+                                white-space: nowrap;    border-spacing: 0;
+                                font-weight: 300;    padding-top: 0px;border: 0px;">
+                                <strong style="font-weight: 700;-webkit-tap-highlight-color: transparent;">Trip Start Date:</strong> {{this._commonAppService.getCalendarDate(tripObject['startDate'],'notDayname')}}
+                                <br>
+                                <strong style="font-weight: 700;-webkit-tap-highlight-color: transparent;">Trip End Date:</strong> {{this._commonAppService.getCalendarDate(tripObject['endDate'],'notDayname')}}
+                                <br> {{tripObject['tripDescription']}}
+                                <br>
+                                <ng-container *ngFor="let trip of tripItineraryShortDetails">
+                                    <ng-container *ngIf="trip.type == 'cruise' && trip.index == 0">
+                                        <h6 style="font-size: 85%; -webkit-tap-highlight-color: transparent; box-sizing: border-box;">{{trip.title}}</h6>
+                                        <br>
+                                    </ng-container>
+                                    <ng-container *ngIf="trip.type == 'property' && trip.index == 0">
+                                        <h6 style="font-size: 85%; -webkit-tap-highlight-color: transparent; box-sizing: border-box;">{{trip.name}} - {{trip.city}}, {{trip.country}}</h6>
+                                        <br>
+                                    </ng-container>
+                                </ng-container>
+
+                             </td>
+                          </tr>
+                       </tbody>
+                    </table>
+                 </div>
+              </div>
+              <div class="row" style="    margin-right: -15px;
+                 margin-left: -15px;    font-weight: 300;font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;    display: table;
+                 clear: both;
+                 box-sizing: border-box;">
+                 <div class="col-lg-4 col-xs-6" style="    width: 30.33333333%;    float: left;    position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;    -webkit-tap-highlight-color: transparent;    box-sizing: border-box;
+                    box-sizing: border-box;">
+                    <div class="small-box bg-aqua" style="
+                       border-radius: 0px;
+                       border: 0;   color: #000 !important;
+                       background-color: #fcde1f;   position: relative;
+                       display: block;
+                       margin-bottom: 20px;
+                       box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+                       ">
+                       <div class="inner" style="    padding: 10px;    color: #000 !important;">
+                          <p style="    font-weight: 300;    z-index: 5;    font-size: 15px;    margin: 0 0 10px;    display: block;    color: #000 !important;">INVOICE NUMBER</p>
+                          <h3 style="    z-index: 5;    font-size: 18px;
+                             font-weight: bold;
+                             margin: 0 0 10px 0;
+                             white-space: nowrap;
+                             padding: 0;    font-family: 'sans-serif',sans-serif !important;
+                             line-height: 1.1;
+                             color: inherit;">{{invoiceNumber}}</h3>
+                       </div>
+                       <div class="icon" style="transition: all .3s linear;
+                          position: absolute;
+                          top: 31px;
+                          right: 10px;
+                          z-index: 0;
+                          font-size: 38px;
+                          color: rgba(0,0,0,0.15);    -webkit-font-smoothing: antialiased;
+                          -moz-osx-font-smoothing: grayscale;
+                          font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;">
+                          <i class="fa fa-sort-numeric-asc" style="    display: inline-block;
+                             font: normal normal normal 14px/1 FontAwesome;
+                             font-size: inherit;
+                             text-rendering: auto;
+                             -webkit-font-smoothing: antialiased;    -webkit-tap-highlight-color: transparent;
+                             color: rgba(0,0,0,0.15);"></i>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-lg-4 col-xs-6" style="    width: 30.33333333%;    float: left;    position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;">
+                    <div class="small-box bg-green" style="border-radius: 0px;
+                       border: 0;    background-color: #4282c5 !important;   color: #fff !important;position: relative;
+                       display: block;
+                       margin-bottom: 20px;
+                       box-shadow: 0 1px 1px rgba(0,0,0,0.1);">
+                       <div class="inner" style="padding: 10px;-webkit-tap-highlight-color: transparent;    display: block;    color: #fff !important;    font-weight: 300;">
+                          <p style="font-weight: 300;    z-index: 5;font-size: 15px;    margin: 0 0 10px;    display: block;    color: #fff !important;">INVOICE DATE</p>
+                          <h3 style="    z-index: 5;    font-size: 18px;
+                             font-weight: bold;
+                             margin: 0 0 10px 0;
+                             white-space: nowrap;
+                             padding: 0;    font-family: 'sans-serif',sans-serif !important;    display: block;">{{todayDate}}</h3>
+                       </div>
+                       <div class="icon" style="
+                          transition: all .3s linear;
+                          position: absolute;
+                          top: 31px;
+                          right: 10px;
+                          z-index: 0;
+                          font-size: 38px;
+                          color: rgba(0,0,0,0.15);    display: block;
+                          font-weight: 300;">
+                          <i class="fa fa-dollar" style="    display: inline-block;
+                             font: normal normal normal 14px/1 FontAwesome;
+                             font-size: inherit;
+                             text-rendering: auto;
+                             -webkit-font-smoothing: antialiased;
+                             color: rgba(0,0,0,0.15);
+                             color: rgba(0,0,0,0.15);
+                             box-sizing: border-box;"></i>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-lg-4 col-xs-6" style="     width: 30.33333333%;    float: right;    position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;">
+                    <div class="small-box  bg-red" style=" border-radius: 0px;
+                       border: 0;    background-color: #dd4b39 !important;    color: #fff !important;position: relative;
+                       display: block;
+                       margin-bottom: 20px;
+                       box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+                       ">
+                       <div class="inner" style="padding: 10px;-webkit-tap-highlight-color: transparent;    display: block;    color: #fff !important;    font-weight: 300;">
+                        <p style="font-weight: 300;    z-index: 5;font-size: 15px; margin: 0 0 10px; display: block;    color: #fff !important;">INVOICE AMOUNT</p>
+                          <h3 style=" z-index: 5; font-size: 18px;
+                             font-weight: bold;
+                             margin: 0 0 10px 0;
+                             white-space: nowrap;
+                             padding: 0;    font-family: 'sans-serif',sans-serif !important; display: block;">{{(totalBalanceAmount)? ('$' + totalBalanceAmount) : '$0'}}
+                        </h3>
+                       </div>
+                       <div class="icon" style="  transition: all .3s linear;
+                          position: absolute;
+                          top: 31px;
+                          right: 10px;
+                          z-index: 0;
+                          font-size: 38px;
+                          color: rgba(0,0,0,0.15);    display: block;
+                          font-weight: 300;">
+                          <i class="fa fa-dollar" style="    display: inline-block;
+                             font: normal normal normal 14px/1 FontAwesome;
+                             font-size: inherit;
+                             text-rendering: auto;
+                             -webkit-font-smoothing: antialiased;
+                             color: rgba(0,0,0,0.15);
+                             color: rgba(0,0,0,0.15);
+                             box-sizing: border-box;
+                             "></i>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-sm-12" style="    width: 100%;    float: left;position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;    -webkit-tap-highlight-color: transparent;">
+                    <h3 class="bigtxt" style="    color: #7b8a97;    font-weight: 300;    font-size: 24px;    margin-top: 20px;
+                       margin-bottom: 10px;
+                       line-height: 1.1;
+                       display: block;
+                       box-sizing: border-box;">PAYMENTS</h3>
+                 </div>
+                 <div class="col-sm-12" style="    width: 100%;    float: left;    position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;-webkit-tap-highlight-color: transparent;    box-sizing: border-box;    display: block;
+                    font-weight: 300;
+                    line-height: 1.42857143;
+                    box-sizing: border-box;">
+                    <table class="table" *ngIf="templateName == 'TessInvoiceDetail' || templateName == 'Invoice'" style="    width: 100%;
+                       max-width: 100%;
+                       margin-bottom: 20px;    border-spacing: 0;
+                       border-collapse: collapse;
+                       white-space: nowrap;    background-color: transparent;    display: table;    border-color: grey;
+                       font-size: 14px;
+                       font-weight: 300;    font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;
+                       line-height: 1.42857143;
+                       box-sizing: border-box;">
+                       <tbody style="display: table-row-group;
+                          vertical-align: middle;
+                          border-color: inherit;    border-collapse: collapse;
+                          white-space: nowrap;
+                          box-sizing: border-box;">
+                          <tr *ngIf="templateName == 'TessInvoiceDetail'" class="bg-gray text-black" style="    color: #111 !important;background-color: #ebeef0 !important;display: table-row;
+                             vertical-align: inherit;
+                             border-color: inherit;    border-collapse: collapse;
+                             white-space: nowrap;
+                             font-weight: 300;">
+                             <th colspan="2" style="    padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    text-align: left;    border-collapse: collapse;
+                                white-space: nowrap;"></th>
+                             <th colspan="3" style="    padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    text-align: center;
+                                box-sizing: border-box;    font-weight: bold;
+                                box-sizing: border-box;">PAYMENT RECEVIED</th>
+                          </tr>
+                          <tr class="bg-gray text-black" style="   color: #111 !important;background-color: #ebeef0 !important;display: table-row;
+                             vertical-align: inherit;
+                             border-color: inherit;    border-collapse: collapse;
+                             white-space: nowrap;
+                             font-weight: 300;">
+                             <th style="    padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    text-align: left;    display: table-cell;    border-collapse: collapse;
+                                white-space: nowrap;">BOOKING NUMBER</th>
+                             <th style="    padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    text-align: left;    font-weight: bold;display: table-cell;    border-collapse: collapse;
+                                white-space: nowrap;">PACKAGE PRICE</th>
+                             <th class="text-right" *ngIf="templateName == 'TessInvoiceDetail'" style="padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    text-align: right;">DATE</th>
+                             <th *ngIf="templateName == 'TessInvoiceDetail'" style="    padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;">TOTAL</th>
+                             <th *ngIf="templateName == 'Invoice'" style="    padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    text-align: left;    font-weight: bold;    display: table-cell;border-collapse: collapse;
+                                white-space: nowrap;">PAYMENT RECEVIED</th>
+                             <th class="bg-gray text-black" style="    padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;color: #111 !important;background-color: #ebeef0 !important;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;    text-align: left;    font-weight: bold;">BALANCE</th>
+                          </tr>
+                          <ng-container *ngFor="let booking of bookings;let i = index;">
+                             <tr style=" display: table-row;
+                                vertical-align: inherit;
+                                border-color: inherit;    border-collapse: collapse;
+                                white-space: nowrap;">
+                                <td class="text-right" style=" padding: 11px 8px;
+                                   line-height: 1.42857143;
+                                   vertical-align: middle;
+                                   border-top: 1px solid #ddd;
+                                   color: #33383c;    text-align: left;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                   font-size: 14px;    display: table-cell;
+                                   border-collapse: collapse;
+                                   white-space: nowrap;">
+                                   <strong>{{booking.bookingNumber}}</strong>
+                                   <br>
+                                   <small>{{booking.description}}</small>
+                                </td>
+                                <td class="text-right" style=" padding: 11px 8px;
+                                   line-height: 1.42857143;
+                                   vertical-align: middle;
+                                   border-top: 1px solid #ddd;
+                                   color: #33383c;text-align: center;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                   font-size: 14px;    display: table-cell;    border-collapse: collapse;
+                                   white-space: nowrap;">${{booking.packagePrice}}</td>
+                                <td class="text-center" *ngIf="templateName == 'TessInvoiceDetail'" style="    font-size: 13px;    padding: 11px 8px;
+                                   line-height: 1.42857143;
+                                   vertical-align: middle;
+                                   text-align: center;
+                                   border-top: 1px solid #ddd;    color: #111 !important;">-</td>
+                                <td class="text-right" style=" padding: 11px 8px;
+                                   line-height: 1.42857143;
+                                   vertical-align: middle;
+                                   border-top: 1px solid #ddd;
+                                   color: #33383c;    text-align: right;    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                   font-size: 14px;display: table-cell;    border-collapse: collapse;
+                                   white-space: nowrap;">{{(booking.bookingPaymentAmount)? ('$' + booking.bookingPaymentAmount) : '$0'}}</td>
+                                <td class="text-right bg-gray text-black" style="    padding: 11px 8px;
+                                   line-height: 1.42857143;
+                                   vertical-align: middle;
+                                   border-top: 1px solid #ddd;color: #111 !important; background-color: #ebeef0 !important; text-align: right;   font-family: Verdana,Arial,Helvetica,sans-serif;
+                                   font-size: 14px; display: table-cell; border-collapse: collapse;
+                                   white-space: nowrap;">${{booking.balance}}</td>
+                             </tr>
+                             <ng-container *ngIf="templateName == 'TessInvoiceDetail'">
+                                <ng-container *ngFor="let payment of payments;">
+                                   <tr *ngIf="payment.bookingNumber == booking.bookingNumber">
+                                      <td class="padL40 fnt13" colspan="2" style=" font-size: 13px; padding: 11px 8px;
+                                         line-height: 1.42857143;
+                                         vertical-align: middle;
+                                         border-top: 1px solid #ddd;
+                                         padding-left: 30px;
+                                         color: #33383c;font-family: Verdana,Arial,Helvetica,sans-serif;">{{payment.paymentType}} / {{payment.description}}</td>
+                                      <td class="fnt13 text-right" style="    padding: 11px 8px;
+                                         line-height: 1.42857143;
+                                         vertical-align: middle;
+                                         border-top: 1px solid #ddd;
+                                         color: #33383c; text-align: right; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                         font-size: 14px;">{{payment.paymentDate}}</td>
+                                      <td class="fnt13 text-right" style="    padding: 11px 8px;
+                                         line-height: 1.42857143;
+                                         vertical-align: middle;
+                                         border-top: 1px solid #ddd;
+                                         color: #33383c;font-family: Verdana,Arial,Helvetica,sans-serif;
+                                         font-size: 14px;    text-align: right;    -webkit-tap-highlight-color: transparent; display: table-cell;">${{payment.paymentAmount}}</td>
+                                      <td class="fnt13 text-right bg-gray text-black" style=" padding: 11px 8px;
+                                         line-height: 1.42857143;
+                                         vertical-align: middle;
+                                         border-top: 1px solid #ddd; color: #111 !important; background-color: #ebeef0 !important;   font-family: Verdana,Arial,Helvetica,sans-serif;
+                                         font-size: 14px; text-align: right;">-</td>
+                                   </tr>
+                                </ng-container>
+                             </ng-container>
+                          </ng-container>
+                          <tr style="border-top: 1px solid #ddd">
+                             <td class="text-right" style="border-top: 1px solid #ddd;"> </td>
+                             <td class="text-right" style="font-size: 13px; padding: 11px 8px;
+                             line-height: 1.42857143;
+                             vertical-align: middle;
+                             text-align: center;
+                             border-top: 1px solid #ddd;    color: #111 !important;">{{(totalBookingAmount)? ('$' + totalBookingAmount) : '$0'}}</td>
+                             <td class="text-center" *ngIf="templateName == 'TessInvoiceDetail'" style="font-size: 13px;   padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                text-align: center;
+                                border-top: 1px solid #ddd; color: #111 !important;">-</td>
+                             <td class="text-right text-aqua" style="padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;color: #00c0ef !important;    text-align: right;
+                                font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px;-webkit-tap-highlight-color: transparent; display: table-cell; border-collapse: collapse;
+                                white-space: nowrap;
+                                font-weight: 300;
+                                box-sizing: border-box;">{{(totalPaymentAmount)? ('$' + totalPaymentAmount) : '$0'}}</td>
+                             <td class="text-right text-red" style="padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #dd4b39 !important;
+                                text-align: right;
+                                font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 14px; display: table-cell; border-collapse: collapse;
+                                white-space: nowrap;">{{(totalBalanceAmount)? ('$' + totalBalanceAmount) : '$0'}}</td>
+                          </tr>
+                       </tbody>
+                    </table>
+                 </div>
+              </div>
+           </div>
+        </div>
+     </div>
+
+<div *ngIf="!isLocal" style="width: 100%;padding: 0 !important;">
+        <div class="box box-primary" style="padding: 8px;   border-top-color: #3c8dbc; border-radius: 0px;
+           border: 0;position: relative; background: #ffffff;margin-bottom: 20px; width: 100%; box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+           font-weight: 300; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; line-height: 1.42857143;box-sizing: border-box;">
+           <div class="box-header" style="padding: 0px 5px; color: #444;
+              display: block;
+              position: relative;">
+              <img alt="Image" src="http://res.cloudinary.com/jst/image/upload/v1523605442/CupcakeCastlesLogo_jeitwc.png" id='company-img' class="company-img" style="float: left; height: 60px; width: 50px; margin-bottom: 10px;">
+
+              <h3 style="text-align: left; float: left; margin-top: 20px; font-size: 12px; color: #333; ">CupCake Castles Travel Company</h3>
+
+              <div class="box-tools txt-right" style="position: absolute;
+                 right: 10px; font-size: 10px;
+                 padding-top: 7px;
+                 top: -2px;text-align: right;">
+                 {{tripAgentObject['firstName'] + ' '+ tripAgentObject['lastName']}}
+                 <br>
+                 <span class="bluetxt" style="color: #46b7c7 !important;">{{tripAgentObject['email']}}</span>
+                 <br>
+                 <img *ngIf="tripAgentObject['phone1']" alt="Tel Image" src="http://res.cloudinary.com/jst/image/upload/v1523945430/cell-image_j4xzal.png" style="vertical-align: middle; border: 0;height: 18px;width: auto;"> {{tripAgentObject['phone1']}}
+              </div>
+                  <hr style="width: 100%;">
+           </div>
+           <div class="box-body" style="border-top-left-radius: 0;
+              border-top-right-radius: 0;
+              border-bottom-right-radius: 3px;
+              border-bottom-left-radius: 3px;
+              padding: 10px;">
+              <div class="row" style=" margin-right: -15px; margin-left: -15px; width: 100%;">
+                 <div class="col-sm-12" style=" width: 100%; position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;">
+                    <h3 class="bigtxt" style="color: #7b8a97; font-weight: 300; font-family: 'sans-serif',sans-serif !important;font-size: 18px; margin-top: 0px; margin-bottom: 10px;">INVOICE</h3>
+                 </div>
+                 <div class="col-sm-12" style="width: 100%;float: left; position: relative;
+                    min-height: 1px;
+                    padding-right: 15px;
+                    padding-left: 15px;">
+                    <table class="table" style="width: 100%;
+                       max-width: 100%;
+                       margin-bottom: 5px; border-spacing: 0;
+                       border-collapse: collapse;
+                       white-space: nowrap; background-color: transparent; -webkit-tap-highlight-color: transparent;">
+                       <tbody style="display: table-row-group;
+                          vertical-align: middle;
+                          border-color: inherit; border-collapse: collapse;
+                          white-space: nowrap;">
+                          <tr style="display: table-row;
+                             vertical-align: inherit;
+                             border-color: inherit;">
+                             <th style="padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 10px; text-align: left;font-weight: bold; display: table-cell; border-collapse: collapse;
+                                white-space: nowrap; padding: 0px;border: 0px;">
+
+                                <ng-container *ngFor="let item of travelerDetails">
+                                    {{item.fullName}}
+                                    <br>
+                                    <span class="clr-blue"> {{item.emailId}}</span>
+                                    <br>
+                                </ng-container>
+                              </th>
+                             <th style=" padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 10px; text-align: left;font-weight: bold; display: table-cell; border-collapse: collapse;
+                                white-space: nowrap; padding-left: 8px;  border: 0px;">YOUR TRIP</th>
+                          </tr>
+                          <tr style="display: table-row;
+                             vertical-align: inherit;
+                             border-color: inherit; border-collapse: collapse;
+                             white-space: nowrap;">
+                             <td class="bluetxt" style="padding: 11px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd; color: #46b7c7 !important; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 10px; display: table-cell;border-collapse: collapse;
+                                white-space: nowrap; vertical-align: baseline;
+                                padding-top: 10px; padding: 0px; border: 0px;">{{tripAgentObject['email']}}</td>
+                             <td style=" padding: 0px 8px;
+                                line-height: 1.42857143;
+                                vertical-align: middle;
+                                border-top: 1px solid #ddd;
+                                color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                font-size: 10px; -webkit-tap-highlight-color: transparent;box-sizing: border-box; display: table-cell; border-spacing: 0;
+                                border-collapse: collapse;
+                                white-space: nowrap; border-spacing: 0;
+                                font-weight: 300; padding-top: 0px;border: 0px;">
+                                <strong style="font-weight: 700;-webkit-tap-highlight-color: transparent;">Trip Start Date:</strong> {{this._commonAppService.getCalendarDate(tripObject['startDate'],'notDayname')}}
+                                <br>
+                                <strong style="font-weight: 700;-webkit-tap-highlight-color: transparent;">Trip End Date:</strong> {{this._commonAppService.getCalendarDate(tripObject['endDate'],'notDayname')}}
+
+                                <ng-container *ngIf="templateName == 'TessInvoiceDetail'">
+                                    <ng-container *ngFor="let trip of tripItineraryShortDetails">
+                                          <ng-container *ngIf="trip.type == 'cruise' && trip.index == 0">
+                                                <h6 style="font-size: 10px; -webkit-tap-highlight-color: transparent; box-sizing: border-box; margin: 0px;">{{trip.title}}</h6>
+                                          </ng-container>
+                                          <ng-container *ngIf="trip.type == 'property' && trip.index == 0">
+                                                <h6 style="font-size: 10px; -webkit-tap-highlight-color: transparent; box-sizing: border-box; margin: 0px;">{{trip.name}} - {{trip.city}}, {{trip.country}}</h6>
+                                          </ng-container>
+                                    </ng-container>
+                                </ng-container>
+                             </td>
+                          </tr>
+                       </tbody>
+                    </table>
+                 </div>
+              </div>
+              <div class="row" style="margin-right:0px; margin-left: -15px; font-weight: 300;font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; display: table; clear: both; box-sizing: border-box; width: 100%;">
+                 <div class="col-lg-4 col-xs-6" style="width: 170px;
+                        float: left;
+                        position: relative;
+                        min-height: 1px;
+                        margin-top: 10px;
+                        padding-right: 8px;
+                        padding-left: 15px;">
+                    <div class="small-box bg-aqua" style="
+                       border-radius: 0px;
+                       border: 0;   color: #000 !important;
+                       background-color: #fcde1f;   position: relative;
+                       display: block;
+                       margin-bottom: 20px;
+                       box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+                       ">
+                       <div class="inner" style="padding: 10px; color: #000 !important; height: 55px;">
+                          <p style="font-weight: 300; z-index: 5; font-size: 12px; margin: 0 0 10px; display: block; color: #000 !important;">INVOICE NUMBER</p>
+                          <h3 style="z-index: 5; font-size: 12px;
+                             font-weight: bold;
+                             margin: 0 0 10px 0;
+                             white-space: nowrap;
+                             padding: 0; font-family: 'sans-serif',sans-serif !important;
+                             line-height: 1.1;
+                             color: inherit;">{{invoiceNumber}}</h3>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-lg-4 col-xs-6" style="width: 170px;
+                        float: left;
+                        position: relative;
+                        min-height: 1px;
+                        margin-top: 10px;
+                        padding-right: 8px;
+                        padding-left: 8px;">
+                    <div class="small-box bg-green" style="border-radius: 0px;
+                       border: 0; background-color: #4282c5 !important;   color: #fff !important;position: relative;
+                       display: block;
+                       margin-bottom: 20px;
+                       box-shadow: 0 1px 1px rgba(0,0,0,0.1);">
+                       <div class="inner" style="padding: 10px;-webkit-tap-highlight-color: transparent; display: block; color: #fff !important; font-weight: 300; height: 55px;">
+                          <p style="font-weight: 300; z-index: 5;font-size: 12px; margin: 0 0 10px; display: block; color: #fff !important;">INVOICE DATE</p>
+                          <h3 style="z-index: 5; font-size: 12px;
+                             font-weight: bold;
+                             margin: 0 0 10px 0;
+                             white-space: nowrap;
+                             padding: 0; font-family: 'sans-serif',sans-serif !important; display: block;">{{todayDate}}</h3>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="col-lg-4 col-xs-6" style="width: 170px;
+                        float: left;
+                        position: relative;
+                        min-height: 1px;
+                        margin-top: 10px;
+                        padding-right: 0px;
+                        padding-left: 8px;">
+                    <div class="small-box  bg-red" style=" border-radius: 0px;
+                       border: 0; background-color: #dd4b39 !important; color: #fff !important;position: relative;
+                       display: block;
+                       margin-bottom: 20px;
+                       box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+                       ">
+                       <div class="inner" style="padding: 10px;-webkit-tap-highlight-color: transparent; display: block; color: #fff !important; font-weight: 300; height: 55px;">
+                        <p style="font-weight: 300; z-index: 5;font-size: 12px; margin: 0 0 10px; display: block; color: #fff !important;">INVOICE AMOUNT</p>
+                          <h3 style=" z-index: 5; font-size: 12px;
+                             font-weight: bold;
+                             margin: 0 0 10px 0;
+                             white-space: nowrap;
+                             padding: 0; font-family: 'sans-serif',sans-serif !important; display: block;">{{(totalBalanceAmount)? ('$' + totalBalanceAmount) : '$0'}}
+                        </h3>
+                       </div>
+                    </div>
+                 </div>
+
+              </div>
+              <div class="row" style="margin-right: -15px; margin-left: -15px; font-weight: 300;font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; display: table; clear: both; box-sizing: border-box;">
+                  <div class="col-sm-12" style="width: 100%; float: left;position: relative;
+                        min-height: 1px;
+                        padding-right: 15px;
+                        padding-left: 15px; -webkit-tap-highlight-color: transparent;">
+                        <h3 class="bigtxt" style="color: #7b8a97; font-weight: 300; font-size: 21px; margin-top: 20px;
+                        margin-bottom: 10px;
+                        line-height: 1.1;
+                        display: block;
+                        box-sizing: border-box;">PAYMENTS</h3>
+                  </div>
+                  <div class="col-sm-12" style="width: 100%; float: left; position: relative;
+                        min-height: 1px;
+                        padding-right: 15px;
+                        padding-left: 15px;-webkit-tap-highlight-color: transparent; box-sizing: border-box; display: block;
+                        font-weight: 300;
+                        line-height: 1.42857143;
+                        box-sizing: border-box;">
+                        <table class="table" *ngIf="templateName == 'TessInvoiceDetail' || templateName == 'Invoice'" style="width: 100%;
+                        max-width: 100%;
+                        margin-bottom: 20px; border-spacing: 0;
+                        border-collapse: collapse;
+                        white-space: nowrap; background-color: transparent; display: table; border-color: grey;
+                        font-size: 11px;
+                        font-weight: 300; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;
+                        line-height: 1.42857143;
+                        box-sizing: border-box;">
+                        <tbody style="display: table-row-group;
+                              vertical-align: middle;
+                              border-color: inherit; border-collapse: collapse;
+                              white-space: nowrap;
+                              box-sizing: border-box;">
+                              <tr *ngIf="templateName == 'TessInvoiceDetail'" class="bg-gray text-black" style="color: #111 !important;background-color: #ebeef0 !important;display: table-row;
+                              vertical-align: inherit;
+                              border-color: inherit; border-collapse: collapse;
+                              white-space: nowrap;
+                              font-weight: 300;">
+                              <th colspan="2" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; text-align: left; border-collapse: collapse;
+                                    white-space: nowrap;"></th>
+                              <th colspan="3" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; text-align: center;
+                                    box-sizing: border-box; font-weight: bold;
+                                    box-sizing: border-box;">PAYMENT RECEVIED</th>
+                              </tr>
+                              <tr class="bg-gray text-black" style="   color: #111 !important;background-color: #ebeef0 !important;display: table-row;
+                              vertical-align: inherit;
+                              border-color: inherit; border-collapse: collapse;
+                              white-space: nowrap;
+                              font-weight: 300;">
+                              <th style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; text-align: left; display: table-cell; border-collapse: collapse;
+                                    white-space: nowrap;">BOOKING NUMBER</th>
+                              <th style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; text-align: left; font-weight: bold;display: table-cell; border-collapse: collapse;
+                                    white-space: nowrap;">PACKAGE PRICE</th>
+                              <th class="text-right" *ngIf="templateName == 'TessInvoiceDetail'" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; text-align: right;">DATE</th>
+                              <th *ngIf="templateName == 'TessInvoiceDetail'" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px;">TOTAL</th>
+                              <th *ngIf="templateName == 'Invoice'" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; text-align: left; font-weight: bold; display: table-cell;border-collapse: collapse;
+                                    white-space: nowrap;">PAYMENT RECEVIED</th>
+                              <th class="bg-gray text-black" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;color: #111 !important;background-color: #ebeef0 !important; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; text-align: left; font-weight: bold;">BALANCE</th>
+                              </tr>
+                              <ng-container *ngFor="let booking of bookings;let i = index;">
+                              <tr style=" display: table-row;
+                                    vertical-align: inherit;
+                                    border-color: inherit; border-collapse: collapse;
+                                    white-space: nowrap;">
+                                    <td class="text-right" style=" padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; text-align: left; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; display: table-cell;
+                                    border-collapse: collapse;
+                                    white-space: nowrap;">
+                                    <strong>{{booking.bookingNumber}}</strong>
+                                    <br>
+                                    <small>{{booking.description}}</small>
+                                    </td>
+                                    <td class="text-right" style=" padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c;text-align: center; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; display: table-cell; border-collapse: collapse;
+                                    white-space: nowrap;">${{booking.packagePrice}}</td>
+                                    <td class="text-center" *ngIf="templateName == 'TessInvoiceDetail'" style="font-size: 10px; padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    text-align: center;
+                                    border-top: 1px solid #ddd; color: #111 !important;">-</td>
+                                    <td class="text-right" style=" padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #33383c; text-align: right; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px;display: table-cell; border-collapse: collapse;
+                                    white-space: nowrap;">{{(booking.bookingPaymentAmount)? ('$' + booking.bookingPaymentAmount) : '$0'}}</td>
+                                    <td class="text-right bg-gray text-black" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;color: #111 !important; background-color: #ebeef0 !important; text-align: right;   font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; display: table-cell; border-collapse: collapse;
+                                    white-space: nowrap;">${{booking.balance}}</td>
+                              </tr>
+                              <ng-container *ngIf="templateName == 'TessInvoiceDetail'">
+                                    <ng-container *ngFor="let payment of payments;">
+                                    <tr *ngIf="payment.bookingNumber == booking.bookingNumber">
+                                          <td class="padL40 fnt13" colspan="2" style=" font-size: 10px; padding: 11px 8px;
+                                          line-height: 1.42857143;
+                                          vertical-align: middle;
+                                          border-top: 1px solid #ddd;
+                                          padding-left: 30px;
+                                          color: #33383c;font-family: Verdana,Arial,Helvetica,sans-serif;">{{payment.paymentType}} / {{payment.description}}</td>
+                                          <td class="fnt13 text-right" style="padding: 11px 8px;
+                                          line-height: 1.42857143;
+                                          vertical-align: middle;
+                                          border-top: 1px solid #ddd;
+                                          color: #33383c; text-align: right; font-family: Verdana,Arial,Helvetica,sans-serif;
+                                          font-size: 11px;">{{payment.paymentDate}}</td>
+                                          <td class="fnt13 text-right" style="padding: 11px 8px;
+                                          line-height: 1.42857143;
+                                          vertical-align: middle;
+                                          border-top: 1px solid #ddd;
+                                          color: #33383c;font-family: Verdana,Arial,Helvetica,sans-serif;
+                                          font-size: 11px; text-align: right; -webkit-tap-highlight-color: transparent; display: table-cell;">${{payment.paymentAmount}}</td>
+                                          <td class="fnt13 text-right bg-gray text-black" style=" padding: 11px 8px;
+                                          line-height: 1.42857143;
+                                          vertical-align: middle;
+                                          border-top: 1px solid #ddd; color: #111 !important; background-color: #ebeef0 !important;   font-family: Verdana,Arial,Helvetica,sans-serif;
+                                          font-size: 11px; text-align: right;">-</td>
+                                    </tr>
+                                    </ng-container>
+                              </ng-container>
+                              </ng-container>
+                              <tr style="border-top: 1px solid #ddd">
+                              <td class="text-right" style="border-top: 1px solid #ddd;"> </td>
+                              <td class="text-right" style="font-size: 10px; padding: 11px 8px;
+                              line-height: 1.42857143;
+                              vertical-align: middle;
+                              text-align: center;
+                              border-top: 1px solid #ddd; color: #111 !important;">{{(totalBookingAmount)? ('$' + totalBookingAmount) : '$0'}}</td>
+                              <td class="text-center" *ngIf="templateName == 'TessInvoiceDetail'" style="font-size: 10px;   padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    text-align: center;
+                                    border-top: 1px solid #ddd; color: #111 !important;">-</td>
+                              <td class="text-right text-aqua" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;color: #00c0ef !important; text-align: right;
+                                    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px;-webkit-tap-highlight-color: transparent; display: table-cell; border-collapse: collapse;
+                                    white-space: nowrap;
+                                    font-weight: 300;
+                                    box-sizing: border-box;">{{(totalPaymentAmount)? ('$' + totalPaymentAmount) : '$0'}}</td>
+                              <td class="text-right text-red" style="padding: 11px 8px;
+                                    line-height: 1.42857143;
+                                    vertical-align: middle;
+                                    border-top: 1px solid #ddd;
+                                    color: #dd4b39 !important;
+                                    text-align: right;
+                                    font-family: Verdana,Arial,Helvetica,sans-serif;
+                                    font-size: 11px; display: table-cell; border-collapse: collapse;
+                                    white-space: nowrap;">{{(totalBalanceAmount)? ('$' + totalBalanceAmount) : '$0'}}</td>
+                              </tr>
+                        </tbody>
+                        </table>
+                     </div>
+                 </div>
+           </div>
+        </div>
+     </div>

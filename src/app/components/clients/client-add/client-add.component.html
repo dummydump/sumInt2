@@ -1,0 +1,454 @@
+<div class="content-wrapper" *ngIf="currentUser">
+   <section class="content-header">
+      <ol class="breadcrumb">
+         <li><a href="javascript:void(0)">Workspace</a></li>
+         <li><a (click)="openMyClient()">Clients</a></li>
+         <li class="active"><a (click)="updateClient()">Update Client</a></li>
+      </ol>
+      <h1>
+         <i class="fa">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297 297" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 297 297">
+               <g>
+                  <path d="M46.169,61.873c3.286,2.507,7.98,1.876,10.488-1.408c22.071-28.917,55.546-45.5,91.843-45.5s69.772,16.584,91.843,45.5   c1.473,1.929,3.7,2.942,5.954,2.942c1.582,0,3.179-0.5,4.534-1.534c3.284-2.508,3.914-7.203,1.408-10.488   C227.312,18.729,189.501,0,148.5,0S69.688,18.729,44.762,51.385C42.255,54.67,42.885,59.365,46.169,61.873z" />
+                  <path d="m228.037,101.786c0,12.885 10.484,23.369 23.369,23.369s23.369-10.484 23.369-23.369-10.484-23.369-23.369-23.369-23.369,10.483-23.369,23.369z" />
+                  <path d="m275.322,132.91c-0.054-0.018-5.942-1.825-5.942-1.825-2.132-0.651-4.448-0.25-6.233,1.086l-11.741,8.791-11.741-8.791c-1.786-1.337-4.103-1.738-6.233-1.086 0,0-5.888,1.807-5.942,1.825-9.474,3.159-15.839,11.99-15.839,21.976v35.329c0,1.363 0.398,2.696 1.148,3.834l11.848,18.031v47.352c0,3.857 3.126,6.983 6.983,6.983h39.553c3.857,0 6.983-3.126 6.983-6.983v-47.352l11.848-18.031c0.749-1.139 1.148-2.472 1.148-3.834v-35.329c-5.68434e-14-9.986-6.366-18.817-15.84-21.976z" />
+                  <path d="m45.594,125.155c12.885,0 23.369-10.484 23.369-23.369s-10.484-23.369-23.369-23.369-23.37,10.483-23.37,23.369 10.484,23.369 23.37,23.369z" />
+                  <path d="m69.51,132.91c-0.054-0.018-5.942-1.825-5.942-1.825-2.133-0.651-4.447-0.25-6.233,1.086l-11.741,8.791-11.741-8.791c-1.785-1.337-4.103-1.738-6.233-1.086 0,0-5.888,1.807-5.942,1.825-9.474,3.159-15.839,11.99-15.839,21.976v35.329c0,1.363 0.398,2.696 1.148,3.834l11.848,18.031v47.352c0,3.857 3.126,6.983 6.983,6.983h39.552c3.857,0 6.983-3.126 6.983-6.983v-47.352l11.848-18.031c0.749-1.139 1.148-2.472 1.148-3.834v-35.329c0-9.986-6.366-18.817-15.839-21.976z" />
+                  <path d="m178.642,68.851c0-16.62-13.522-30.142-30.142-30.142s-30.142,13.522-30.142,30.142c0,16.621 13.522,30.142 30.142,30.142s30.142-13.521 30.142-30.142z" />
+                  <path d="m181.607,113.601l-.05-.016-8.603-2.64c-1.357-0.417-2.807,0.301-3.295,1.64l-18.09,49.635c-1.044,2.863-5.093,2.863-6.137,0l-18.09-49.635c-0.394-1.081-1.414-1.759-2.508-1.759-0.259,0-9.38,2.755-9.38,2.755-10.99,3.662-18.332,13.85-18.332,25.37v52.506c0,0.521 0.153,1.031 0.439,1.467l18.876,28.724v72.68c0,1.476 1.196,2.672 2.672,2.672h58.783c1.476,0 2.672-1.196 2.672-2.672v-72.68l18.876-28.724c0.286-0.436 0.439-0.946 0.439-1.467v-52.644c-0.001-11.47-7.372-21.641-18.272-25.212z" />
+                  <path d="m155.568,112.556c-0.747-0.814-1.84-1.224-2.946-1.224h-8.245c-1.105,0-2.198,0.41-2.946,1.224-1.157,1.261-1.325,3.082-0.504,4.505l4.407,6.644-2.063,17.405 4.063,10.808c0.396,1.087 1.933,1.087 2.33,0l4.063-10.808-2.063-17.405 4.407-6.644c0.822-1.423 0.654-3.244-0.503-4.505z" />
+               </g>
+            </svg>
+         </i>
+         Client
+         <small class="label" *ngIf="clientObject.firstName == '' && clientObject.lastName == ''">{{clientFound}}</small>
+         <small class="label" *ngIf="clientObject.firstName != '' || clientObject.lastName != ''">{{clientObject.firstName}}&nbsp;{{clientObject.lastName}}</small>
+      </h1>
+   </section>
+   <section class="content">
+      <div class="row">
+         <section class="col-lg-12">
+            <div class="col-md-12 no-padding">
+               <div class="panel-heading">
+                  <ul class="nav nav-tabs">
+                     <li class="active"><a href="#tab1default" data-toggle="tab">Information</a></li>
+                     <li><a href="#tab2default" data-toggle="tab">Tracking</a></li>
+                     <!--<li><a href="#tab3default" data-toggle="tab">Trips <span class="badge bg-purple">5</span></a></li>
+                     <li><a href="#tab4default" data-toggle="tab">Communications</a></li>-->
+                  </ul>
+               </div>
+               <div class="panel with-nav-tabs panel-default">
+                  <div class="panel-body">
+                     <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1default">
+                           <div class="col-md-6">
+                              <div class="col-md-12 no-padding ">
+                                 <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                       <h3 class="box-title">Client Information</h3>
+                                    </div>
+                                    <form role="form">
+                                       <div class="box-body top20">
+                                          <div class="row">
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" ngModel #firstName="ngModel" required [(ngModel)]="clientObject.firstName" name="firstName">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>First Name*</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" required [(ngModel)]="clientObject.middleName" name="middleName">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>Middle Name</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" ngModel #lastName="ngModel" required [(ngModel)]="clientObject.lastName" name="lastName">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>Last Name*</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" required [(ngModel)]="clientObject.nickName" name="nickName">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>Nick Name</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="mdl-selectfield">
+                                                    <label>Standard Select</label>
+                                                    <select class="browser-default" [(ngModel)]="clientObject.gender" name="gender">
+                                                    <option value="" disabled selected>Client Gender</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    </select>
+                                                </div>
+                                            </div> 
+                                             
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" required [(ngModel)]="clientObject.address1" name="address1">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>Address 1</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" required [(ngModel)]="clientObject.address2" name="address2">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>Address 2</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" required [(ngModel)]="clientObject.city" name="city">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>City</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" required [(ngModel)]="clientObject.zipcode" name="zipcode">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>Zip Code</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="text" required [(ngModel)]="clientObject.state" name="state">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>State</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="date" [(ngModel)]="clientObject.birthDate" name="birthDate" [value]="clientObject.birthDate" [max]="TODAY">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>Birth Date</label>
+                                                </div>
+                                             </div>
+                                             <div class="col-sm-6">
+                                                <div class="group">
+                                                   <input type="date"  [(ngModel)]="clientObject.anniversaryDate" name="anniversaryDate" [value]="clientObject.anniversaryDate">
+                                                   <span class="highlight"></span>
+                                                   <span class="bar"></span>
+                                                   <label>Anniversary Date</label>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="row">
+                                             <div class="col-sm-6">
+                                                <div class="mdl-selectfield">
+                                                   <label>Agent Select </label>
+                                                   <select class="browser-default" name="agent" (change)="agentSelectChange($event.target.value)" [disabled]="this.currentUser.user && this.currentUser.user.roleName === 'Agent'">
+                                                      <option value="" disabled selected>Select Agent</option>
+                                                      <option *ngFor="let agent of agentsList" [value]="agent._id" [selected]="clientObject.agent && clientObject.agent.agentId == agent._id">
+                                                            {{agent.firstName}} {{agent.lastName}}
+                                                      </option>
+                                                   </select>
+                                                </div>
+                                             </div>
+                                             
+                                             <div class="col-sm-12">
+                                                <tag-input name="standard" [(ngModel)]='clientTags'></tag-input>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="box-footer">
+                                          <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="closePage()">
+                                             Close
+                                             <div class="ripple-container"></div>
+                                          </button>
+                                          <button type="button" [disabled]="!(firstName.valid && lastName.valid)" class="btn bg-navy btn-flat roundbtn margin" (click)="saveClient(false)">
+                                          Save
+                                          <div class="ripple-container"></div>
+                                          </button>
+                                          <button type="button" [disabled]="!(firstName.valid && lastName.valid)" class="btn bg-green btn-flat roundbtn margin" (click)="saveClient(true)">
+                                          Save & Close
+                                          <div class="ripple-container"></div>
+                                          </button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                              <div class="col-md-12 no-padding ">
+                                 <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                       <h3 class="box-title">Passport Details</h3>
+                                    </div>
+                                    <ng-container *ngIf="clientObject._id == ''">
+                                       <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to <span class="text-danger">add passport information</span> once the client has been saved.</h6>
+                                    </ng-container>
+                                    <ng-container *ngIf="clientObject._id != ''">
+                                       <form role="form">
+                                          <div class="box-body top20">
+                                             <div class="row">
+                                                <div class="col-sm-12">
+                                                   <div class="group">
+                                                      <input type="text" #passportNumber="ngModel" ngModel required [(ngModel)]="clientObject.passportDetails[0].passportNumber" (input)="validatePassportNumber($event.target.value)" name="passportNumber">
+                                                      <span class="highlight"></span>
+                                                      <span class="bar"></span>
+                                                      <label>Passport Number*</label>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="row">
+                                                <div class="col-sm-6">
+                                                   <div class="group">
+                                                      <input type="date" #issueDate="ngModel"  [(ngModel)]="clientObject.passportDetails[0].issueDate"  name="issueDate">
+                                                      <span class="highlight"></span>
+                                                      <span class="bar"></span>
+                                                      <label>Issue Date*</label>
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                   <div class="group">
+                                                      <input type="date" #expirationDate="ngModel" [(ngModel)]="clientObject.passportDetails[0].expirationDate" name="expirationDate" [min]="clientObject.passportDetails[0].issueDate">
+                                                      <span class="highlight"></span>
+                                                      <span class="bar"></span>
+                                                      <label>Expiration Date*</label>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="row">
+                                                <div class="col-sm-6">
+                                                   <div class="group">
+                                                      <input type="text" required [(ngModel)]="clientObject.passportDetails[0].issueCity" name="issueCity">
+                                                      <span class="highlight"></span>
+                                                      <span class="bar"></span>
+                                                      <label>Issued City</label>
+                                                   </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                   <div class="group">
+                                                      <input type="text" required [(ngModel)]="clientObject.passportDetails[0].issueCountry" name="issueCountry">
+                                                      <span class="highlight"></span>
+                                                      <span class="bar"></span>
+                                                      <label>Issued Country</label>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="box-footer">
+                                             <button type="button" [disabled]="!((passportNumber.valid && issueDate.valid) && expirationDate.valid)" class="btn bg-navy btn-flat roundbtn margin" (click)="savePassportDetails(false)">
+                                             Save
+                                             <div class="ripple-container"></div>
+                                             </button>
+                                          </div>
+                                       </form>
+                                    </ng-container>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="col-md-12 no-padding">
+                                 <div class="box">
+                                    <div class="box-header">
+                                       <h3 class="box-title">Workspace Extensions</h3>
+                                       <div class="box-tools">
+                                          <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                                             <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Workspace"></i>
+                                             <div class="ripple-container"></div>
+                                          </button>
+                                       </div>
+                                    </div>
+                                    <div class="box-body no-padding">
+                                       <ng-container *ngIf="clientObject._id == '' && clientWorkspaceExtensions.length <= 0">
+                                          <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to <span class="text-danger">add extensions</span> once the client has been saved.</h6>
+                                       </ng-container>
+                                       <ng-container *ngIf="clientObject._id != '' && clientWorkspaceExtensions.length <= 0">
+                                          <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> No workspace extensions added.</h6>
+                                       </ng-container>
+                                       <ng-container *ngIf="clientWorkspaceExtensions.length > 0">
+                                          <table class="table">
+                                             <tr *ngFor="let workspace of clientWorkspaceExtensions;">
+                                                 <td class="bluetxt">{{workspace.title}}</td>
+                                                 <td>
+                                                     <i class="fa fa-envelope bg-yellow">&nbsp;</i> {{workspace.emailCounter}} email{{(workspace.emailCounter > 1)? 's':''}}
+                                                 </td>
+                                                 <td>
+                                                     <a> <i class="fa fa-trash delete" (click)="removeWorkspaceExtensionById(workspace._id, false)"></i></a>
+                                                 </td>
+                                             </tr>
+                                         </table>
+                                       </ng-container>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-12 no-padding">
+                                 <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+                                 <div class="box">
+                                    <div class="box-header">
+                                       <h3 class="box-title">Contact Details</h3>
+                                       <div class="box-tools">
+                                          <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" (click)="isContactEditMode=false;editContactIndex=0;clearContact();isAddContactDetail = true;">
+                                             <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Contact"></i>
+                                             <div class="ripple-container"></div>
+                                          </button>
+                                       </div>
+                                    </div>
+                                    <ng-container *ngIf="clientObject._id == ''">
+                                       <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to add <span class="text-danger"> contact details</span> once the client has been saved.</h6>
+                                    </ng-container>
+                                    <ng-container *ngIf="clientObject._id != '' && clientObject.contactDetails.length > 0">
+                                       <ng-container *ngIf="clientObject.contactDetails && clientObject.contactDetails.length <= 0">
+                                          <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You do not have any <span class="text-danger">contact details</span> associated with this lead.</h6>
+                                          <h6 class="text-center">Let's add one by clicking the <span class="text-danger">Add Contact Detail</span> button on top right hand side.</h6>
+                                       </ng-container>
+                                       <ng-container *ngIf="clientObject.contactDetails && clientObject.contactDetails.length > 0">
+                                          <table class="table">
+                                             <tr>
+                                                <th>Detail</th>
+                                                <th>Detail Type</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                             </tr>
+                                             <tr *ngFor="let contact of clientObject.contactDetails; let i = index;">
+                                                <td>
+                                                   <i class="fa fa-envelope bg-yellow">&nbsp;</i> {{contact.detail}}
+                                                </td>
+                                                <td>{{contact.detailType}}</td>
+                                                <td class="bluetxt">{{getFormattedValue(contact)}}</td>
+                                                <td><small class="label bg-green">Default</small></td>
+                                                <td>
+                                                   <a> <i class="material-icons blueicon" (click)="editContactIndex=(i+1);editContact(contact)">edit</i></a>
+                                                   <a><i class="material-icons delete" (click)="removeContact(contact)">delete</i></a>
+                                                </td>
+                                             </tr>
+                                          </table>
+                                       </ng-container>
+                                    </ng-container>
+                                    <div class="box-body no-padding">
+                                       <table class="table" [hidden]="isAddContactDetail == false">
+                                          <tr>
+                                             <th>Detail</th>
+                                             <th>Detail Type</th>
+                                             <th></th>
+                                             <th></th>
+                                             <th></th>
+                                          </tr>
+                                          <tr class="custom">
+                                             <td>
+                                                <div class="mdl-selectfield">
+                                                   <label>Select Details</label>
+                                                   <select class="browser-default" #contactObjectDetail="ngModel" required [(ngModel)]="contactDetailObject.detail" name="detail">
+                                                   <option value="" disabled selected>Select Details</option>
+                                                   <option value="Client Referral">Client Referral</option>
+                                                   <option value="Email Address">Email Address</option>
+                                                   <option value="Fax">Fax</option>
+                                                   <option value="Referral Group">Referral Group</option>
+                                                   <option value="Reward Program">Reward Program</option>
+                                                   <option value="Telephone">Telephone</option>
+                                                   </select>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <div class="mdl-selectfield">
+                                                   <label>Select Type</label>
+                                                   <select class="browser-default" #contactObjectDetailType="ngModel" required [(ngModel)]="contactDetailObject.detailType" name="detailType">
+                                                   <option value="" disabled selected>Select Type</option>
+                                                   <option value="Home">Home</option>
+                                                   <option value="Mobile">Mobile</option>
+                                                   <option value="Other">Other</option>
+                                                   <option value="Work">Work</option>
+                                                   </select>
+                                                </div>
+                                             </td>
+                                             <td>
+                                                <input [hidden]="contactDetailObject.detail!=='Telephone' && contactDetailObject.detail!=='Fax'" type="text" #contactObjectDetailValue="ngModel" required [(ngModel)]="contactDetailObject.value" name="detailvalue" placeholder="Value*" mask="000-000-0000">
+                                                <input [hidden]="contactDetailObject.detail==='Telephone' || contactDetailObject.detail==='Fax'" type="text" #contactObjectDetailValue="ngModel" required [(ngModel)]="contactDetailObject.value" name="value" placeholder="Value*">
+                                                <span class="bar"></span>
+                                                <span class="highlight"></span>
+                                             </td>
+                                             <td></td>
+                                             <td>
+                                                <a> <i class="material-icons delete" (click)="clearContact()">cancel</i></a>
+                                                <a> <i class="material-icons" (click)="addContact()">save</i></a>
+                                             </td>
+                                          </tr>
+                                       </table>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-md-12 no-padding ">
+                                 <div class="box box-primary">
+                                    <div class="box-header with-border">
+                                       <h3 class="box-title">Additional Notes</h3>
+                                       <div class="box-tools">
+                                          <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                                             <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                                             <div class="ripple-container"></div>
+                                          </button>
+                                       </div>
+                                    </div>
+                                    <ng-container *ngIf="clientObject._id == ''">
+                                       <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to <span class="text-danger">add client notes</span> once the client has been saved.</h6>
+                                    </ng-container>
+                                    <ng-container *ngIf="clientObject._id != ''">
+                                       <form role="form">
+                                          <div class="box-body top20">
+                                             <div class="row">
+                                                <div class="col-sm-12">
+                                                   <div class="group">
+                                                      <textarea class="form-control" rows="3" placeholder="Enter Notes..." [(ngModel)]="clientObject.additionalNotes" name="additionalNotes"></textarea>
+                                                      <span class="highlight"></span>
+                                                      <span class="bar"></span>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                          <div class="box-footer">
+                                             <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="saveAdditionalNotes(false)">
+                                                Save
+                                                <div class="ripple-container"></div>
+                                             </button>
+                                          </div>
+                                       </form>
+                                    </ng-container>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab2default">
+                           <tracking-tab [allClients]="allClients" [clientObject]="clientObject"></tracking-tab>
+                        </div>
+                        <!--<div class="tab-pane fade" id="tab3default">
+                           <trips-tab [clientObject]="clientObject"></trips-tab>
+                        </div>
+                        <div class="tab-pane fade" id="tab4default">
+                           <communications-tab [clientObject]="clientObject"></communications-tab>
+                        </div>-->
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+      </div>
+   </section>
+</div>
+

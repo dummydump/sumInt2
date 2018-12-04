@@ -1,0 +1,313 @@
+<div class="col-md-6">
+    <div class="col-md-12 no-padding ">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Flights</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                   <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                   <div class="ripple-container"></div>
+                </button>
+                </div>
+            </div>
+            <div class="box-body ">
+                <div class="row custom1">
+                    <div class="col-sm-12">
+                        <ng-container *ngIf="childFlightCount == 0 && tripObject._id != ''">
+                            <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to <span class="text-danger"> view flights </span>once flights have been saved.
+                            </h6>
+                        </ng-container>
+                        <ng-container>
+                            <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color" [hidden]="!isFlightLoaderShow"></ngx-spinner>
+                            <table class="table" style="white-space: inherit;" [hidden]="isFlightEditMode">
+                                <!-- <tr>
+                            <td colspan="2" class="bordertopn"> <img alt="User Image" class="img-responsive" src="/assets/public/dist/img/map.png"></td>
+                            </tr> -->
+                                <tr *ngFor="let flight of currentFlightList;let _index=index;">
+                                    <td width="115px">
+                                        <small>{{flight.departureDate  | date : "MM/dd/yyyy"}}</small><br>
+                                        <small>{{flight.departureTime}}</small>
+                                    </td>
+                                    <td>
+                                        <span class="bluetxt">Scheduled</span><br>
+                                        <small>{{flight.flightNumber}}</small>
+                                        <!--departs in 6 months 4 days 15 hours 14 minutes <strong>Seattle (SEA) - Orlando (MCO) -</strong> Seattle Tacoma international Airport - Orlando International Airport-->
+                                    </td>
+                                    <td align="center" width="75">
+                                        <a>
+                                            <i class="material-icons blueicon" data-toggle="tooltip" data-placement="top" title="Edit" (click)="editFlight(flight)">edit</i>
+                                        </a>
+                                        <a>
+                                            <i class="material-icons delete" data-toggle="tooltip" data-placement="top" title="Delete" (click)="removeFlight(flight,_index)">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="box-footer clearfix" [hidden]="isFlightEditMode" *ngIf="totalRecordsFlight > 0">
+                                <div class="col-sm-3  no-padding"><small class="pull-left showtxt">{{(pgListFlight.pageCount * limitFlight) + 1}} to {{((pgListFlight.pageCount * limitFlight) + currentFlightList.length)}} out of {{totalRecordsFlight}}</small></div>
+                                <div class="col-sm-9 no-padding">
+
+                                    <ul *ngIf="pgListFlight.pages && pgListFlight.pages.length" class="pagination">
+                                        <li [ngClass]="{disabled:pgListFlight.pageCount  == 0}">
+                                            <a (click)="!(pgListFlight.pageCount  == 0) ? paginateFlight((0), limitFlight): ''">First</a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pgListFlight.pageCount === 0}">
+                                            <a (click)="paginateFlight((pgListFlight.pageCount - 1), limitFlight)">Previous</a>
+                                        </li>
+                                        <li *ngFor="let page of pgListFlight.pages" [ngClass]="{active:(pgListFlight.pageCount + 1)  === page}">
+                                            <a (click)="paginateFlight((page - 1), limitFlight)">{{page}}</a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pgListFlight.pageCount == pgListFlight.totalPages}">
+                                            <a (click)="!(pgListFlight.pageCount == pgListFlight.totalPages) ? paginateFlight((pgListFlight.pageCount + 1), limitFlight) : ''">Next</a>
+                                        </li>
+                                        <li [ngClass]="{disabled:pgListFlight.pageCount === pgListFlight.totalPages}">
+                                            <a (click)="!(pgListFlight.pageCount === pgListFlight.totalPages) ?paginateFlight((pgListFlight.totalPages), limitFlight) : ''">Last</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ng-container>
+                        <div [hidden]="!isFlightEditMode">
+                            <table class="table">
+                                <ng-container>
+                                    <tr class="custom1">
+                                        <td class="bordertopn" rowspan="2"><i class="fa fa-plane"></i></td>
+                                        <td class="bordertopn">
+                                            <div class="group">
+                                                <input type="date" [(ngModel)]="currentFlight.departureDate" name="departureDate" [value]="currentFlight.departureDate" (blur)="validateFlightDates('date', oldObj, oldVal, currentFlight.departureDate, currentFlight.departureTime, 'flights', 0, 0, 0);"
+                                                    (focus)="oldVal=currentFlight.departureDate; oldObj=currentFlight;">
+                                                <span class="highlight"></span>
+                                                <span class="bar"></span>
+                                                <label>Departure Date</label>
+                                            </div>
+                                        </td>
+                                        <td class="bordertopn">
+                                            <div class="group">
+                                                <input type="time" [(ngModel)]="currentFlight.departureTime" name="departureTime" (blur)="validateFlightDates('time', oldObj, oldVal, currentFlight.departureDate, currentFlight.departureTime, 'flights', 0, 0, 0);" (focus)="oldVal=currentFlight.departureTime; oldObj=currentFlight;">
+                                                <span class="highlight"></span>
+                                                <span class="bar"></span>
+                                                <label>Departure Time</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="custom1">
+                                        <td colspan="2" class="bordertopn">
+                                            <div class="group">
+                                                <input type="text" required [(ngModel)]="currentFlight.flightNumber" name="flightNumber" placeholder="Flight Number" [value]="currentFlight.flightNumber">
+                                                <span class="highlight"></span>
+                                                <span class="bar"></span>
+                                                <label>Flight Number</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </table>
+                            <div class="col-sm-12">
+                                <button type="button" class="pull-right btn bg-gray roundbtn btn-flat margin" (click)="cancelEditFlight()">
+                            Cancel
+                            <div class="ripple-container"></div>
+                         </button>
+                                <button type="button" class="pull-right btn bg-navy btn-flat roundbtn margin" (click)="saveFlight()">
+                            Save
+                            <div class="ripple-container"></div>
+                         </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="col-md-12 no-padding ">
+        <!-- <ng-container *ngIf="tripObject._id == ''"> -->
+        <!-- <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to <span class="text-danger">add extensions</span> once the trip has been saved.</h6> -->
+        <!-- </ng-container> -->
+        <!-- <ng-container *ngIf="tripObject._id != ''"> -->
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Activities/Events</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" (click)="RefreshFlightActivity()">
+                   <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                   <div class="ripple-container"></div>
+                </button>
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" (click)="toggle(); isEditActivityMode=0;">
+                   <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Activities"></i>
+                   <div class="ripple-container"></div>
+                </button>
+                </div>
+            </div>
+            <ng-container *ngIf="tripObject._id == ''">
+                <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to <span class="text-danger">add activities/events </span>once trip has been created.
+                </h6>
+                <br />
+            </ng-container>
+
+            <ng-container *ngIf="tripObject._id != ''">
+                <div class="box-body">
+                    <div [hidden]="!show">
+                        <form novalidate id="activityForm" #activityForm="ngForm">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="group">
+                                        <select class="browser-default" [(ngModel)]="activityObject.activity" name="activity" required>
+                                <option value="" disabled selected>Select Activity*</option>
+                                <option *ngFor="let item of activityList" [value]="item.name">
+                                    {{item.name}}
+                                </option>
+                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="group">
+
+                                        <input type="date" [(ngModel)]="activityObject.activityDate" name="activityDate" (blur)="validateActivityDate(activityObject.activityDate,activityObject.activityTime);" required />
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Date*</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="group">
+                                        <input type="time" [(ngModel)]="activityObject.activityTime" name="activityTime" value="" (blur)="validateActivityTime(activityObject.activityTime);" />
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label class="ngValid-label">Time*</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-sm-7">
+                                    <div class="group">
+                                        <input type="text" required [(ngModel)]="activityObject.activityName" name="activityName" required/>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Activity Name*</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="group">
+                                        <input type="text" required [(ngModel)]="activityObject.confirmationNumber" name="confirmationNumber" required/>
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+                                        <label>Confirmation*</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+
+
+                                    <!--   <div class="form-group">
+                                                <label for="description">Description/Instructions</label>
+                                                <textarea class="form-control rounded-0" [(ngModel)]="activityObject.description" name="description" rows="3"></textarea>
+                                                <span class="highlight"></span>
+                                                <span class="bar"></span>
+                                            </div> -->
+                                    <div class="group">
+                                        <textarea id="description" type="text" name="description" [(ngModel)]="activityObject.description" rows="4" cols="90" maxlength="500" placeholder="Description"></textarea>
+                                        <!--  <input type="text" multiline="true" [(ngModel)]="activityObject.description" name="description" /> -->
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="box-footer">
+                            <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="closePage()">
+                         Close
+                         <div class="ripple-container"></div>
+                      </button>
+                            <button type="button" class="btn bg-navy btn-flat roundbtn margin" [disabled]="!activityForm.form.valid" (click)="saveFlightActivity(false)">
+                         Save
+                         <div class="ripple-container"></div>
+                      </button>
+                        </div>
+                    </div>
+                    <div [hidden]="show">
+                        <div class="row">
+                            <div class="col-sm-12 table-responsive">
+                                <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color" [hidden]="!isActivityLoaderShow"></ngx-spinner>
+                                <ng-container *ngIf="!flightActivityList || flightActivityList.length <= 0">
+                                    <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> There are no <span class="text-danger"> activities/events </span>attached to this trip.
+                                    </h6>
+                                    <h6 class="text-center"> Let's add one by clicking the <span class="text-danger"> Add Activity </span>button on top right hand side.
+                                    </h6>
+                                </ng-container>
+
+                                <table class="table" *ngIf="flightActivityList && flightActivityList.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th>Activity/Events</th>
+                                            <th>Date</th>
+                                            <th>Time</th>
+                                            <th>Name</th>
+                                            <th>Confirmation</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let flightActivity of flightActivityList">
+                                        <tr>
+                                            <td>{{flightActivity.activity}}</td>
+                                            <td>{{flightActivity.activityDate | date : "EEE, MMM d, yyyy"}}</td>
+                                            <td>{{getFormatedTime(flightActivity.activityTime)}}</td>
+                                            <td>{{flightActivity.activityName}}</td>
+                                            <td>{{flightActivity.confirmationNumber}}</td>
+                                            <td align="center">
+                                                <a>
+                                                    <i class="material-icons blueicon" (click)="editFlightActivity(flightActivity._id); isEditActivityMode = 1;" data-toggle="tooltip" data-placement="top" title="Edit">edit</i>
+                                                </a>
+                                                <a>
+                                                    <i class="material-icons delete" (click)="removeFlightActivity(flightActivity._id)" data-toggle="tooltip" data-placement="top" title="Delete">delete</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6">
+                                                <p class="flight-desc">Description: </p>
+                                                <p class="flight-descp"> {{flightActivity.description}}
+                                                    <p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <app-pagination [paginationList]="flightActivityList" [showLimit]="false" [totalRecords]="totalRecords" [isSearching]="false" (currentPageCountEvent)="currentPageCountEvent($event)" (limitChangeEvent)="limitChangeEvent($event)"></app-pagination>
+<!--
+                <div class="box-footer clearfix" [hidden]="show" *ngIf="flightActivityList && flightActivityList.length > 0">
+                    <div class="col-sm-3  no-padding">
+                        <small class="pull-left showtxt">{{(pgList.pageCount * limit) + 1}} to {{((pgList.pageCount * limit) + flightActivityList.length)}} out of {{totalRecords}}</small></div>
+                    <div class="col-sm-9 no-padding">
+
+                        <ul *ngIf="pgList.pages && pgList.pages.length" class="pagination">
+                            <li [ngClass]="{disabled:pgList.pageCount  == 0}">
+                                <a (click)="!(pgList.pageCount  == 0) ? getFlightActivityList((0), limit): ''">First</a>
+                            </li>
+                            <li [ngClass]="{disabled:pgList.pageCount === 0}">
+                                <a (click)="!(pgList.pageCount === 0) ? getFlightActivityList((pgList.pageCount - 1), limit): ''">Previous</a>
+                            </li>
+                            <li *ngFor="let page of pgList.pages" [ngClass]="{active:(pgList.pageCount + 1)  === page}">
+                                <a (click)="getFlightActivityList((page - 1), limit)">{{page}}</a>
+                            </li>
+                            <li [ngClass]="{disabled:pgList.pageCount == pgList.totalPages}">
+                                <a (click)="!(pgList.pageCount == pgList.totalPages) ? getFlightActivityList((pgList.pageCount + 1), limit) : ''">Next</a>
+                            </li>
+                            <li [ngClass]="{disabled:pgList.pageCount === pgList.totalPages}">
+                                <a (click)="!(pgList.pageCount === pgList.totalPages) ?getFlightActivityList((pgList.totalPages), limit) : ''">Last</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>-->
+            </ng-container>
+        </div>
+        <!-- </ng-container> -->
+    </div>
+</div>

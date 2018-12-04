@@ -1,0 +1,8 @@
+.autocomplete-ul li {
+    line-height: 1.5em;
+    height: auto;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    width: 100%;
+}

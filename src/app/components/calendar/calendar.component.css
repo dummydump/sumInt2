@@ -1,0 +1,165 @@
+mwl-calendar-open-day-events, .cal-open-day-events{
+    display: none !important;
+}
+
+.filter-events .active{
+    color: #070;
+    font-weight: bold;
+}
+
+.filter-events span{
+    display: block;
+    cursor: pointer;
+}
+
+.nopad{
+    padding: 0px;
+}
+
+.mar5px{
+    margin: 5px;
+}
+
+.no-border{
+    border: 0px !important;
+}
+
+.day-view-left-td{
+    /*width: 30px;   */
+    padding: 5px 2px 0px 0px;
+    vertical-align: top; 
+}
+
+ 
+.col-md-1{
+    width: 14%;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+}
+
+.col-md-11{
+    width: 86%;
+    font-family: Verdana,Arial,Helvetica,sans-serif;
+}
+
+.pagination-div{
+    padding: 5px 0px;
+}
+
+.v-top{
+    vertical-align: top; 
+    padding: 5px 0px 0px 6px;
+}
+
+.view-date{
+    font-size: large; 
+    color: lightseagreen;
+}
+
+::ng-deep .cdk-overlay-container .cdk-overlay-pane {
+    position: absolute !important;
+}
+
+mat-datepicker-toggle{
+    position: relative;
+    float: right;
+    bottom: 42px;
+    background-color: #fff;
+}
+
+::ng-deep .mat-icon-button{
+    background-color: #fff !important;
+}
+
+::ng-deep .mydp .currmonth{
+    background-color: transparent !important;
+}
+
+::ng-deep .mydp .datevalue{
+    padding: 5px !important;
+    /*width: 30px !important;*/
+}
+
+::ng-deep .mydp .selectedday .datevalue{
+    border-radius: 15px !important;
+}
+
+::ng-deep .mydp .selectedday .datevalue, 
+::ng-deep .mydp .selectedmonth .monthvalue, 
+::ng-deep .mydp .selectedyear .yearvalue{
+    background-color: rgba(21, 143, 246, 1) !important;
+    color: #fff !important;
+}
+
+::ng-deep .mydp .monthcell .monthvalue{
+    padding: 10px 0px !important;
+}
+
+::ng-deep .mydp .inlinedp{
+    width: 100% !important;
+    margin-top: 10px !important;
+    height: 290px !important;
+}
+
+::ng-deep .mydp .highlight{
+    color: transparent !important;
+}
+
+::ng-deep .mydp .header{
+    height: 60px !important;
+    background-color: rgba(21, 143, 246, 0.8) !important;
+    color: #fff !important;
+}
+
+::ng-deep .mydp .weekdaytitle{
+    background-color: rgba(21, 143, 246, 1) !important;
+    color: #fff !important;
+    text-transform: uppercase !important;
+}
+
+::ng-deep .mydp .caltable, 
+::ng-deep .mydp .monthtable, 
+::ng-deep .mydp .yeartable{
+    height: calc(100% - 100px) !important;
+}
+
+::ng-deep .mydp .headerbtncell,
+::ng-deep .mydp .headerbtn,
+::ng-deep .mydp .headerlabelbtn,
+::ng-deep .mydp .yearchangebtn{
+    background-color: transparent !important;
+    color: #fff !important;
+}
+
+.view-type .btn-primary{
+    border-right:1px solid;
+    color: white !important;
+    background-color: rgba(21, 143, 246, 0.8);
+}
+
+.view-type .active{
+    color: white !important;
+    background-color: rgba(21, 143, 246, 1);
+}
+
+.view-type{
+    color: white !important;    
+}
+
+::ng-deep .event-details{
+    
+}
+/* ::ng-deep .mydp td.daycell:not(.currmonth){
+    pointer-events: none !important;
+    cursor: default !important;
+    text-decoration: none !important;
+    color: black !important;
+} */
+::ng-deep .event-details h6{
+    margin: 1px 1px 5px 5px;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+::ng-deep .cal-month-view .cal-cell-top{
+    min-height: 55px;
+}

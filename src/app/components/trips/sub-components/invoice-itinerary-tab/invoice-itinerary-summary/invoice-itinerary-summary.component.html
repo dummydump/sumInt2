@@ -1,0 +1,291 @@
+<div class="col-md-12 no-padding " [id]="divID" >
+    <div id="editor"></div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <img alt="Image" src="/assets/public/dist/img/CupcakeCastlesLogo.PNG" id='company-img' class="company-img">
+
+            <h3 class="company-title">CupCake Castles Travel Company</h3>
+
+            <div *ngIf="tripAgentObject" class="box-tools txt-right">
+                {{tripAgentObject.firstName}} {{tripAgentObject.lastName}}
+                <br>
+                <span class="bluetxt cyan-color">{{tripAgentObject.email}}</span>
+                <br>
+                <i *ngIf="tripAgentObject.phone1" class="material-icons font15">phone</i> {{tripAgentObject.phone1}}
+            </div>
+        </div>
+
+
+        <div class="box-body ">
+            <div class="col-sm-12">
+                <h3 class="bigtxt">At a glance</h3>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table responsive">
+                        <tr>
+                            <!--<th></th>-->
+                            <th>Traveling Package</th>
+                            <th>From</th>
+                            <th>To</th>
+                        </tr>
+                        <ng-container *ngFor="let itineraryElem of itineraryFieldsArr" [class.hidden]="itineraryElem[1]['isCheckOut'] == true">
+                            <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries' && (itineraryElem[1].isCheckOut != true))">
+                                <!--<td>
+                                    <span class="hidden">{{itineraryElem[0]}}</span>
+                                    <span class="badge bg-gray">
+                                        <i [class]="getItineraryType(itineraryElem)"></i>
+                                    </span>
+                                </td>-->
+                                <td [class.padL20]="itineraryElem[0] == 'room'">
+                                    <small></small>
+                                    <span class="maroontxt orange-color" *ngIf="itineraryElem[0] == 'flightActivities'">{{getFlightActivityTypeAndName(itineraryElem, true)}}</span>
+
+                                    <span class="bluetxt cyan-color" *ngIf="getItineraryEmail(itineraryElem, false, 'glance', false, false)!=''">{{getItineraryEmail(itineraryElem, false, 'glance', false, false)}}</span>
+                                    <br *ngIf="getItineraryEmail(itineraryElem, false, 'glance', false, false)!=''">
+                                    <small>{{getItineraryAddress(itineraryElem, false, false)}}</small>
+                                    <br *ngIf="getItineraryAddress(itineraryElem, false, false)!=''"> {{getItineraryText(itineraryElem, false, false)}}
+                                </td>
+                                <td colspan="2" class="text-center" *ngIf="itineraryElem[0] == 'flightActivities'">{{getFromDate(itineraryElem, true)}} {{getFromTime(itineraryElem, true)}}</td>
+                                <td *ngIf="itineraryElem[0] != 'flightActivities'">{{getFromDate(itineraryElem, true)}} {{getFromTime(itineraryElem, true)}}</td>
+                                <td *ngIf="itineraryElem[0] != 'flightActivities'">{{getToDate(itineraryElem, true)}} {{getToTime(itineraryElem, true)}}</td>
+                            </tr>
+                        </ng-container>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="box-body ">
+            <div class="row custom1">
+                <div class="col-sm-12">
+                    <table class="table " style="white-space: inherit;">
+                        <thead>
+                            <tr>
+                                <th class="bordertopn">Itinerary</th>
+                                <th class="bordertopn"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <ng-container *ngFor="let itineraryElem of itineraryFieldsArr">
+                                <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries')">
+                                    <td class="text-right col-sm-3" [ngClass]="(itineraryElem[0] == 'room')? 'noBorder padTB0' : ''">
+
+                                        <i [class]="getItineraryType2(itineraryElem)" *ngIf="itineraryElem[0] != 'room'"></i>
+                                        
+                                        <br>
+                                        <small *ngIf="itineraryElem[1]['isCheckOut'] != true"> {{getFromDate(itineraryElem)}}</small>
+                                        <small *ngIf="itineraryElem[1]['isCheckOut'] == true"> {{getToDate(itineraryElem)}}</small>
+                                        <br>
+                                        <small *ngIf="itineraryElem[1]['isCheckOut'] != true">{{getFromTime(itineraryElem)}}</small>
+                                        <small *ngIf="itineraryElem[1]['isCheckOut'] == true">{{getToTime(itineraryElem)}}</small>
+                                    </td>
+                                    <td [ngClass]="(itineraryElem[0] == 'room')? 'noBorder padTB0' : ''" [ngClass]="(itineraryElem[0] == 'properties' || itineraryElem[0] == 'cruises')? 'padB0' : ''">
+                                        <!--<img crossOrigin="anonymous" class="prop-cruise-img img-responsive" src="http://res.cloudinary.com/jst/image/upload/v1499851246/nologo_mvnoeq.png">-->
+
+                                        <span class="maroontxt orange-color" *ngIf="itineraryElem[0] == 'flightActivities'"><b>{{getFlightActivityTypeAndName(itineraryElem, false)}}</b></span>
+                                        
+                                        <span [class]="(itineraryElem[1]['isCheckOut'])? 'maroontxt' : 'bluetxt cyan-color'" *ngIf="itineraryElem[0] != 'flightActivities' && getItineraryEmail(itineraryElem, true, 'package', false, false)!=''"><b>{{getItineraryEmail(itineraryElem, true, 'package', false, false)}}</b></span>
+
+
+                                        <p *ngIf="itineraryElem[0] == 'flightActivities'">
+                                            <span>{{getFlightActivityConfirmationDetails(itineraryElem)}}</span><br>
+                                            <span>{{getFlightActivityDesc(itineraryElem)}}</span>
+                                        </p>
+
+                                        <small>{{getItineraryText(itineraryElem, false, false)}}</small>
+
+                                        <small *ngIf="itineraryElem[0] != 'flightActivities' && itineraryElem[1]['isCheckOut'] == true"><br>Double check you are not leaving anything behind.</small>
+                                        <small *ngIf="itineraryElem[0] != 'flightActivities' && !itineraryElem[1]['isCheckOut']"><br>{{getItineraryAddress(itineraryElem, true, false)}}</small>
+
+                                        <br *ngIf="itineraryElem[0] == 'properties' || itineraryElem[0] == 'cruises'">
+                                        <br *ngIf="itineraryElem[0] == 'properties' || itineraryElem[0] == 'cruises'">
+
+                                        <img *ngIf="getLandmarkImage(itineraryElem)!=''" crossOrigin="Anonymous" alt="User Image" class="prop-cruise-img img-responsive" [src]="getLandmarkImage(itineraryElem)">
+
+                                        <ng-container *ngIf="showExtraInfo(itineraryElem)">
+                                            <br>
+                                            <p class="font16">
+                                                ABOUT
+                                            </p>
+                                            <p *ngIf="itineraryElem != null && itineraryElem[0] == 'room' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].roomId] != null">
+                                                <!--<span>test1</span>-->
+                                                {{landmarkDetailInfo[itineraryElem[1].roomId].text}}
+                                            </p>
+
+                                            
+                                            <span *ngIf="itineraryElem != null && itineraryElem[0] == 'properties' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].propertyId] != null">
+                                                
+                                                <small *ngFor="let obj of landmarkDetailInfo[itineraryElem[1].propertyId].propertyAmenities">
+                                                    {{obj.text}}
+                                                </small>
+                                            </span>
+                                            
+                                            <span *ngIf="itineraryElem!=null && itineraryElem[0]=='cruises' && landmarkDetailInfo!=null && landmarkDetailInfo[itineraryElem[1].cruiseId]!=null">
+                                                <!--<small *ngFor="let obj of landmarkDetailInfo[itineraryElem[1].cruiseId].cruiseAmenities">
+                                                    <strong>{{obj.title}}</strong>
+                                                    <br>
+                                                    <p>{{obj.text}}</p>
+                                                </small>-->
+                                                <p [innerHTML]="landmarkDetailInfo[itineraryElem[1].cruiseId].descriptionHTML"></p>
+                                                
+                                            </span>
+
+                                            <h6 *ngIf="itineraryElem!=null && (itineraryElem[0]=='cruises' || itineraryElem[0]=='properties')" class="font16">ROOM CATEGORIES</h6>
+                                        </ng-container>
+                                        <!-- <br>
+                                        <small>Flight and airport Details go here</small> -->
+                                    </td>
+                                </tr>
+
+                                <ng-container *ngIf="(itineraryElem[0] == 'cruiseItineraries')">
+                                    <tr *ngFor="let subCruise of itineraryElem[1].itinerary">
+                                        <td class="text-right col-sm-3">
+                                            <small>{{getCruiseData(subCruise, itineraryElem[1].cruiseDetails)}}</small><br />
+                                            <small>{{getCruiseArrivalDepartTime(subCruise)}}</small>  
+                                            <!--<small>{{getCruiseDepartTime(subCruise)}}</small>-->
+                                        </td>
+                                        <td class="day-td">
+                                            <span class="bluetxt cyan-color title"><b>Day {{subCruise.dayNo}}</b></span>
+                                            <small>{{getCruiseAddress(subCruise)}}</small>
+                                            <p [innerHTML]="getCruiseHTML(subCruise)"></p>
+                                        </td>
+                                    </tr>   
+                                </ng-container>
+                            </ng-container>
+                            
+                        </tbody>
+                    </table>
+
+                    <table class="table" id="pdfTableItinerary" class="pdfTableItinerary hidden">
+                        <thead>
+                            <tr>
+                                <th class="bordertopn">Traveling Package</th>
+                                <th class="bordertopn"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <ng-container *ngFor="let itineraryElem of itineraryFieldsArr; let i = index;">
+                                
+                                <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries')">
+                                    <td>
+                                        <img *ngIf="itineraryElem" [src]="getItineraryIcon2x(itineraryElem)" class="itinerary-small-img" alt="Image" [id]="getSmallImageId(itineraryElem, i)">
+                                        
+                                        <small>{{(itineraryElem[0] == 'room')? 'roomType' : ''}}{{getFromDate(itineraryElem, false)}}</small> 
+                                        <small>{{getFromTime(itineraryElem, false)}}</small>
+                                    </td>
+                                    <td>
+                                        <!--<img crossOrigin="anonymous" class="prop-cruise-img img-responsive" src="http://res.cloudinary.com/jst/image/upload/v1499851246/nologo_mvnoeq.png">-->
+                                        <span [class]="(itineraryElem[1]['isCheckOut'] == true || itineraryElem[0] == 'flightActivities')? 'maroontxt' : 'bluetxt cyan-color'">{{(getLandmarkImage(itineraryElem) === '')? 'nmg' : 'img'}}{{(itineraryElem[1]['isCheckOut'] == true)? 'checkout' : ''}}{{getItineraryEmail(itineraryElem, true, 'package', false, true)}}</span>
+
+                                        <!--<span [class]="(itineraryElem[1]['isCheckOut'])? 'maroontxt' : 'bluetxt cyan-color'" *ngIf="getItineraryEmail(itineraryElem, true)!=''"><b>{{getItineraryEmail(itineraryElem, true)}}</b></span>-->
+
+                                        <small>{{getItineraryText(itineraryElem, false, true)}}</small>
+                                        <small *ngIf="itineraryElem[1]['isCheckOut'] == true"><br>Double check you are not leaving anything behind.</small>
+                                        <small *ngIf="!itineraryElem[1]['isCheckOut']"><br>{{getItineraryAddress(itineraryElem, true, true)}}</small>
+
+                                        <img *ngIf="getLandmarkImage(itineraryElem) !='' " crossOrigin="Anonymous" alt="Image" class="prop-cruise-img img-responsive" [src]="getLandmarkImage(itineraryElem)" id="img{{i}}">
+
+                                        <img *ngIf="getLandmarkImage(itineraryElem) === ''" crossOrigin="Anonymous" alt="Image" style="height: 30px;" class="prop-cruise-img img-responsive" src="http://res.cloudinary.com/jst/image/upload/v1499851246/nologo_mvnoeq.png" id="noimg{{i}}">
+
+                                        <ng-container *ngIf="showExtraInfo(itineraryElem) && itineraryElem[0] == 'room'">
+                                            <p class="blacktxt">
+                                                About
+                                            </p>
+                                            <br>
+                                            <p class="blacktxt" *ngIf="itineraryElem!=null && itineraryElem[0] == 'room' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].roomId]!=null">
+                                                {{landmarkDetailInfo[itineraryElem[1].roomId].text}}</p>
+
+                                            <p class="blacktxt" *ngIf="itineraryElem != null && itineraryElem[0]=='properties' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].propertyId]!=null">
+                                                <small *ngFor="let obj of landmarkDetailInfo[itineraryElem[1].propertyId].propertyAmenities">
+                                                    {{obj.text}}
+                                                </small>
+                                            </p>
+                                            <p class="blacktxt" *ngIf="itineraryElem != null && itineraryElem[0] == 'cruises' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].cruiseId]!=null">
+                                                <!--<small class="blacktxt" *ngFor="let obj of landmarkDetailInfo[itineraryElem[1].cruiseId].cruiseAmenities">
+                                                    <strong class="blacktxt">{{obj.title}}</strong>
+                                                    <br>
+                                                    <p class="blacktxt">{{obj.text}}</p>
+                                                </small>-->
+
+                                                <span [innerHTML]="landmarkDetailInfo[itineraryElem[1].cruiseId].descriptionHTML"></span>
+                                            </p>
+
+                                            <h6  class="blacktxt" *ngIf="itineraryElem != null && (itineraryElem[0] == 'cruises' || itineraryElem[0] == 'properties')" class="font16">ROOM CATEGORIES</h6>
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                                
+                                <tr *ngIf="(itineraryElem[0] == 'properties' || itineraryElem[0] == 'cruises') && !itineraryElem[1]['isCheckOut']">
+                                    <td>
+                                        <img *ngIf="itineraryElem" src="/assets/public/images/itinerary-icons/blank.jpg" class="itinerary-small-img" alt="Image">
+                                         <!--<img *ngIf="itineraryElem" [src]="getItineraryIcon2x(itineraryElem)" class="itinerary-small-img" alt="Image">-->
+                                    </td>
+                                    <td>
+                                        <img crossOrigin="Anonymous" alt="Image" style="height: 30px;" class="prop-cruise-img img-responsive" src="http://res.cloudinary.com/jst/image/upload/v1499851246/nologo_mvnoeq.png" id="noimg{{i}}">
+
+                                        <ng-container *ngIf="showExtraInfo(itineraryElem)">
+                                            <p class="blacktxt">
+                                                About
+                                            </p>
+                                            <br>
+                                            <p class="blacktxt" *ngIf="itineraryElem!=null && itineraryElem[0] == 'room' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].roomId]!=null">
+                                                {{landmarkDetailInfo[itineraryElem[1].roomId].text}}</p>
+
+                                            <p class="blacktxt" *ngIf="itineraryElem != null && itineraryElem[0]=='properties' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].propertyId]!=null">
+                                                <small *ngFor="let obj of landmarkDetailInfo[itineraryElem[1].propertyId].propertyAmenities">
+                                                    {{obj.text}}
+                                                </small>
+                                            </p>
+                                            <p class="blacktxt" *ngIf="itineraryElem != null && itineraryElem[0] == 'cruises' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].cruiseId]!=null">
+                                                <!--<small class="blacktxt" *ngFor="let obj of landmarkDetailInfo[itineraryElem[1].cruiseId].cruiseAmenities">
+                                                    <strong class="blacktxt">{{obj.title}}</strong>
+                                                    <br>
+                                                    <p class="blacktxt">{{obj.text}}</p>
+                                                </small>-->
+
+                                                <span [innerHTML]="landmarkDetailInfo[itineraryElem[1].cruiseId].descriptionHTML"></span>
+                                            </p>
+
+                                            <h6  class="blacktxt" *ngIf="itineraryElem != null && (itineraryElem[0] == 'cruises' || itineraryElem[0] == 'properties')" class="font16">ROOM CATEGORIES</h6>
+                                        </ng-container>
+
+                                    </td>
+                                </tr>
+
+                                <ng-container *ngIf="(itineraryElem[0] == 'cruiseItineraries')">
+                                    <tr *ngFor="let subCruise of itineraryElem[1].itinerary; let subIndex = index;">
+                                        <td class="text-right col-sm-3">
+                                            <img *ngIf="itineraryElem" src="/assets/public/images/itinerary-icons/blank.jpg" class="itinerary-small-img" alt="Image" [id]="getSmallImageId(itineraryElem, i)">
+                                            <small>Day{{getCruiseData(subCruise, itineraryElem[1].cruiseDetails)}}</small><br />
+                                            <small>{{getCruiseArrivalDepartTime(subCruise)}}</small>  
+                                        </td>
+                                        <td class="day-td">
+                                            <span class="bluetxt cyan-color1 title"><b>Day {{subCruise.dayNo}}</b></span>
+                                            <small>{{getCruiseAddress(subCruise)}}</small>
+                                            <p id="cruiseHTML{{subIndex}}" [innerHTML]="getCruiseHTML(subCruise)"></p>
+                                        </td>
+                                    </tr>   
+                                </ng-container>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                    <div *ngIf="tripAgentObject" style="text-align: center; width: 100%; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;">
+                        <br>
+                        <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                        <div class="col-sm-12">
+                            <a href="http://www.facebook.com/cupcakecastlestravelcompany" target="_blank"><img class="fb-icon" src="http://res.cloudinary.com/jst/image/upload/v1524126739/facebook-icon_sy9gvk.png"/></a>
+                        </div>
+                        <br>
+                        <span>To learn more about our services and promotions please contact us</span>
+                        <br>
+                        <b>{{tripAgentObject.firstName}} {{tripAgentObject.lastName}}</b>, <span *ngIf="tripAgentObject.phone1"> {{tripAgentObject.phone1}}, </span> <span style="color: #46b7c7;">{{tripAgentObject.email}}</span>
+                        <br>
+                        <span>CupCake Castles Travel Company</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

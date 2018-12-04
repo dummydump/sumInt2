@@ -1,0 +1,249 @@
+<div class="content-wrapper" *ngIf="currentUser && _commonAppService.isManagerOrAdmin(currentUser.user.roleName)">
+  <section class="content-header">
+    <ol class="breadcrumb">
+      <li><a href="#">Workspace</a></li>
+      <li class="active">Add User</li>
+    </ol>
+    <h1>
+      <i class="fa">
+           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 299.997 299.997" style="enable-background:new 0 0 299.997 299.997;" xml:space="preserve">
+      <g>
+	    <g>
+        <path d="M149.996,0C67.157,0,0.001,67.158,0.001,149.997c0,82.837,67.156,150,149.995,150s150-67.163,150-150
+        C299.996,67.156,232.835,0,149.996,0z M150.453,220.763v-0.002h-0.916H85.465c0-46.856,41.152-46.845,50.284-59.097l1.045-5.587
+        c-12.83-6.502-21.887-22.178-21.887-40.512c0-24.154,15.712-43.738,35.089-43.738c19.377,0,35.089,19.584,35.089,43.738
+        c0,18.178-8.896,33.756-21.555,40.361l1.19,6.349c10.019,11.658,49.802,12.418,49.802,58.488H150.453z"/>
+      </g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      </svg>
+        </i>
+      <div class="h1txt">Add User</div>
+    </h1>
+  </section>
+  <section class="content">
+    <div class="row">
+      <section class="col-lg-12">
+        <div class="col-md-12 no-padding">
+
+          <div class="col-md-12 no-padding ">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">User Information</h3>
+              </div>
+              <form role="form" id="userForm" #userForm="ngForm">
+                <div class="box-body top20">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="group">
+                        <input type="text" ngModel #firstName="ngModel" required [(ngModel)]="userObject.firstName" name="firstName">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>First Name*</label>
+                        <div
+                        *ngIf="firstName.errors && (firstName.dirty || firstName.touched)"
+                        class="small text-danger">
+                        <div [hidden]="!firstName.errors.required">
+                          First name is required
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="group">
+                          <input type="text" ngModel #lastName="ngModel" required [(ngModel)]="userObject.lastName" name="lastName">
+                        <!-- <input type="text" required [(ngModel)]="userObject.lastName" name="lastName"> -->
+                        <span class="bar"></span>
+                        <label>Last Name*</label>
+                        <div
+                        *ngIf="lastName.errors && (lastName.dirty || lastName.touched)"
+                        class="small text-danger">
+                        <div [hidden]="!lastName.errors.required">
+                          Last name is required
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="group">
+                        <input type="email" ngModel #email="ngModel" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"  [(ngModel)]="userObject.email" name="email">
+                        <span class="bar"></span>
+                        <label>Email Id*</label>
+                        <div
+                        *ngIf="email.errors && (email.dirty || email.touched)"
+                        class="small text-danger">
+                        <div [hidden]="!email.errors.required">
+                          Email Id is required
+                        </div>
+                        <div [hidden]="email.errors.required">
+                            Invalid email Id
+                          </div>
+                      </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="mdl-selectfield">
+                        <label>Standard Select</label>
+                        <select class="browser-default" [(ngModel)]="userObject.gender" name="gender">
+                          <option value="" disabled selected>Gender</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="group">
+                        <input type="text" [(ngModel)]="userObject.phone1" name="phone1" mask="000-000-0000">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Phone 1</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="group">
+                        <input type="text" [(ngModel)]="userObject.phone2" name="phone2" mask="000-000-0000">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Phone 2</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="group">
+                        <input type="text" required [(ngModel)]="userObject.address1" name="address1">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Address 1*</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="group">
+                        <input type="text" [(ngModel)]="userObject.address2" name="address2">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Address 2</label>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      
+                      <div class="mdl-selectfield">
+                        <label>Select Country</label>
+                        <select class="browser-default" [(ngModel)]="userObject.country" (change)="countrySelected($event)" name="country">
+                          <option value="" disabled selected>Select Country*</option>
+                          <option *ngFor="let country of countries" [value]="country._id">{{country.countryName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="mdl-selectfield">
+                        <label>Select State</label>
+                        <select  class="browser-default" [(ngModel)]="userObject.state" (change)="stateSelected($event)" name="state">
+                          <option value="" disabled selected>Select State</option>
+                          <option *ngFor="let state of stateList" [value]="state._id">{{state.stateName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="mdl-selectfield">
+                        <label>Select City</label>
+                        <select  class="browser-default" [(ngModel)]="userObject.city" name="city">
+                          <option value="" disabled selected>Select City</option>
+                          <option *ngFor="let city of cities" [value]="city._id">{{city.cityName}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="group">
+                        <input type="text" [(ngModel)]="userObject.zipCode" name="zipCode" >
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Zip Code</label>
+                      </div>
+                    </div>     
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="mdl-selectfield">
+                        <label> Select Role* </label>
+                        <select class="browser-default" [(ngModel)]="userObject.roleName" name="roleName" (change)="roleSelectChanged()" required>
+                          <option value="" disabled selected>Select Role</option>
+                          <option *ngFor="let role of rolesList" value={{role}}>
+                              {{role}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4" *ngIf="userObject.roleName === 'Assistant'">
+                      <div class="mdl-selectfield">
+                        <label>Select Assistant Of*</label>
+                        <select class="browser-default" [(ngModel)]="userObject.assistantOf" name="assistantOf" (change)="roleSelectChanged()" required>
+                          <option value="" disabled selected>Select Assistant Of</option>
+                          <option *ngFor="let agent of agentsList" [value]="agent._id">
+                              {{agent.firstName}} {{agent.lastName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="box-footer">
+                  <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="closePage()">
+                    Close 
+                    <div class="ripple-container"></div>
+                  </button>
+                  <button type="button" [disabled]="!userForm.form.valid" class="btn bg-navy btn-flat roundbtn margin" (click)="saveUser(false)">
+                    Save
+                    <div class="ripple-container"></div>
+                  </button>
+                  <button type="button"  [disabled]="!userForm.form.valid" class="btn bg-green btn-flat roundbtn margin" (click)="saveUser(true)">
+                     Save & Close
+                    <div class="ripple-container"></div>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>

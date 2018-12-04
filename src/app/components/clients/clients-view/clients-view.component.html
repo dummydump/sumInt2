@@ -1,0 +1,361 @@
+<div class="content-wrapper">
+   <section class="content-header">
+      <ol class="breadcrumb">
+         <li><a href="#">Workspace</a></li>
+         <li class="active">Clients</li>
+      </ol>
+      <h1>
+         <i class="fa">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 297 297" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 297 297">
+               <g>
+                  <path d="M46.169,61.873c3.286,2.507,7.98,1.876,10.488-1.408c22.071-28.917,55.546-45.5,91.843-45.5s69.772,16.584,91.843,45.5   c1.473,1.929,3.7,2.942,5.954,2.942c1.582,0,3.179-0.5,4.534-1.534c3.284-2.508,3.914-7.203,1.408-10.488   C227.312,18.729,189.501,0,148.5,0S69.688,18.729,44.762,51.385C42.255,54.67,42.885,59.365,46.169,61.873z"/>
+                  <path d="m228.037,101.786c0,12.885 10.484,23.369 23.369,23.369s23.369-10.484 23.369-23.369-10.484-23.369-23.369-23.369-23.369,10.483-23.369,23.369z"/>
+                  <path d="m275.322,132.91c-0.054-0.018-5.942-1.825-5.942-1.825-2.132-0.651-4.448-0.25-6.233,1.086l-11.741,8.791-11.741-8.791c-1.786-1.337-4.103-1.738-6.233-1.086 0,0-5.888,1.807-5.942,1.825-9.474,3.159-15.839,11.99-15.839,21.976v35.329c0,1.363 0.398,2.696 1.148,3.834l11.848,18.031v47.352c0,3.857 3.126,6.983 6.983,6.983h39.553c3.857,0 6.983-3.126 6.983-6.983v-47.352l11.848-18.031c0.749-1.139 1.148-2.472 1.148-3.834v-35.329c-5.68434e-14-9.986-6.366-18.817-15.84-21.976z"/>
+                  <path d="m45.594,125.155c12.885,0 23.369-10.484 23.369-23.369s-10.484-23.369-23.369-23.369-23.37,10.483-23.37,23.369 10.484,23.369 23.37,23.369z"/>
+                  <path d="m69.51,132.91c-0.054-0.018-5.942-1.825-5.942-1.825-2.133-0.651-4.447-0.25-6.233,1.086l-11.741,8.791-11.741-8.791c-1.785-1.337-4.103-1.738-6.233-1.086 0,0-5.888,1.807-5.942,1.825-9.474,3.159-15.839,11.99-15.839,21.976v35.329c0,1.363 0.398,2.696 1.148,3.834l11.848,18.031v47.352c0,3.857 3.126,6.983 6.983,6.983h39.552c3.857,0 6.983-3.126 6.983-6.983v-47.352l11.848-18.031c0.749-1.139 1.148-2.472 1.148-3.834v-35.329c0-9.986-6.366-18.817-15.839-21.976z"/>
+                  <path d="m178.642,68.851c0-16.62-13.522-30.142-30.142-30.142s-30.142,13.522-30.142,30.142c0,16.621 13.522,30.142 30.142,30.142s30.142-13.521 30.142-30.142z"/>
+                  <path d="m181.607,113.601l-.05-.016-8.603-2.64c-1.357-0.417-2.807,0.301-3.295,1.64l-18.09,49.635c-1.044,2.863-5.093,2.863-6.137,0l-18.09-49.635c-0.394-1.081-1.414-1.759-2.508-1.759-0.259,0-9.38,2.755-9.38,2.755-10.99,3.662-18.332,13.85-18.332,25.37v52.506c0,0.521 0.153,1.031 0.439,1.467l18.876,28.724v72.68c0,1.476 1.196,2.672 2.672,2.672h58.783c1.476,0 2.672-1.196 2.672-2.672v-72.68l18.876-28.724c0.286-0.436 0.439-0.946 0.439-1.467v-52.644c-0.001-11.47-7.372-21.641-18.272-25.212z"/>
+                  <path d="m155.568,112.556c-0.747-0.814-1.84-1.224-2.946-1.224h-8.245c-1.105,0-2.198,0.41-2.946,1.224-1.157,1.261-1.325,3.082-0.504,4.505l4.407,6.644-2.063,17.405 4.063,10.808c0.396,1.087 1.933,1.087 2.33,0l4.063-10.808-2.063-17.405 4.407-6.644c0.822-1.423 0.654-3.244-0.503-4.505z"/>
+               </g>
+            </svg>
+         </i>
+         Clients
+         <div class="col-sm-6 txt-right pull-right">
+            <input type="file" accept=".xlsx, .xls, .csv" #file (change)="selectClient(file.files)" class="hidden">
+            <!--<a (click)="file.click()"> <i class="material-icons bg-blue bigbtn">file_download</i></a>-->
+            <!--<a (click)="file.click()" class="pull-right"> <i class="material-icons bg-blue bigbtn">file_download</i></a>-->
+            <a (click)="refreshClientList()" class="pull-right">  <i data-toggle="tooltip" data-placement="top" title="Refresh" class="fa fa-refresh bg-blue bigbtn"></i></a>
+            <div class="bigbtn pull-right no-padding">
+               <li class="dropdown user user-menu" style="list-style: none;">
+                  <a href="#" class="no-padding" data-toggle="dropdown">
+                  <span class="hidden-xs"> <i data-toggle="tooltip" data-placement="top" title="Import Client" class="material-icons bg-blue bigbtn">file_download</i></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                     <li class="user-header">
+                        <a data-toggle="modal"  data-target="#importclient">Import Clients</a>
+                     </li>
+                     <li class="user-header" (click)="exportClients()">
+                        <a data-toggle="modal">Export Clients (.xlsx)</a>
+                     </li>
+                     <li class="user-header">
+                        <a href="/assets/public/downloads/Sample_Import_Client.xlsx" target="_self" download>Import Format (.xlsx)</a>
+                     </li>
+                  </ul>
+               </li>
+            </div>
+            <a routerLink="/client/addClient" class="pull-right"> <i data-toggle="tooltip" data-placement="top" title="Add Client" class="material-icons bg-green bigbtn greenshadow">add</i></a>
+            <a [hidden]="!isimportErrors"  class="pull-right" (click)="downloadErrors()"><span class="hidden-xs"> <i data-toggle="tooltip" data-placement="top" title="Download error file" class="material-icons bg-red bigbtn">file_download</i></span></a>
+         </div>
+      </h1>
+   </section>
+   <section class="content">
+      <div class="row">
+         <section class="col-lg-12">
+            <div class="col-md-12 no-padding">
+               <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+               <div class="box no-padding" *ngIf="currentUser && (!clientsList || clientsList.length <= 0) && isSearching == false">
+                  <h6 class="text-center"><i class="fa fa-warning text-danger"></i> You do not have any clients.</h6>
+                  <h6 class="text-center">Let's add a client by clicking the <span class="text-danger">Add Client </span>on the top right hand side.</h6>
+               </div>
+               <div class="box no-padding" *ngIf="currentUser && isSearching == true || (clientsList && clientsList.length > 0 && isSearching == false)">
+                  <!-- /.box-header -->
+                  <div class="box-body table-responsive no-padding">
+                     <table class="table table-striped">
+                        <tbody>
+                           <tr class="bg-white  box-success">
+                              <th>First Name</th>
+                              <th>Last Name</th>
+                              <th>Address</th>
+                              <th>Telephone</th>
+                              <th>Email Address</th>
+                              <th># Trips</th>
+                              <th>Agent</th>
+                              <th></th>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search First Name" (input)="onSearchChange('firstName', $event.target.value)" [(ngModel)]="searchObject.firstName" name="firstName"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Last Name" (input)="onSearchChange('lastName', $event.target.value)" [(ngModel)]="searchObject.lastName" name="lastName"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Address" (input)="onSearchChange('address', $event.target.value)" [(ngModel)]="searchObject.address" name="address"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Telephone" (input)="onSearchChange('telephone', $event.target.value)" [(ngModel)]="searchObject.telephone" name="telephone" mask="000-000-0000"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Email Address" (input)="onSearchChange('email', $event.target.value)" [(ngModel)]="searchObject.email" [(ngModel)]="searchObject.email" name="email"></div>
+                              </td>
+                              <td></td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Agent" (input)="onSearchChange('agent', $event.target.value)" [(ngModel)]="searchObject.agent" name="agent"></div>
+                              </td>
+                              <td></td>
+                           </tr>
+                           <ng-container *ngIf="clientsList && clientsList.length > 0">
+                              <tr *ngFor="let client of clientsList">
+                                 <td><a routerLink="/client/editClient/{{client._id}}" class="txtlink">{{client.firstName}}</a></td>
+                                 <td><a routerLink="/client/editClient/{{client._id}}" class="txtlink">{{client.lastName}}</a></td>
+                                 <td>{{client.address1}}</td>
+                                 <td>{{getClientContactTelephone(client.contactDetails)}}</td>
+                                 <td >
+                                    <a routerLink="/client/editClient/{{client._id}}" class="txtlink">
+                                    {{getClientContactEmail(client.contactDetails)}}
+                                    </a>
+                                 </td>
+                                 <td><small class="label bg-green">{{client.tripCounter}}</small></td>
+                                 <td>{{(client.agent)? client.agent.agentFirstName : ''}}&nbsp;{{(client.agent)? client.agent.agentLastName : ''}}</td>
+                                 <td>
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Add new trip" routerLink="/trip/addTrip/{{client._id}}"> <i class="material-icons blueicon">add_circle</i></a>
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Delete">
+                                        <i class="material-icons delete" (click)="removeClientById(client._id)">delete</i>
+                                    </a>
+                                 </td>
+                              </tr>
+                           </ng-container>
+                        </tbody>
+                     </table>
+                  </div>
+                  <app-pagination [paginationList]="clientsList" [showLimit]="true" [totalRecords]="totalRecords" [isSearching]="isSearching" (currentPageCountEvent)="currentPageCountEvent($event)" (limitChangeEvent)="limitChangeEvent($event)"></app-pagination>
+               </div>
+            </div>
+         </section>
+      </div>
+   </section>
+</div>
+<div id="importclient" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Client Import</h4>
+         </div>
+         <div class="modal-body uploadf">
+            <div class="row">
+               <div class="col-sm-12 center">
+                  <div id="dropzone">
+                     <div fileDrop
+                     [ngClass]="{'file-is-over': fileIsOver}"
+                     (fileOver)="fileOver($event)"
+                     (onFileDrop)="onFileDrop($event)">
+                     {{ beforeFileDrop }} <br>
+                     <i class="fa fa-cloud-upload fa-3x text-gray"></i>
+                  </div>
+               </div>
+               Or <br>
+               <button type="button" class="btn bg-green btn-flat roundbtn margin" (click)="selectFile()">
+                  <i class="fa fa-plus"></i>   Select Import File
+                  <div class="ripple-container"></div>
+               </button>
+            </div>
+            <div class="col-sm-12 top20">
+               <div class="col-sm-12 bg-gray ">
+                  <h3>Guidelines</h3>
+                  <ul>
+                     <li>Excel 2007+ file formats are accepted and the client data must be on the first sheet.</li>
+                     <li>The first row must have the column headers and the client data must start on row two.</li>
+                     <li>Required fields: First Name, Last Name</li>
+                     <li>Email Address must be a valid email address.</li>
+                     <li>Optional Fields: Middle Name, Birth Date, Anniversary Date, Mobile Phone, Home Phone and Address 1, & 2, City, State, Zip.</li>
+                     <li>Works best with maximum 1000 rows.</li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer top20">
+            <button type="button" class="btn bg-gray roundbtn btn-flat margin" data-dismiss="modal">
+               Close
+               <div class="ripple-container"></div>
+            </button>
+            <button type="button" class="btn bg-navy btn-flat roundbtn margin" data-toggle="modal" (click)="clientImport()" [attr.data-target]="dataTarget" data-dismiss="#importclient">
+            Import
+            <div class="ripple-container"></div>
+            </button>
+         </div>
+      </div>
+   </div>
+</div>
+<!--import tab-->
+<div id="import2" *ngIf="fileFound" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Client Import</h4>
+         </div>
+         <div class="modal-body">
+            <div class="row">
+               <div class="col-sm-12 center">
+               </div>
+               <div class="col-sm-12 center">
+                  <h3 class="bigtxt">Review Mapping</h3>
+                  If one of the optional field is unavailable please select 'Unavailable'
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>First Name</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>First Name</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Middle Name</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Middle Name</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Last Name</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Last Name</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Email</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Email</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Telephone</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Telephone</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Birthday</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Birthday</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Anniversary Date</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Anniversary Date</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Address 1</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Address 1</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Address 2</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Address 2</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>City</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>City</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>State</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>State</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="col-sm-6">
+                  <div class="mdl-selectfield">
+                     <label>Zip Code</label>
+                     <select class="browser-default" name="">
+                        <option value="" disabled selected>Zip Code</option>
+                        <option value="Active">Unavailable</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn bg-gray roundbtn btn-flat margin" data-dismiss="modal">
+               Close
+               <div class="ripple-container"></div>
+            </button>
+            <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="clientImport()" data-toggle="modal" data-target="#import3" data-dismiss="#import2">
+               Import
+               <div class="ripple-container"></div>
+            </button>
+         </div>
+      </div>
+   </div>
+</div>
+<div id="import3" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Client Import</h4>
+         </div>
+         <div class="modal-body">
+            <div class="row">
+               <div class="col-sm-12 center">
+                  <h3> <i class="fa fa-fw fa-check-circle-o fa-3x text-green"></i></h3>
+               </div>
+               <div class="col-sm-12 center">
+                 <!--  <h3 class="bigtxt">File Uploded successfully</h3> -->
+                  <h4 *ngIf="!isimportErrors">Processing your clients data...</h4>
+                  <ng-container *ngIf="totalImportedCount > -1"> {{totalImportedCount}} Clients have been successsfully imported</ng-container>
+                  <div *ngIf="isimportErrors" class="text-danger"> {{totalRejecedContact}} Clients rejected. Click on red download icon to download rejected clients.</div>
+                  <div *ngIf="importErrorMessage" class="text-danger"> {{importErrorMessage}} </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" #closeImport3Btn class="btn bg-gray roundbtn btn-flat margin" data-dismiss="modal">
+               Close
+               <div class="ripple-container"></div>
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

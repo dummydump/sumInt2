@@ -1,0 +1,118 @@
+<div class="content-wrapper">
+   <section class="content-header" *ngIf="_commonAppService.isManagerOrAdmin(currentUser.user.roleName)">
+      <ol class="breadcrumb">
+         <li><a href="#">Workspace</a></li>
+         <li class="active">Users</li>
+      </ol>
+      <h1>
+         <i class="fa">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+               viewBox="0 0 299.997 299.997" style="enable-background:new 0 0 299.997 299.997;" xml:space="preserve">
+               <g>
+                  <g>
+                     <path d="M149.996,0C67.157,0,0.001,67.158,0.001,149.997c0,82.837,67.156,150,149.995,150s150-67.163,150-150
+                        C299.996,67.156,232.835,0,149.996,0z M150.453,220.763v-0.002h-0.916H85.465c0-46.856,41.152-46.845,50.284-59.097l1.045-5.587
+                        c-12.83-6.502-21.887-22.178-21.887-40.512c0-24.154,15.712-43.738,35.089-43.738c19.377,0,35.089,19.584,35.089,43.738
+                        c0,18.178-8.896,33.756-21.555,40.361l1.19,6.349c10.019,11.658,49.802,12.418,49.802,58.488H150.453z"/>
+                  </g>
+               </g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+            </svg>
+         </i>
+         <div class="h1txt">Users</div>
+         <div class="col-sm-6 txt-right pull-right">
+            <a routerLink="/user/addUser"> <i data-toggle="tooltip" data-placement="top" title="Add User" class="material-icons bg-green bigbtn greenshadow">add</i></a>
+            <!--<a> <i class="material-icons bg-blue bigbtn">file_download</i></a>-->
+            <a (click)="refreshUserList()"><i data-toggle="tooltip" data-placement="top" title="Refresh" class="fa fa-refresh bg-blue bigbtn"></i></a>
+         </div>
+      </h1>
+   </section>
+   <section class="content">
+      <div class="row">
+         <section class="col-lg-12">
+            <div class="col-md-12 no-padding">
+               <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+               <div class="box no-padding" *ngIf="currentUser && (!usersList || usersList.length <= 0) && isSearching == false">
+                  <h6 class="text-center"><i class="fa fa-warning text-danger"></i> You do not have any users.</h6>
+                  <h6 class="text-center">Let's add a user by clicking the <span class="text-danger">Add User </span>on the top right hand side.</h6>
+               </div>
+               <div class="box no-padding" *ngIf="currentUser && isSearching == true || (usersList && usersList.length > 0 && isSearching == false)">
+                  <!-- /.box-header -->
+                  <div class="box-body table-responsive no-padding">
+                     <table class="table table-striped">
+                        <tbody>
+                           <tr class="bg-white  box-success">
+                              <th>First Name</th>
+                              <th>Last Name</th>
+                              <th>Address</th>
+                              <th>Telephone</th>
+                              <th>Email Address</th>
+                              <th>Role</th>
+                              <th></th>
+                           </tr>
+                           <tr>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search First Name" (input)="onSearchChange('firstName', $event.target.value)" [(ngModel)]="searchObject.firstName" name="firstName"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Last Name" (input)="onSearchChange('lastName', $event.target.value)" [(ngModel)]="searchObject.lastName" name="lastName"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Address" (input)="onSearchChange('address', $event.target.value)" [(ngModel)]="searchObject.address" name="address"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Telphone" (input)="onSearchChange('telephone', $event.target.value)" [(ngModel)]="searchObject.telephone" name="telephone" mask="000-000-0000"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Email Address" (input)="onSearchChange('email', $event.target.value)" [(ngModel)]="searchObject.email" [(ngModel)]="searchObject.email" name="email"></div>
+                              </td>
+                              <td>
+                                 <div class="form-group form-group-sm search is-empty"><input class="form-control" type="text" placeholder="Search Role" (input)="onSearchChange('role', $event.target.value)" [(ngModel)]="searchObject.role" name="role"></div>
+                              </td>
+                              <td></td>
+                           </tr>
+                           <ng-container *ngIf="usersList && usersList.length > 0">
+                              <tr *ngFor="let user of usersList;let i=index;">
+                                 <td><a routerLink="/user/editUser/{{user._id}}" class="txtlink">{{user.firstName}}</a></td>
+                                 <td><a routerLink="/user/editUser/{{user._id}}" class="txtlink">{{user.lastName}}</a></td>
+                                 <td>{{user.address1}}, {{user.address2}}</td>
+                                 <td>{{getFormattedValue(user.phone1)}}</td>
+                                 <td ><a routerLink="/user/editUser/{{user._id}}" class="txtlink">
+                                    <i class="fa fa-envelope bg-yellow-disabled">&nbsp;</i> {{user.email}}</a>
+                                 </td>
+                                 <!--<td><small class="label bg-green">0</small></td>-->
+                                 <!--<td>{{(_commonAppService.getRecordById(user.roleId, rolesList))}}</td>-->
+                                 <td>{{user.roleName}}</td>
+                                 <td>
+                                    <a  routerLink="/user/editUser/{{user._id}}" > <i data-toggle="tooltip" title ="Edit User" class="material-icons blueicon">edit</i></a>
+                                    <a> <i data-toggle="tooltip" title ="Delete User" class="material-icons delete" (click)="removeUserById(user._id,i)">delete</i></a>
+                                 </td>
+                              </tr>
+                           </ng-container>
+                        </tbody>
+                     </table>
+                  </div>
+
+                  <app-pagination [paginationList]="usersList" [showLimit]="true" [totalRecords]="totalRecords" [isSearching]="isSearching" (currentPageCountEvent)="currentPageCountEvent($event)" (limitChangeEvent)="limitChangeEvent($event)">      
+                  </app-pagination>
+ 
+               </div>
+            </div>
+         </section>
+      </div>
+   </section>
+</div>

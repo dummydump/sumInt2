@@ -1,0 +1,152 @@
+<div class="col-md-12">
+    <div class="col-md-12 no-padding ">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Additional Details</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" (click)="refreshTripDetails()">
+                    <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                    <div class="ripple-container"></div>
+                </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <div class="bluetxt">Itinerary - [trip.itinerary]</div>
+
+                                    <div *ngIf="itineraryDetail._id !=0 && !isItineraryEditorShow">
+                                        <button type="button" class="btn bg-orange btn-flat roundbtn margin" (click)="updateItineraryClick()">
+                                           Update Itinerary
+                                        </button>
+
+                                        <button type="button" class="btn bg-red btn-flat roundbtn margin" (click)="removeItineraryNote()">
+                                                Delete Itinerary
+                                            </button>
+                                    </div>
+                                    <div [hidden]="itineraryDetail._id !==0">
+                                        <button type="button" (click)="isItineraryEditorShow = true" class="btn bg-navy btn-flat roundbtn margin">
+                                          <i class="fa fa-plus" ></i> Add Itinerary
+                                         </button>
+                                    </div>
+                                    <div [hidden]="itineraryDetail._id !==0 || isItineraryEditorShow"><small><i>No Itinerary data provided</i></small></div>
+                                    <div>
+                                        <form>
+                                            <!-- <quill-editor class="rich-text-editor" [hidden]="!isItineraryEditorShow" [(ngModel)]="itineraryDetail.tripDetailContent" name="itineraryeditor">
+                                            </quill-editor> -->
+                                            <text-editor #itineraryeditor
+                                                 [elementId]="'itineraryeditor'" [hidden]="!isItineraryEditorShow" 
+                                                (onEditorContentChange)="itineraryeditorContentChange($event)"
+                                                 [toolbar]="toolbarConfig">
+                                            </text-editor>
+                                        </form>
+                                        <div [hidden]="!isItineraryEditorShow">
+                                            <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="isItineraryEditorShow = false">
+                                                Close
+                                                <div class="ripple-container"></div>
+                                            </button>
+                                            <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="saveItineraryNote()">
+                                                Save
+                                                <div class="ripple-container"></div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div [hidden]="isItineraryEditorShow" [innerHTML]="itineraryDetailHTML"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="bluetxt">Security Information - [trip.securityinformation]</div>
+
+                                    <div *ngIf="securityDetail._id !=0 && !isSecurityEditorShow" >
+                                        <button type="button" class="btn bg-orange btn-flat roundbtn margin" (click)="updateSecurityClick()">
+                                           Update Security Information
+                                        </button>
+                                        <button type="button" class="btn bg-red btn-flat roundbtn margin" (click)="removeSecurityNote()">
+                                            Delete Security Information
+                                        </button>
+                                    </div>
+                                    <div [hidden]="securityDetail._id !==0">
+                                        <button type="button" (click)="isSecurityEditorShow = true" class="btn bg-navy btn-flat roundbtn margin">
+                                      <i class="fa fa-plus" ></i>  Add Security Information
+                                     </button>
+                                    </div>
+                                    <div [hidden]="securityDetail._id !==0 || isSecurityEditorShow"><small><i>No Security Information data provided</i></small></div>
+                                    <div>
+                                        <form>
+                                            <!-- <quill-editor class="rich-text-editor" [hidden]="!isSecurityEditorShow" [(ngModel)]="securityDetail.tripDetailContent" name="securityEditor">
+                                            </quill-editor> -->
+                                            <text-editor #securityEditor
+                                                [elementId]="'securityEditor'" [hidden]="!isSecurityEditorShow" 
+                                                 (onEditorContentChange)="securityEditorContentChange($event)"
+                                                 [toolbar]="toolbarConfig">
+                                             </text-editor>
+                                        </form>
+                                        <div [hidden]="!isSecurityEditorShow">
+                                            <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="isSecurityEditorShow = false">
+                                            Close
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                            <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="saveSecurityNote()">
+                                            Save
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                        </div>
+                                    </div>
+                                    <div [hidden]="isSecurityEditorShow" [innerHTML]="securityDetailHtml"></div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>
+                                    <div class="bluetxt">Flight Information - [trip.flightinformation]</div>
+                                    <div *ngIf="flightDetail._id !=0 && !isFlightEditorShow" >
+                                        <button type="button" class="btn bg-orange btn-flat roundbtn margin" (click)="updateFlightClick()">
+                                           Update Flight Information
+                                        </button>
+                                        <button type="button" class="btn bg-red btn-flat roundbtn margin" (click)="removeFlightNote()">
+                                            Delete Flight Information
+                                        </button>
+                                    </div>
+                                    <div [hidden]="flightDetail._id !==0">
+                                        <button type="button" (click)="isFlightEditorShow = true" class="btn bg-navy btn-flat roundbtn margin">
+                                      <i class="fa fa-plus" ></i>  Add Flight Information
+                                     </button>
+                                    </div>
+                                    <div [hidden]="flightDetail._id !==0 || isFlightEditorShow"><small><i>No Flight Information data provided</i></small></div>
+                                    <div>
+                                        <form>
+                                            <!-- <quill-editor class="rich-text-editor" [hidden]="!isFlightEditorShow" [(ngModel)]="flightDetail.tripDetailContent" name="flightEditor">
+                                            </quill-editor> -->
+                                            <text-editor #flightEditor
+                                                 [elementId]="'flightEditor'" [hidden]="!isFlightEditorShow" 
+                                                 (onEditorContentChange)="flightDetailContentChange($event)"
+                                                 [toolbar]="toolbarConfig">
+                                         </text-editor>
+                                        </form>
+                                        <!-- class="box-footer" -->
+                                        <div [hidden]="!isFlightEditorShow">
+                                            <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="isFlightEditorShow = false">
+                                            Close
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                            <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="saveFlightNote()">
+                                            Save
+                                            <div class="ripple-container"></div>
+                                        </button>
+                                        </div>
+                                    </div>
+                                    <div [hidden]="isFlightEditorShow" [innerHTML]="flightDetailHtml"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

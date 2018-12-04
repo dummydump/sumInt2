@@ -1,0 +1,6 @@
+<div *ngFor="let alert of alerts" class="{{ cssClass(alert) }} alert-dismissable">
+    <a class="alert-icon"><i class="{{ alertIcon(alert) }}"></i></a>
+    <span class="alert-title">{{alertTitle(alert)}}</span>
+    <span class="alert-message">{{alert.message}}</span>
+    <a class="close pull-right" (click)="removeAlert(alert)"><i class="fa fa-times"></i></a>
+</div>

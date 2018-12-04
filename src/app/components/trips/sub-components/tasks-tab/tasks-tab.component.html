@@ -1,0 +1,268 @@
+<div class="col-md-12">
+
+    <div class="col-md-12 no-padding ">
+        <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Tasks</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" (click)="RefreshTasks()">
+                                             <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                                             <div class="ripple-container"></div>
+                                          </button>
+
+
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" data-toggle="modal" data-target="#myTaskModal" (click)="addNewTask()">
+                                             <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Task"></i>
+                                             <div class="ripple-container"></div>
+                                          </button>
+                </div>
+            </div>
+            <div class="box-body">
+
+                <div class="row">
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>Task</th>
+                                <th>Task Type</th>
+                                <th>Assigned To</th>
+                                <th>Due Date</th>
+                                <th>Reminder</th>
+                                <th>Completed Date</th>
+                                <th style="text-align:center;">Status</th>
+                                <th style="text-align:center;"></th>
+
+                            </tr>
+                            <tr class="custom">
+                                <td>
+                                    <input type="text" name="value" placeholder="Task subject" (input)="onSearchChange()" [(ngModel)]="searchObject.subject">
+                                </td>
+                                <td>
+                                    <div class="mdl-selectfield">
+                                        <label>Select Type</label>
+                                        <select class="browser-default" name="searchTaskType" required [(ngModel)]="searchObject.taskType" (change)="onSearchChange()" #searchTaskType="ngModel" name="searchTaskType">
+                                            <option value="" selected >Select Task Type*</option>
+                                            <option *ngFor="let type of taskTypes" [value]="type.name">
+                                                {{type.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input type="text" name="value" placeholder="Search agent" [disabled]="currentUser.user.roleName=='Agent' || currentUser.user.roleName=='Assistant' " (input)="onSearchChange()" [(ngModel)]="searchObject.assignedToAgentId">
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="mdl-selectfield">
+                                        <label>Select Type</label>
+                                        <select class="browser-default" name="searchTaskStatus" [(ngModel)]="searchObject.taskStatus" (change)="onSearchChange()" #searchTaskStatus="ngModel" name="searchTaskStatus">
+                                        <option value=""  selected>Show All</option>
+                                        <option *ngFor="let type of statusTypes" [value]="type.val">
+                                            {{type.name}}
+                                        </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr *ngFor="let task of tasks;let i = index">
+                                <td>{{task.subject}}</td>
+                                <td><small class="label bg-orange">{{task.taskType}}</small></td>
+
+                                <td>{{getAgentById(task.assignedToAgentId)}}</td>
+                                <!-- <td>{{task.assignedToAgentId}}</td> -->
+                                <td>{{task.dueDate | date : "MM/dd/yyyy"}} <small>{{getDueDateText(task.dueDate)}}</small></td>
+                                <td align="center">{{task.reminder}}</td>
+                                <td align="center">N/A</td>
+                                <td align="center"><small class="label bg-green">{{task.taskStatus}}</small></td>
+                                <td align="center">
+                                    <a> <i class="material-icons blueicon" data-toggle="tooltip" data-toggle="modal" data-target="#myTaskModal" data-placement="top" title="Edit" (click)="editTask(task)">edit</i></a>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer clearfix" *ngIf="pgList && pgList['pages'] && pgList['pages'].length > 0">
+                <!--<div class="col-sm-1  no-padding"><small class="pull-left showtxt">{{(totalRecords < limit)? totalRecords : ((clientsList && clientsList.length >= limit)? limit : clientsList.length) }} out of {{totalRecords}}</small></div>-->
+
+                <div class="col-sm-4  no-padding">
+                    <small class="pull-left showtxt">{{(pgList.pageCount * limit) + 1}} to {{((pgList.pageCount * limit) + tasks.length)}} out of {{totalRecords}}</small>
+                </div>
+
+                <div class="col-sm-8 no-padding">
+                    <ul class="pagination pagination-sm no-margin pull-right" *ngIf="pgList['pages'] && pgList['pages'].length">
+                        <!--<ul  class="pagination">-->
+
+                        <li [ngClass]="{disabled:pgList.pageCount  == 0}">
+                            <a (click)="!(pgList.pageCount  == 0) ? getTasks((0), limit): ''">First</a>
+                        </li>
+                        <li [ngClass]="{disabled:pgList.pageCount === 0}">
+                            <a (click)="!(pgList.pageCount === 0) ? getTasks((pgList.pageCount - 1), limit): ''">Previous</a>
+                        </li>
+                        <li *ngFor="let page of pgList.pages" [ngClass]="{active:(pgList.pageCount + 1) === page}">
+                            <a (click)="getTasks((page - 1), limit)">{{page}}</a>
+                        </li>
+                        <li [ngClass]="{disabled:pgList.pageCount == pgList.totalPages}">
+                            <a (click)="!(pgList.pageCount == pgList.totalPages) ? getTasks((pgList.pageCount + 1), limit) : ''">Next</a>
+                        </li>
+                        <li [ngClass]="{disabled:pgList.pageCount === pgList.totalPages}">
+                            <a (click)="!(pgList.pageCount === pgList.totalPages) ?getTasks((pgList.totalPages), limit) : ''">Last</a>
+                        </li>
+                        <!--</ul>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myTaskModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #taskForm="ngForm">
+                <div class="modal-header">
+                    <button type="button" #btnModelClose data-dismiss="modal" class="close">&times;</button>
+                    <h4 class="modal-title">Task</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="group">
+                                <input type="text" required [(ngModel)]="newTask.subject" #subject="ngModel" name="subject">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Subject*</label>
+                                <div *ngIf="subject.errors && (subject.dirty || subject.touched)" class="small text-danger">
+                                    <div [hidden]="!subject.errors.required">
+                                        Subject is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="date" [(ngModel)]="newTask.dueDate" [min]="todayDate" #duedate="ngModel" name="duedate">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Due Date*</label>
+                                <div *ngIf="duedate.errors && (duedate.dirty || duedate.touched)" class="small text-danger">
+                                    <div [hidden]="!duedate.errors.required">
+                                        Due date is required
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mdl-selectfield">
+                                <label>Reminder</label>
+                                <select class="browser-default" name="reminder" required [(ngModel)]="newTask.reminder" #reminder="ngModel">
+                                    <option value="" disabled  selected >Reminder</option>
+                                    <option *ngFor="let remde of reminderList" [value]="remde.name">
+                                       {{remde.name}}
+                                    </option>
+                                    </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="group">
+
+                                <ng-template #assignedToItemTemplate let-model="item" let-index="index">
+                                    <ul class="autocomplete-ul" style="width: 280px; padding-left:0px;">
+                                        <li>
+                                            {{model.name}}
+                                        </li>
+                                    </ul>
+                                </ng-template>
+
+                                <input autocomplete="off" *ngIf="currentUser.user.roleName==='Manager' || currentUser.user.roleName==='Admin'" ngModel #_assignedToAgentName="ngModel" name="_assignedToAgentName" class="mdl-selectfield" [(ngModel)]="newTask._assignedToAgentName" (typeaheadOnSelect)="typeaHeadAssignedToOnSelect($event,newTask)"
+                                    [typeahead]="agentsList" typeaheadOptionField="name" [typeaheadScrollable]="true" [typeaheadItemTemplate]="assignedToItemTemplate" [typeaheadOptionsInScrollableView]="5" placeholder="Assigned To *">
+
+                                <input *ngIf="currentUser.user.roleName==='Agent'" disabled type="text" [(ngModel)]="newTask._assignedToAgentName" #_assignedToAgentName="ngModel" name="_assignedToAgentName">
+
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label class="ngValid-label">Assigned To *</label>
+                                <!-- <select class="browser-default" required ngModel #assignedToAgentId="ngModel" name="assignedToAgentId" (change)="agentSelectChange(newTask,$event.target.value)">
+                                                <option value=""  >Assigned To*</option>
+                                                <option *ngFor="let agent of agentsList" [value]="agent._id" [selected]="newTask.assignedToAgentId && newTask.assignedToAgentId == agent._id">
+                                                   {{agent.firstName}} {{agent.lastName}}
+                                                </option>
+                                            </select>
+                                <div *ngIf="assignedToAgentId.dirty && assignedToAgentId.invalid" style="margin-top:5px;" class="small text-danger">
+                                    Assigned To is required.
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="group">
+
+                                <textarea id="description" type="text" name="description" [(ngModel)]="newTask.description" rows="4" cols="75" maxlength="500" placeholder="Description"></textarea>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mdl-selectfield">
+                                <label>Task Type</label>
+                                <select class="browser-default" required [(ngModel)]="newTask.taskType" #taskType="ngModel" name="taskType">
+                                        <option value="" disabled  selected >Select Task Type*</option>
+                                        <option *ngFor="let type of taskTypes" [value]="type.name">
+                                           {{type.name}}
+                                        </option>
+                                        </select>
+                                <!-- <div *ngIf="taskType.errors && (taskType.dirty || taskType.touched)" class="small text-danger">
+                                    <div [hidden]="!taskType.errors.required">
+                                        Task Type is required
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="mdl-selectfield">
+                                <label>Task Status</label>
+                                <select class="browser-default" name="agent" required [(ngModel)]="newTask.taskStatus" #taskStatus="ngModel" name="taskStatus">
+                                        <option value="" disabled  selected >Task Status*</option>
+                                        <option *ngFor="let type of statusTypes" [value]="type.val">
+                                           {{type.name}}
+                                        </option>
+                                        </select>
+                                <!-- <div *ngIf="taskStatus.errors && (taskStatus.dirty || taskStatus.touched)" class="small text-danger">
+                                    <div [hidden]="!taskStatus.errors.required">
+                                        Task Status is required
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-gray roundbtn btn-flat margin" #btnModelClose data-dismiss="modal">
+                                                 Close
+                                                 <div class="ripple-container"></div>
+                                              </button>
+                    <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="saveTask()">
+                                                 Save
+                                                 <div class="ripple-container"></div>
+                                              </button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

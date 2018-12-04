@@ -1,0 +1,10 @@
+.company-img{
+    height: 85px;
+    width: 45px;
+}
+
+.day-td .title{
+    font-weight: bold;
+    font-size: 20px;
+    display: block;
+}

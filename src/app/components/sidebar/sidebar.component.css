@@ -1,0 +1,14 @@
+div.col-sm-3.col-md-2.sidebar{
+    border-width: 2px;
+    border-color: grey;
+    border-style: solid;
+    background-color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+
+}
+a{
+    color: white;
+}
+a:hover{
+    color: black;
+}

@@ -1,0 +1,39 @@
+
+ 
+    <div class="box-footer clearfix" *ngIf="pgList && pgList['pages'] && pgList['pages'].length > 0"> 
+    
+        <div class="col-sm-4  no-padding" >
+            <small class="pull-left showtxt">{{(pgList.pageCount * limit) + 1}} to {{((pgList.pageCount * limit) + paginationList.length)}} out of {{totalRecords}}</small>
+    
+            <small class="pull-left showtxt" *ngIf="showLimit"> Show</small>
+            <select  class="form-control pull-left" *ngIf="showLimit" [(ngModel)]="limit" (change)="setPageLimit($event.target.value)">
+                <option value="10" selected>10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <small class="pull-left showtxt" *ngIf="showLimit"> rows per page</small>
+        </div>
+
+       
+    
+        <div class="col-sm-8 no-padding">
+            <ul *ngIf="pgList['pages'] && pgList['pages'].length" class="pagination">
+                <li [ngClass]="{disabled:pgList.pageCount  == 0}">
+                    <a (click)="!(pgList.pageCount  == 0) ? currentPageCountChange((0), limit): ''">First</a>
+                </li>
+                <li [ngClass]="{disabled:pgList.pageCount === 0}">
+                    <a (click)="!(pgList.pageCount === 0) ? currentPageCountChange((pgList.pageCount - 1), limit): ''">Previous</a>
+                </li>
+                <li *ngFor="let page of pgList['pages']" [ngClass]="{active:(currentPageCount + 1) === page}">
+                    <a (click)="currentPageCountChange((page - 1), limit)">{{page}}</a>
+                </li>
+                <li [ngClass]="{disabled:pgList.pageCount == pgList.totalPages}">
+                    <a (click)="!(pgList.pageCount == pgList.totalPages) ? currentPageCountChange((pgList.pageCount + 1), limit): ''">Next</a>
+                </li>
+                <li [ngClass]="{disabled:pgList.pageCount === pgList.totalPages}">
+                    <a (click)="!(pgList.pageCount === pgList.totalPages) ? currentPageCountChange((pgList.totalPages), limit): ''">Last</a>
+                </li>
+            </ul>
+        </div>
+    </div> 

@@ -1,0 +1,46 @@
+
+.curPnter {
+    cursor: pointer
+}
+
+.pagination{
+    margin: 0px;
+    padding: 10px 14px 14px;
+}
+
+ul li{
+    display: inline;
+    color:black !important;
+  }
+
+.padL0px{
+    padding-left: 0px
+}
+
+.txtAL{
+    text-align: left;
+}
+
+.txtClrBlack{
+    color: black
+}
+
+.txtCActive{
+    color:#009688;
+}
+
+.disabled {
+    cursor: none;
+    color: rgba(0, 0, 0, 0.41) !important;
+}
+
+.small-text {
+    font-size: 10px;
+    display: inline;
+    margin-bottom: 1px !important;
+    position: relative;
+    margin-top: 1px;
+    margin-left: 3px;
+    margin-right: 3px;
+    vertical-align: bottom;
+}

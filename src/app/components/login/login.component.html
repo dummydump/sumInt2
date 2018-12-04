@@ -1,0 +1,12 @@
+<div class="container">
+    <section class="content-header">
+        <!--<h4 class="text-center">Login page</h4>-->
+    </section>
+    <section class="content" *ngIf="!currentUser">
+        <div class="row">
+            <section class="col-lg-12">
+                <button class="btn btn-social btn-adn btn-center" (click)="socialLogin('google')">Login Using Google</button>
+            </section>
+        </div>
+    </section>
+</div>

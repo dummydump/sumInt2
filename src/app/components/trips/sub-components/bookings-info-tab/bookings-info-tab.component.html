@@ -1,0 +1,253 @@
+<div class="col-md-6">
+    <div class="col-md-12 no-padding ">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Booking Information</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                        <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+            <form>
+                <div class="box-body top20">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="text" [(ngModel)]="tripDescription" readonly name="tripDescription">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label class="ngValid-label">Trip Description</label>
+                            </div>
+
+
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="text" [(ngModel)]="bookingInfo.bookingNumber" required name="bookingNumber">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Booking Number</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="date" name="startDate" [max]="tripObject.endDate" [(ngModel)]="bookingInfo.startDate">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Start Date</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="date" name="endDate" [max]="tripObject.endDate" [(ngModel)]="bookingInfo.endDate">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>End Date</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="date" name="bookingDate" [max]="tripObject.endDate" [(ngModel)]="bookingInfo.bookingDate">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Booking Date</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="text" numberOnly="true" DecimalPlaces="2" [(ngModel)]="bookingInfo.packagePrice" required name="packagePrice">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Package Price</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <ng-template #tourOperatorItemTemplate let-model="item" let-index="index">
+                                    <ul class="autocomplete-ul" style="width: 280px; padding-left:0px;">
+                                        <li>
+                                            {{model.name}}
+                                        </li>
+                                    </ul>
+                                </ng-template>
+
+                                <input autocomplete="off" ngModel name="tourOperatorId" #tourOperatorId="ngModel" class="mdl-selectfield" [(ngModel)]="bookingInfo.tourOperatorId" [value]="bookingInfo.tourOperatorId" (typeaheadOnSelect)="typeaHeadTourOperatorOnSelect($event)" [typeahead]="tourOperatorsList"
+                                    typeaheadOptionField="name" [typeaheadScrollable]="true" [typeaheadItemTemplate]="tourOperatorItemTemplate" [typeaheadOptionsInScrollableView]="5" placeholder="Search Operator">
+
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Tour Operator</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="text" numberOnly="true" DecimalPlaces="2" (afterBlur)="calculateCommisionExpected($event)" [(ngModel)]="bookingInfo.commisionEarned" required name="commisionEarned">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Commission Earned</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mdl-selectfield">
+                                <label>Standard Select</label>
+                                <select class="browser-default" [(ngModel)]="bookingInfo.alternateCommision" name="alternateCommision" (change)="calculateCommisionExpected($event)">
+                                    <option value=""  selected>Alternate Commission </option>
+                                    <option *ngFor="let item of alternateCommisionList" [value]="item.name">
+                                        {{item.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="text" name="agentName" [(ngModel)]="bookingInfo.agentName" disabled>
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label class="ngValid-label">Agent Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="mdl-selectfield">
+                                <label>Standard Select</label>
+                                <select class="browser-default" name="bookingStatus" [(ngModel)]="bookingInfo.bookingStatus">
+                                    <option value="">Booking Status</option>
+                                   <option *ngFor="let type of statusTypes" [value]="type.val">
+                                            {{type.name}}
+                                        </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="checkbox">
+                                <label>
+                                <input type="checkbox" [(ngModel)] ="bookingInfo.personalTravel" (ngModelChange)="calculateCommisionExpected($event)" name="personalTravel"><span class="checkbox-material"><span class="check"></span></span>
+                                Personal Travel
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <input type="text" numberOnly="true" DecimalPlaces="2" [(ngModel)]="bookingInfo.commisionExpected" required name="commisionExpected">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Commission Expected</label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="group">
+                                <a data-toggle="modal" data-target="#commisionModal" class="txtlink" (click)="showCommisionDetails()">(Agent Rate)</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <div class="group">
+                                <input type="text" [(ngModel)]="bookingInfo.description" required name="booking-description">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label>Booking Description</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="closeTab()">
+                        Close
+                        <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="saveBooking(false,$event)">
+                        Save
+                        <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn bg-green btn-flat roundbtn margin" (click)="saveBooking(true,$event)">
+                        Save & Close
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<div class="col-md-6">
+    <div class="col-md-12 no-padding">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Booking Tasks</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                        <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                        <i class="fa fa-plus" data-toggle="tooltip" data-placement="top"  title="Add Booking"></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table" style="white-space: inherit;">
+                    <tr>
+                        <td>
+                            <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to <span class="text-danger">Add Task</span>Once the booking has been created.</h6>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="commisionModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Commission Expected</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>LEGAL NAME</th>
+                                <th>RATE</th>
+                                <th>TYPE</th>
+                                <th>EXPECTED</th>
+                            </tr>
+                            <tr *ngFor="let item of commisionExpectedInfo">
+                                <td>{{item.legalName}}</td>
+                                <td>{{item.rate}}</td>
+                                <td>{{item.type}}</td>
+                                <td>{{item.expected | currency:'USD'}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    The commission for this booking is based on the {{commisionNametoShow}} <strong>{{bookingInfo.agentName}}</strong> receives.
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

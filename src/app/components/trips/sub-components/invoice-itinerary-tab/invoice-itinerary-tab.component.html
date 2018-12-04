@@ -1,0 +1,169 @@
+<div class="col-md-6">
+    <div class="col-md-12 no-padding ">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Invoice & Itinerary</h3>
+
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                        <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+            <form role="form">
+                <div class="box-body top20">
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="mdl-selectfield">
+                                <label>Standard Select</label>
+                                <select class="browser-default" name="templateName" [(ngModel)]="templateName" (change)="templateChange()">
+                                    <option value="" disabled selected>Template Name</option>
+                                    <!-- <option value="Anniversary">Option</option> -->
+                                    <option value="Itinerary">Itinerary</option>
+                                    <option value="Invoice">Invoice</option>
+                                    <option value="TessInvoiceDetail">Tess Invoice Detail</option>
+
+                                </select>
+                                <!--<span class="badge bg-red">Tess Library</span>-->
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="mdl-selectfield">
+                                <select class="browser-default" name="travelerId">
+                                    <option value="" disabled selected>Select Traveler</option>
+                                    <option *ngFor="let client of filteredClientsList" value={{client._id}}>
+                                        {{client.firstName}} {{client.lastName}}
+                                    </option>
+                                </select>
+                                <i class="fa fa-envelope bg-yellow">&nbsp;</i>
+                                <span class="bluetxt">stephen@travelsolutions.com</span> /+0 additional
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="button" [disabled]="isSendingItineraryMail" class="btn bg-navy btn-flat roundbtn margin pull-left" (click)="makePDF()">
+                        EXPORT TO PDF
+                        <div class="ripple-container"></div>
+                    </button>
+
+                    <button type="button" [disabled]="isSendingItineraryMail" class="btn bg-navy btn-flat roundbtn margin" data-toggle="modal" data-target="#myModal">
+                     Email Test {{(templateName != 'Itinerary')? 'Invoice' : 'Itinerary'}}
+                     <div class="ripple-container"></div>
+                     </button>
+
+                    <button type="button" [disabled]="isSendingItineraryMail" class="btn bg-green btn-flat roundbtn margin" (click)="emailTrip('user')">
+                        Email {{(templateName != 'Itinerary')? 'Invoice' : 'Itinerary'}}
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-12 no-padding ">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Email History</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right">
+                        <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body ">
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    
+    <invoice-itinerary-pdf class="hide" #pdfItineraryId id="pdfItineraryId" [tripAgentObject]="tripAgentObject" [agentId]="tripObject['agent']['agentId']" [itineraryObjectData]="itineraryObject" [allFlightActivitiesPDF]="pdfAllFlightActivities" [itineraryFieldsArr]="itineraryFieldsArr" [landmarkDetailInfo]="landmarkDetailInfo" (landmarkDetailInfoEvent)="landmarkDetailInfoEvent($event)" *ngIf="templateName == 'Itinerary'">
+    </invoice-itinerary-pdf>
+
+    <invoice-itinerary-summary *ngIf="templateName == 'Itinerary'" class="hide1" divID="myItineraryContentID" [tripAgentObject]="tripAgentObject" [agentId]="tripObject['agent']['agentId']" [itineraryObjectData]="itineraryObject" [allFlightActivitiesSummary]="summaryAllFlightActivities" [itineraryFieldsArr]="itineraryFieldsArr" [landmarkDetailInfo]="landmarkDetailInfo" (landmarkDetailInfoEvent)="landmarkDetailInfoEvent($event)">
+    </invoice-itinerary-summary>
+
+    <invoice-booking-summary class="hide1" [bookings]="bookings" [invoiceNumber]="invoiceNumber" [tripAgentObject]="tripAgentObject" [tripObject]="tripObject" [itineraryObjectData]="itineraryObject" [payments]="payments" [templateName]="templateName" *ngIf="templateName != 'Itinerary'" [travelerDetails]="tripNewTravelerList" > </invoice-booking-summary>
+
+    <invoice-booking-pdf class="hide" #pdfBookingId id="pdfBookingId" [invoiceNumber]="invoiceNumber" [bookings]="bookings" [tripAgentObject]="tripAgentObject" [tripObject]="tripObject" [itineraryObjectData]="itineraryObject" [payments]="payments" [templateName]="templateName" *ngIf="templateName != 'Itinerary'" [travelerDetails]="tripNewTravelerList">
+    </invoice-booking-pdf>
+
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog" style="width: 800px !important;">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" style="clear: both;">
+
+                <invoice-booking-summary class="hide1" [bookings]="bookings" [tripAgentObject]="tripAgentObject" [tripObject]="tripObject" [itineraryObjectData]="itineraryObject" [payments]="payments" [templateName]="templateName" *ngIf="templateName != 'Itinerary'" [travelerDetails]="tripNewTravelerList"> </invoice-booking-summary>
+
+                <invoice-itinerary-summary *ngIf="templateName == 'Itinerary'" [itineraryObjectData]="itineraryObject" (itineraryFieldsArrEvent)="itineraryFieldsArrEvent($event)" [itineraryFieldsArr]="itineraryFieldsArr" [landmarkDetailInfo]="landmarkDetailInfo" (landmarkDetailInfoEvent)="landmarkDetailInfoEvent($event)"></invoice-itinerary-summary>
+
+                <div id="img-out"></div>
+            </div>
+            <div class="modal-footer" style="clear: both;">
+                <button type="button" class="btn bg-gray roundbtn btn-flat margin" data-dismiss="modal">
+                    Close
+                    <div class="ripple-container"></div>
+                </button>
+                <button type="button" [disabled]="isSendingItineraryMail" class="btn bg-navy btn-flat roundbtn margin pull-left" (click)="makePDF()">
+                    EXPORT TO PDF
+                    <div class="ripple-container"></div>
+                </button>
+                <button type="button" [disabled]="isSendingItineraryMail" class="btn bg-navy btn-flat roundbtn margin pull-left" (click)="emailTrip('traveler')">
+                    Send Mail
+                    <div class="ripple-container"></div>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Modal Start-->
+<div id="sendinvoice" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Send Invoice</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 center">
+                        <h3>
+                            <i class="fa fa-fw fa-exclamation-circle fa-3x text-orange"></i>
+                        </h3>
+                    </div>
+                    <div class="col-sm-12 center">
+                        <h3 class="bigtxt">Are You Sure?</h3>
+
+                        Please confirm you would like to email this invoice to
+                        <strong>Tammy Jones</strong>
+                        <span class="bluetxt">Stemhen@travelsolutions.com</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-gray roundbtn btn-flat margin" data-dismiss="modal">
+                    Close
+                    <div class="ripple-container"></div>
+                </button>
+                <button type="button" class="btn bg-navy btn-flat roundbtn margin">
+                    Send Invoice
+                    <div class="ripple-container"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,213 @@
+<div class="col-md-12 no-padding ">
+    <ng-container *ngIf="!bookings || bookings.length <= 0">
+       <div class="box box-primary">
+            <div class="box-header">
+               <h4>No booking information added</h4>
+            </div>
+       </div>
+    </ng-container>
+    <ng-container *ngIf="bookings && bookings.length > 0">
+        <div class="box box-primary">
+            <div class="box-header">
+                <img class="company-img" alt="Company Image" src="http://res.cloudinary.com/jst/image/upload/v1523605442/CupcakeCastlesLogo_jeitwc.png">
+
+                <h3 class="company-title">CupCake Castles Travel Company</h3>
+
+                <div class="box-tools txt-right">
+                    {{tripAgentObject['firstName'] + ' '+ tripAgentObject['lastName']}}
+                    <br>
+                    <span class="clr-blue">{{tripAgentObject['email']}}</span>
+                    <br>
+                    <i *ngIf="tripAgentObject['phone1']" class="material-icons font15">phone</i> {{tripAgentObject['phone1']}}
+                </div>
+            </div>
+            <hr class="hr">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3 class="bigtxt">INVOICE</h3>
+                    </div>
+                    <div class="col-sm-12">
+                    <div class="col-sm-6">
+                        <ng-container *ngFor="let item of travelerDetails">
+                            {{item.firstName}} {{item.lastName}}
+                            <br>
+                            <span class="clr-blue"> {{item.emails}}</span>
+                            <br>
+                            <br>
+                        </ng-container>
+                    </div>
+                    <div class="col-sm-6">
+                        <div>
+                            <span>
+                                <b>
+                                    YOUR TRIP
+                                </b>
+                            </span>
+                        </div>
+                        <div>
+                            <strong>Trip Start Date:</strong> {{this._commonAppService.getCalendarDate(tripObject['startDate'],'notDayname')}}
+                            <br>
+                            <strong>Trip End Date:</strong> {{this._commonAppService.getCalendarDate(tripObject['endDate'],'notDayname')}}
+                            <br>
+                            <ng-container *ngFor="let trip of tripItineraryShortDetails">
+                                <ng-container *ngIf="trip.type == 'cruise' && trip.index == 0">
+                                    <h6>{{trip.title}}</h6>
+                                    <br>
+                                </ng-container>
+                                <ng-container *ngIf="trip.type == 'property' && trip.index == 0">
+                                    <h6>{{trip.name}} - {{trip.city}}, {{trip.country}}</h6>
+                                    <br>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                    </div>
+                    <!--<div class="col-sm-12">
+                        <table class="table">
+                            <tr>
+                                <th class="bor0px pad0px">{{tripAgentObject['firstName'] + ' '+ tripAgentObject['lastName']}}</th>
+                                <th class="bor0px pad0px padL8px">YOUR TRIP</th>
+                            </tr>
+                            <tr>
+                                <td class="clr-blue bor0px pad0px mail">{{tripAgentObject['email']}}</td>
+                                <td class="bor0px padT0px">
+                                    <strong>Trip Start Date:</strong> {{this._commonAppService.getCalendarDate(tripObject['startDate'],'notDayname')}}
+                                    <br>
+                                    <strong>Trip End Date:</strong> {{this._commonAppService.getCalendarDate(tripObject['endDate'],'notDayname')}}
+                                    <br> {{tripObject['tripDescription']}}
+                                    <br>
+                                    <ng-container *ngFor="let trip of tripItineraryShortDetails">
+                                        <ng-container *ngIf="trip.type == 'cruise' && trip.index == 0">
+                                            <h6>{{trip.title}}</h6>
+                                            <br>
+                                        </ng-container>
+                                        <ng-container *ngIf="trip.type == 'property' && trip.index == 0">
+                                            <h6>{{trip.name}} - {{trip.city}}, {{trip.country}}</h6>
+                                            <br>
+                                        </ng-container>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>-->
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-xs-6">
+                        <div class="small-box bckg-yellow">
+                            <div class="inner">
+                                <p>INVOICE NUMBER</p>
+                                <h3>{{invoiceNumber}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-sort-numeric-asc"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-6">
+                        <div class="small-box bg-blue">
+                            <div class="inner">
+                                <p>INVOICE DATE</p>
+                                <h3>{{todayDate}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-6">
+                        <div class="small-box  bg-red">
+                            <div class="inner">
+                                <p>INVOICE AMOUNT</p>
+                                <h3>{{(totalBalanceAmount)? ('$' + totalBalanceAmount) : '$0'}}</h3>
+                            </div>
+                            <div class="icon">
+                                <i class="fa fa-dollar"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <h3 class="bigtxt">PAYMENTS</h3>
+                    </div>
+                    <div class="col-sm-12">
+
+                        <table class="table" *ngIf="templateName == 'TessInvoiceDetail' || templateName == 'Invoice'">
+
+                            <tr *ngIf="templateName == 'TessInvoiceDetail'" class="bg-gray text-black">
+                                <th colspan="2"></th>
+                                <th colspan="3">PAYMENT RECEVIED</th>
+                            </tr>
+
+                            <tr class="bg-gray text-black">
+                                <th>BOOKING NUMBER</th>
+                                <th>PACKAGE PRICE</th>
+                                <th class="text-right" *ngIf="templateName == 'TessInvoiceDetail'">DATE</th>
+                                <th *ngIf="templateName == 'TessInvoiceDetail'">TOTAL</th>
+                                <th *ngIf="templateName == 'Invoice'">PAYMENT RECEVIED</th>
+                                <th class="bg-gray text-black">BALANCE</th>
+                            </tr>
+
+                            <ng-container *ngFor="let booking of bookings;let i = index;">
+                                <tr>
+                                    <td class="">
+                                        <strong>
+                                            {{booking.bookingNumber}}
+                                        </strong>
+                                        <br>
+                                        <small class="text-left">{{booking.description}}</small>
+                                    </td>
+                                    <td class="text-right">${{booking.packagePrice}}</td>
+                                    <td class="text-center" *ngIf="templateName == 'TessInvoiceDetail'">-</td>
+                                    <td class="text-right">{{(booking.bookingPaymentAmount)? ('$' + booking.bookingPaymentAmount) : '$0'}}</td>
+
+                                    <td class="text-right bg-gray text-black">${{booking.balance}}</td>
+                                </tr>
+
+                                <ng-container *ngIf="templateName == 'TessInvoiceDetail'">
+                                    <ng-container *ngFor="let payment of payments;">
+                                        <tr *ngIf="payment.bookingNumber == booking.bookingNumber">
+                                            <td class="padL40 fnt13" colspan="2">{{payment.paymentType}} / {{payment.description}}</td>
+                                            <td class="fnt13 text-right">{{payment.paymentDate}}</td>
+                                            <td class="fnt13 text-right">${{payment.paymentAmount}}</td>
+                                            <td class="fnt13 text-right bg-gray text-black">-</td>
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+
+                            <tr>
+                                <td class="text-right"></td>
+                                <td class="text-right">{{(totalBookingAmount)? ('$' + totalBookingAmount) : '$0'}}</td>
+                                <td class="text-center" *ngIf="templateName == 'TessInvoiceDetail'">-</td>
+                                <td class="text-right text-aqua">{{(totalPaymentAmount)? ('$' + totalPaymentAmount) : '$0'}}</td>
+                                <td class="text-right text-red">{{(totalBalanceAmount)? ('$' + totalBalanceAmount) : '$0'}}</td>
+                            </tr>
+
+                        </table>
+
+                        -
+                    <div *ngIf="tripAgentObject" style="text-align: center; width: 100%; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;">
+                        <br>
+                        <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                        <div class="col-sm-12">
+                            <a href="http://www.facebook.com/cupcakecastlestravelcompany" target="_blank">
+                                <img class="fb-icon" src="http://res.cloudinary.com/jst/image/upload/v1524126739/facebook-icon_sy9gvk.png" />
+                            </a>
+                        </div>
+                        <br>
+                        <span>To learn more about our services and promotions please contact us</span>
+                        <br>
+                        <b>{{tripAgentObject.firstName}} {{tripAgentObject.lastName}}</b>,
+                        <span *ngIf="tripAgentObject.phone1">
+                            {{tripAgentObject.phone1}}, </span>
+                        <span style="color: #46b7c7;">{{tripAgentObject.email}}</span>
+                        <br>
+                        <span>CupCake Castles Travel Company</span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </ng-container>
+</div>

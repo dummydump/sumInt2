@@ -1,0 +1,196 @@
+<div class="content-wrapper" *ngIf="currentUser">
+  <section class="content-header">
+    <ol class="breadcrumb">
+      <li><a href="#">Workspace</a></li>
+      <li><a routerLink="/ports">Ports</a></li>
+      <li class="active">Add Port</li>
+    </ol>
+    <h1>
+      <i class="fa">
+           <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 299.997 299.997" style="enable-background:new 0 0 299.997 299.997;" xml:space="preserve">
+      <g>
+	    <g>
+        <path d="M149.996,0C67.157,0,0.001,67.158,0.001,149.997c0,82.837,67.156,150,149.995,150s150-67.163,150-150
+        C299.996,67.156,232.835,0,149.996,0z M150.453,220.763v-0.002h-0.916H85.465c0-46.856,41.152-46.845,50.284-59.097l1.045-5.587
+        c-12.83-6.502-21.887-22.178-21.887-40.512c0-24.154,15.712-43.738,35.089-43.738c19.377,0,35.089,19.584,35.089,43.738
+        c0,18.178-8.896,33.756-21.555,40.361l1.19,6.349c10.019,11.658,49.802,12.418,49.802,58.488H150.453z"/>
+      </g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      <g>
+      </g>
+      </svg>
+        </i>
+      <div class="h1txt">Add Port</div>
+    </h1>
+  </section>
+  <section class="content">
+    <div class="row">
+      <section class="col-lg-12">
+        <div class="col-md-12 no-padding">
+
+          <div class="col-md-12 no-padding ">
+            <div class="box box-primary">
+              <div class="box-header with-border">
+                <h3 class="box-title">Port Information</h3>
+              </div>
+              <form role="form" id="portForm" #portForm="ngForm" autocomplete="off">
+                <div class="box-body top20">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="group">
+                        <input type="text" ngModel #name="ngModel" required [(ngModel)]="portObject.name" name="name">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label>Name*</label>
+                        
+                        <div
+                        *ngIf="name.errors && (name.dirty || name.touched)"
+                        class="small text-danger">
+                        <div [hidden]="!name.errors.required">
+                          Name is required
+                        </div>
+                      </div>
+
+                      </div>
+                    </div>
+                  
+                    <div class="col-sm-4">
+                      <div class="mdl-selectfield">
+                        <label>Select Country</label>
+                        <select class="browser-default" required ngModel #country="ngModel" [(ngModel)]="portObject.country" (change)="countrySelected($event)" name="country" [ngModel]="portObject">
+                          <option value="" disabled >Select Country*</option>
+                          <option *ngFor="let country of countries" [value]="country._id"
+                          [selected]="country._id===portObject.country">{{country.countryName}}</option>
+                        </select>
+
+                        <p
+                        *ngIf="country.errors && (country.dirty || country.touched)"
+                        class="small text-danger">
+                        <span [hidden]="!country.errors.required">
+                          Country is required
+                        </span>
+                      </p>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <div class="mdl-selectfield">
+                        <label>Select State*</label>
+                        <select  class="browser-default" required ngModel #state="ngModel" [(ngModel)]="portObject.state" (change)="stateSelected($event)" name="state" [ngModel]="portObject">
+                          <option value="" disabled selected>Select State*</option>
+                          <option *ngFor="let state of stateList" [value]="state._id"
+                          [selected]="state._id===portObject.state"
+                          >{{state.stateName}}</option>
+                        </select>
+
+                        <p
+                        *ngIf="state.errors && (state.dirty || state.touched)"
+                        class="small text-danger">
+                        <span [hidden]="!state.errors.required">
+                          State is required
+                        </span>
+                      </p>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <div class="mdl-selectfield">
+                        <label>Select City*</label>
+                        <select  class="browser-default" required ngModel #city="ngModel" [(ngModel)]="portObject.city" name="city">
+                          <option value="" disabled selected>Select City*</option>
+                          <option *ngFor="let city of cities" [value]="city._id">{{city.cityName}}</option>
+                        </select>
+
+                        <p
+                        *ngIf="city.errors && (city.dirty || city.touched)"
+                        class="small text-danger">
+                        <span [hidden]="!city.errors.required">
+                          City is required
+                        </span>
+                      </p>
+
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <div class="mdl-selectfield">
+                        <label>Image url</label>
+                        <input type="url" placeholder="Enter image url..." [(ngModel)]="portObject.main_image_url" name="main_image_url">
+                      </div>
+
+
+                    </div>
+                
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <form>
+                        
+                   
+                     <text-editor #noteEditor
+                                [elementId]="'note-editor'"
+                                (onEditorContentChange)="EditorContentChange($event)"
+                                [toolbar]="toolbarConfig"
+                                [desiredInitialText]="portObject.descriptionHTML"
+                                >
+                                
+                            </text-editor>
+                </form>
+                  </div> 
+                  </div> 
+                </div>
+                <div class="box-footer">
+                  <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="closePage()">
+                    Close 
+                    <div class="ripple-container"></div>
+                  </button>
+                  <button type="button" [disabled]="!portForm.form.valid"  class="btn bg-navy btn-flat roundbtn margin" (click)="savePort(false)">
+                    Save
+                    <div class="ripple-container"></div>
+                  </button>
+                  <button type="button" [disabled]="!portForm.form.valid" class="btn bg-green btn-flat roundbtn margin" (click)="savePort(true)">
+                     Save & Close
+                    <div class="ripple-container"></div>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </section>
+</div>

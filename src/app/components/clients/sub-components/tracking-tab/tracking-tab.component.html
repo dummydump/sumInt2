@@ -1,0 +1,287 @@
+<div class="col-md-12">
+    <div class="col-md-6">
+        <div class="col-md-12 no-padding">
+            <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Relatives</h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                            <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                            <div class="ripple-container"></div>
+                        </button>
+                        <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" data-toggle="modal" (click)="checkGender()">
+                            <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Relatives"></i>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+
+
+                    <table class="table">
+                        <ng-container *ngIf="isAddRelatives">
+                            <tr>
+                                <th>Relationship</th>
+                                <th>Relative</th>
+                                <th></th>
+                            </tr>
+                            <tr class="custom">
+                                <td>
+                                    <div class="mdl-selectfield">
+                                        <select class="browser-default" ngModel #detail="ngModel" [(ngModel)]="relationObject.relation" name="detail" required>
+                                            <option value=""  disabled selected>Relationship*</option>
+                                            <option *ngFor="let relation of relationShipArray" [value]="relation">{{relation}}</option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <ng-template #customItemTemplate let-model="item" let-index="index">
+                                        <ul style="width: 250px; padding-left:0px;">
+                                            {{model.name}}
+                                        </ul>
+                                    </ng-template>
+
+                                    <input autocomplete="off" (ngModelChange)="modelChanged($event)" ngModel #relativeName="ngModel" class="mdl-selectfield" [(ngModel)]="newClientName" (input)="onNameChange()" (typeaheadNoResults)="changeTypeaheadNoResults($event)"
+                                        (typeaheadOnSelect)="typeaheadOnSelect($event)" [typeahead]="statesComplex" typeaheadOptionField="name"
+                                        [typeaheadScrollable]="true" [typeaheadItemTemplate]="customItemTemplate" [typeaheadOptionsInScrollableView]="5"
+                                        placeholder="Relative*">
+                                        <span class="highlight"></span>
+                                        <span class="bar"></span>
+
+                                     <div class="dropdown" *ngIf="typeaheadNoResults">
+                                        <ul style="width: 300px; height:40px;" class="dropdown-menu show" aria-labelledby="dropdownMenu1">
+                                            <li style="padding-top:5px;">&nbsp;&nbsp;Client not found!
+                                                <a style="padding-left:3px;display:inline;"
+                                                    class="txtlink" data-toggle="modal" data-target="#addrelationship">
+                                                    Click here to add new client. </a>
+                                            </li>
+                                        </ul>
+                                    </div> 
+                                </td>
+                                <td>
+                                    <a (click)="cancelRelationAddandEdit()"> <i class="material-icons delete" data-toggle="tooltip" data-placement="top" title="Cancel">cancel</i></a>
+                                    <a (click)="saveRelation()"> <i class="material-icons" data-toggle="tooltip" data-placement="top" title="Save">save</i></a>
+                                </td>
+                            </tr>
+                        </ng-container>
+
+                        <tr *ngFor="let relative of allRelatives">
+                            <td>
+                                {{relative.relation}}
+                            </td>
+                            <td ><a class="txtlink" href="/client/editClient/{{relative.relativeClientId}}">{{relative.relativeClientFirstName}} {{relative.relativeClientlastName}}</a></td>
+                            <td>
+                                <a (click)="editRelation(relative)"> <i class="material-icons blueicon" data-toggle="tooltip" data-placement="top" title="Edit">edit</i></a>
+                                <a (click)="deleteRelation(relative.relativeId)"><i class="material-icons delete" data-toggle="tooltip" data-placement="top" title="Delete">delete</i></a>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 no-padding">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Credit Cards</h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                            <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                            <div class="ripple-container"></div>
+                        </button>
+                        <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                            <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Credit Card"></i>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <table class="table">
+                        <tr>
+                            <th></th>
+                            <th>Credit Card Number</th>
+                            <th>Expires</th>
+                            <th>Name on the Card/Address</th>
+                            <th></th>
+                        </tr>
+                        <tr>
+                            <td>Visa</td>
+                            <td>************7777 <span class="bluetxt">Decrypt</span></td>
+                            <td>2/2018</td>
+                            <td>
+                                Tamy Jones<br> 1234Pulaski road<br> 1234Pulaski road
+                            </td>
+                            <td>
+                                <a> <i class="material-icons blueicon" data-toggle="tooltip" data-placement="top" title="Edit">edit</i></a>
+                                <a><i class="material-icons delete" data-toggle="tooltip" data-placement="top" title="Delete">delete</i></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-12 no-padding">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Spending Habits</h3>
+                    <div class="box-tools">
+                        <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                            <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                            <div class="ripple-container"></div>
+                            </button>
+                        <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                            <i class="fa fa-calendar" data-toggle="tooltip" data-placement="top" title="Select Year"></i>
+                            <div class="ripple-container"></div>
+                            </button>
+                    </div>
+                </div>
+                <div class="box-body no-padding">
+                    <table class="table" style="white-space: inherit;">
+                        <tr>
+                            <th width="30%">Overall Spending</th>
+                            <th>Yearly Spending</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="custom1">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"><span class="checkbox-material"><span class="check"></span></span>
+                                            Tammy Jones
+                                            </label>
+                                    </div>
+                                    <div class="spend">$0.00 <small>0 Trips</small></div>
+                                </div>
+                                <div class="custom1">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox"><span class="checkbox-material"><span class="check"></span></span>
+                                            All Relatives
+                                            </label>
+                                    </div>
+                                    <div class="spend">$0.00 <small>0 Trips</small></div>
+                                </div>
+                            </td>
+                            <td>
+                                <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> There is no <span class="text-danger">Payment</span> Data Available for this time period. Please select a diffrent time period by clicking
+                                    on the calendar icon above</h6>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table" style="white-space: inherit;">
+                        <tr>
+                            <th class="bordertopn">Top Location</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> There is no <span class="text-danger">Trip</span> Data Available for this time period.</h6>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table" style="white-space: inherit;">
+                        <tr>
+                            <th class="bordertopn">Top Carriers</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> There is no <span class="text-danger">Trip</span> Data Available for this time period.</h6>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="addrelationship" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Client</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="group">
+                            <input type="text" name="firstName" [(ngModel)]="newClientObject.firstName">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>First Name</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="group">
+                            <input type="text" name="middleName" [(ngModel)]="newClientObject.middleName">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>Middle Name</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="group">
+                            <input type="text" required name="lastName" [(ngModel)]="newClientObject.lastName">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>Last Name</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="group">
+                            <input type="date" name="birthDate" [(ngModel)]="newClientObject.birthDate">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>Birth Date</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                        <div class="col-sm-6">
+                                <div class="mdl-selectfield">
+                                    <label>Standard Select</label>
+                                    <select class="browser-default" required [(ngModel)]="newClientObject.gender" name="gender">
+                                    <option value="" disabled selected>Client Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    </select>
+                                </div>
+                            </div> 
+                    <div class="col-sm-6">
+                        <div class="group">
+                            <input type="text" required name="telephone" [(ngModel)]="newClientObject.telephone" mask="000-000-0000">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>Telephone Number</label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-gray roundbtn btn-flat margin" data-dismiss="modal">
+          Close
+          <div class="ripple-container"></div>
+        </button>
+                <button type="button" (click)="saveNewClient()" data-dismiss="modal" class="btn bg-navy btn-flat roundbtn margin">
+          Save
+          <div class="ripple-container"></div>
+        </button>
+
+            </div>
+        </div>
+
+    </div>
+</div>

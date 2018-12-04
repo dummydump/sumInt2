@@ -1,0 +1,26 @@
+.ql-container {
+    height: 200px !important;
+}
+.upperDiv{
+    height:5px;position: relative;padding-left:20px;
+}
+.innerDiv{
+    width: 100%;margin-left:65px;
+}
+.text-muted pull-right{
+    text-align: left;
+}
+.text-muted{
+    color:rgb(5, 128, 5) !important;
+}
+
+.texttime{
+    color:grey !important;
+}
+
+.item{
+    margin-bottom:50px;
+   
+    height: 50%;
+    
+}

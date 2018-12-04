@@ -1,0 +1,215 @@
+
+
+<div class="content-wrapper" *ngIf="currentUser">
+   <section class="content-header">
+      <ol class="breadcrumb">
+         <li><a href="#">Workspace</a></li>
+         <li class="active">Calendar</li>
+      </ol>
+      <h1>
+         <i class="fa">
+            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+               viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+               <g>
+                  <g>
+                     <g>
+                        <rect x="176" y="192" width="64" height="64"/>
+                        <rect x="272" y="192" width="64" height="64"/>
+                        <rect x="368" y="192" width="64" height="64"/>
+                        <rect x="80" y="288" width="64" height="64"/>
+                        <rect x="176" y="288" width="64" height="64"/>
+                        <rect x="272" y="288" width="64" height="64"/>
+                        <rect x="368" y="288" width="64" height="64"/>
+                        <rect x="80" y="384" width="64" height="64"/>
+                        <rect x="176" y="384" width="64" height="64"/>
+                        <rect x="272" y="384" width="64" height="64"/>
+                        <path d="M432,64V16c0-8.801-7.168-16-16-16h-64c-8.832,0-16,7.199-16,16v48H176V16c0-8.801-7.168-16-16-16H96
+                           c-8.832,0-16,7.199-16,16v48H16v448h480V64H432z M368,32h32v64h-32V32z M112,32h32v64h-32V32z M464,480H48V160h416V480z"/>
+                     </g>
+                  </g>
+               </g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+               <g></g>
+            </svg>
+         </i>
+         <div class="h1txt">My Calendar</div>
+      </h1>
+   </section>
+   <section class="content">
+      <div class="row">
+         <section class="col-lg-12">
+            <div class="col-md-12 col-sm-12 no-padding">
+               <div class="col-md-12 col-sm-12 no-padding ">
+                  <div class="box box-primary">
+                     <div class="box-body">
+                        <div class="row">
+                           <div class="col-md-3">
+                             <form [formGroup]="myForm" novalidate>
+                              <my-date-picker name="selectedDate" [(ngModel)]="selectedDate" [options]="myDatePickerOptions" (calendarViewChanged)="onCalendarViewChanged($event)" (dateChanged)="onDateChanged($event)" formControlName="myDate"></my-date-picker>
+                               </form>
+                           </div>
+                           <div class="col-md-9">
+                              <div class="row">
+                                 <div class="col-md-6 text-left view-type">
+                                    <div class="btn-group">
+                                       <div class="btn btn-primary" [class.active]="calendarView == 'month'" (click)="changeViewMode('month')">
+                                       MONTH
+                                    </div>
+                                    <div class="btn btn-primary" [class.active]="calendarView == 'day'" (click)="changeViewMode('day')">
+                                    DAY VIEW
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-6 text-right">
+                              <h3 class="view-date">{{ viewDate }}</h3>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-12 col-sm-12">
+                              <ng-template #customCellTemplate let-day="day" let-locale="locale">
+                                 <div class="cal-cell-top">
+                                    <!--<span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>-->
+                                    <span class="cal-day-number">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+                                 </div>
+                                 <span class="event-details" *ngIf="day.badgeTotal > 0" [innerHTML]="getEventMessageByEvents(day.events)">
+                                 <!--There are {{ day.events.length }} events on this day-->
+                                 </span>
+                              </ng-template>
+                              <div>
+                                 <ngx-loading [show]="isShowLoadingMonth" [config]="loadingConfig"></ngx-loading>
+                                 <!--<ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>-->
+                                 <mwl-calendar-month-view *ngIf="calendarView == 'month'" [viewDate]="viewDate" [events]="calendarMonthViewEventsList" [cellTemplate]="customCellTemplate" (dayClicked)="calendarDateClick($event.day.date)" [refresh]="refresh">
+                                 </mwl-calendar-month-view>
+                                 <div class="col-md-12 col-sm-12 nopad" *ngIf="calendarView == 'day'" >
+                                    <div class="col-md-12 col-sm-12 nopad">
+                                       <ngx-loading [show]="isShowLoadingReminder" [config]="loadingConfig"></ngx-loading>
+                                       <div class="col-md-12 col-sm-12 nopad" *ngIf="!isShowLoadingReminder">
+                                          <div class="col-md-1 col-sm-1 text-right day-view-left-td"> 
+                                             <strong>
+                                             <span class=""> REMINDERS ({{(calendarDayViewEventsList && calendarDayViewEventsList.totalCounters)? calendarDayViewEventsList.totalCounters['reminderCount'] : 0}})
+                                             </span>
+                                             </strong>
+                                          </div>
+                                          <div class="col-md-11 col-sm-11 v-top" *ngIf="(!calendarDayViewEventsList.reminders || calendarDayViewEventsList.reminders.length <= 0) && !isEventsLoading"> 
+                                            <span class="h6"><i class="fa fa-warning text-yellow"></i> There are no reminders for selected date</span> 
+                                          </div>
+                                          <div class="col-md-11 col-sm-11 v-top" *ngIf="calendarDayViewEventsList.reminders && calendarDayViewEventsList.reminders.length > 0">
+                                            <ng-container *ngFor="let evt of calendarDayViewEventsList.reminders;">
+                                                <span class="h6 pad0"> 
+                                                    <a href="#">{{evt.title}}</a> 
+                                                    {{getEventDetails(evt)}}
+                                                </span>
+                                                <hr class="mar5px">
+                                            </ng-container>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-12 col-sm-12 no-border nopad"  *ngIf="calendarDayViewEventsList.remindersCount">
+                                          <div class="col-md-1 col-sm-1 text-right day-view-left-td no-border"> 
+                                          </div>
+                                          <div class="col-md-11 col-sm-11 no-border nopad pagination-div">
+                                             <ng-container> 
+                                                <app-calendar-pagination [currentPageCountNew]="currentPageCountReminder" [paginationList]="(calendarDayViewEventsList.reminders)? calendarDayViewEventsList.reminders : []" [showLimit]="false" [totalRecords]="(calendarDayViewEventsList.totalCounters)? calendarDayViewEventsList.totalCounters['reminderCount'] : 0" [isSearching]="false" (currentPageCountEvent)="currentPageCountEvent($event, 'reminder')" (limitChangeEvent)="limitChangeEvent($event)">
+                                                </app-calendar-pagination>
+                                             </ng-container>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-12 col-sm-12 nopad" *ngIf="calendarView == 'day'" >
+                                    <div class="col-md-12 col-sm-12 nopad">
+                                       <ngx-loading [show]="isShowLoadingTrip" [config]="loadingConfig"></ngx-loading>
+                                       <div class="col-md-12 col-sm-12 nopad" *ngIf="!isShowLoadingTrip">
+                                          <div class="col-md-1 col-sm-1 text-right day-view-left-td">
+                                             <strong>
+                                             <span class=""> TRIPS ({{(calendarDayViewEventsList && calendarDayViewEventsList.totalCounters)? calendarDayViewEventsList.totalCounters['tripCount'] : 0}})</span>
+                                             </strong>
+                                          </div>
+                                          <div class="col-md-11 col-sm-11 v-top" *ngIf="(!calendarDayViewEventsList.trips || calendarDayViewEventsList.trips.length <= 0) && !isEventsLoading">
+                                            <span class="h6"><i class="fa fa-warning text-yellow"></i> There are no trips for selected date</span> 
+                                          </div>
+                                          <div class="col-md-11 col-sm-11 v-top" *ngIf="calendarDayViewEventsList.trips && calendarDayViewEventsList.trips.length > 0">
+                                              <ng-container *ngFor="let evt of calendarDayViewEventsList.trips;">
+                                                <span class="h6 pad0"> 
+                                                    <a routerLink="/trip/editTrip/{{evt.tripId}}">
+                                                        {{evt.title}}
+                                                    </a> 
+                                                    {{getEventDetails(evt)}}
+                                                </span>
+                                                <hr class="mar5px">
+                                            </ng-container>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-12 col-sm-12 no-border nopad" *ngIf="calendarDayViewEventsList.tripsCount">
+                                          <div class="col-md-1 col-sm-1 text-right day-view-left-td no-border"></div>
+                                          <div class="no-border col-md-11 col-sm-11 nopad pagination-div">
+                                             <ng-container> 
+                                                <app-calendar-pagination [currentPageCountNew]="currentPageCountTrip" [paginationList]="(calendarDayViewEventsList.trips)? calendarDayViewEventsList.trips : []" [showLimit]="false" [totalRecords]="(calendarDayViewEventsList.totalCounters)? calendarDayViewEventsList.totalCounters['tripCount'] : 0" [isSearching]="false" (currentPageCountEvent)="currentPageCountEvent($event, 'trip')" (limitChangeEvent)="limitChangeEvent($event)">
+                                                </app-calendar-pagination>
+                                             </ng-container>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+
+                                 <div class="col-md-12 col-sm-12 nopad" *ngIf="calendarView == 'day'" >
+                                    <div class="col-md-12 col-sm-12 nopad">
+                                       <ngx-loading [show]="isShowLoadingTask" [config]="loadingConfig"></ngx-loading>
+                                       <div class="col-md-12 col-sm-12 nopad" *ngIf="!isShowLoadingTask">
+                                          <div class="col-md-1 col-sm-1 text-right day-view-left-td">
+                                             <strong>
+                                             <span class=""> TASKS ({{(calendarDayViewEventsList && calendarDayViewEventsList.totalCounters)? calendarDayViewEventsList.totalCounters['taskCount'] : 0}})</span>
+                                             </strong>
+                                          </div>
+                                          <div class="col-md-11 col-sm-11 v-top" *ngIf="(!calendarDayViewEventsList.tasks || calendarDayViewEventsList.tasks.length <= 0) && !isEventsLoading">
+                                            <span class="h6"><i class="fa fa-warning text-yellow"></i> There are no tasks for selected date</span> 
+                                          </div>
+                                          <div class="col-md-11 col-sm-11 v-top" *ngIf="calendarDayViewEventsList.tasks && calendarDayViewEventsList.tasks.length > 0">
+                                              <ng-container *ngFor="let evt of calendarDayViewEventsList.tasks;">
+                                                <span class="h6 pad0"> 
+                                                    <a routerLink="/trip/editTrip/{{evt.tripId}}">
+                                                        {{evt.title}}
+                                                    </a> 
+                                                    {{getEventDetails(evt)}}
+                                                </span>
+                                                <hr class="mar5px">
+                                            </ng-container>
+                                          </div>
+                                       </div>
+                                       <div class="col-md-12 col-sm-12 no-border nopad" *ngIf="calendarDayViewEventsList.tasksCount">
+                                          <div class="col-md-1 col-sm-1 text-right day-view-left-td no-border"></div>
+                                          <div class="no-border col-md-11 col-sm-11 nopad pagination-div">
+                                             <ng-container> 
+                                                <app-calendar-pagination [currentPageCountNew]="currentPageCountTask" [paginationList]="(calendarDayViewEventsList.tasks)? calendarDayViewEventsList.tasks : []" [showLimit]="false" [totalRecords]="(calendarDayViewEventsList.totalCounters)? calendarDayViewEventsList.totalCounters['taskCount'] : 0" [isSearching]="false" (currentPageCountEvent)="currentPageCountEvent($event, 'task')" (limitChangeEvent)="limitChangeEvent($event)">
+                                                </app-calendar-pagination>
+                                             </ng-container>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+      </div>
+</div>
+</section>
+</div>
+</section>
+</div>
+

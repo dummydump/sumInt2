@@ -1,0 +1,130 @@
+<div class="content-wrapper">
+  <section class="content-header">
+    <ol class="breadcrumb">
+      <li><a href="#">Workspace</a></li>
+      <li class="active">Ships</li>
+    </ol>
+    <h1>
+      <i class="fa">
+        <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             viewBox="0 0 299.997 299.997" style="enable-background:new 0 0 299.997 299.997;" xml:space="preserve">
+        <g>
+        <g>
+        <path d="M149.996,0C67.157,0,0.001,67.158,0.001,149.997c0,82.837,67.156,150,149.995,150s150-67.163,150-150
+                    C299.996,67.156,232.835,0,149.996,0z M150.453,220.763v-0.002h-0.916H85.465c0-46.856,41.152-46.845,50.284-59.097l1.045-5.587
+                    c-12.83-6.502-21.887-22.178-21.887-40.512c0-24.154,15.712-43.738,35.089-43.738c19.377,0,35.089,19.584,35.089,43.738
+                    c0,18.178-8.896,33.756-21.555,40.361l1.19,6.349c10.019,11.658,49.802,12.418,49.802,58.488H150.453z" />
+
+              </g>
+           </g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        <g></g>
+        </svg>
+      </i>
+      <div class="h1txt">Ships</div>
+      <div class="col-sm-6 txt-right pull-right">
+        <a routerLink="/ship/addship"> <i data-toggle="tooltip" data-placement="top" title="Add Ship" class="material-icons bg-green bigbtn greenshadow">add</i></a>
+        <!--<a> <i class="material-icons bg-blue bigbtn">file_download</i></a>-->
+        <a (click)="refreshShipList()"><i data-toggle="tooltip" data-placement="top" title="Refresh" class="fa fa-refresh bg-blue bigbtn"></i></a>
+      </div>
+    </h1>
+    </section>
+    <section class="content">
+      <div class="row">
+        <section class="col-lg-12">
+          <div class="col-md-12 no-padding">
+            <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+            <div class="box no-padding" *ngIf="currentUser && (!shipList || shipList.length <= 0) && isSearching == false">
+              <h6 class="text-center"><i class="fa fa-warning text-danger"></i> You do not have any Ship.</h6>
+              <h6 class="text-center">Let's add a Ship by clicking the <span class="text-danger">Add Ship </span>on the top right hand side.</h6>
+            </div>
+            <div class="box no-padding" *ngIf="currentUser && isSearching == true || (shipList && shipList.length > 0 && isSearching == false)">
+              <!-- /.box-header -->
+              <div class="box-body table-responsive no-padding">
+                <table class="table table-striped">
+                  <tbody>
+                    <tr class="bg-white  box-success">
+                      <th>Name</th>
+                      <th>
+                        Cruise Line 
+                      </th>
+                     
+                      <th>
+
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="form-group no-padding form-group-sm col-md-4 search is-empty"><input class="form-control" type="text" placeholder="Search Name" [(ngModel)]="searchObject.name" (input)="onSearchChange('name', $event.target.value)" name="name"></div>
+                      </td>
+                      <td>
+                      </td>
+                      <td></td>
+                    </tr>
+                    <ng-container *ngIf="shipList && shipList.length > 0">
+                      <tr *ngFor="let ship of shipList;let i=index;">
+                        <td><a routerLink="/ship/editship/{{ship._id}}" class="txtlink">{{ship.name}}</a></td>
+                        <td>{{ship.cruiseLineId ?  getCruiseLineById(ship.cruiseLineId) : ''}}</td>
+
+                        <td>
+                          <a routerLink="/ship/editship/{{ship._id}}"> <i class="material-icons blueicon">edit</i></a>
+                          <a (click)="removeShipById(ship._id,i)"> <i class="material-icons delete">delete</i></a>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+              <div class="box-footer clearfix" *ngIf="pgList && pgList.pages && pgList.pages.length > 0">
+                <div class="col-sm-4  no-padding">
+                  <small class="pull-left showtxt">{{(pgList.pageCount * limit) + 1}} to {{((pgList.pageCount * limit) + shipList.length)}} out of {{totalRecords}}</small>
+
+                  <small class="pull-left showtxt">  Show</small>
+                  <select class="form-control pull-left" (change)="setPageLimit($event.target.value)">
+                    <option value="10" selected>10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                  <small class="pull-left showtxt"> rows per page</small>
+                </div>
+                <div class="col-sm-8 no-padding">
+                  <ul class="pagination">
+                    <li [ngClass]="{disabled:pgList.pageCount  == 0}">
+                      <a (click)="!(pgList.pageCount  == 0) ? getShipList((0), limit): ''">First</a>
+                    </li>
+                    <li [ngClass]="{disabled:pgList.pageCount === 0}">
+                      <a (click)="!(pgList.pageCount === 0) ? getShipList((pgList.pageCount - 1), limit): ''">Previous</a>
+                    </li>
+                    <li *ngFor="let page of pgList.pages" [ngClass]="{active:(pgList.pageCount + 1)  === page}">
+                      <a (click)="getShipList((page - 1), limit)">{{page}}</a>
+                    </li>
+                    <li [ngClass]="{disabled:pgList.pageCount == pgList.totalPages}">
+                      <a (click)="!(pgList.pageCount == pgList.totalPages) ? getShipList((pgList.pageCount + 1), limit): ''">Next</a>
+                    </li>
+                    <li [ngClass]="{disabled:pgList.pageCount === pgList.totalPages}">
+                      <a (click)="!(pgList.pageCount === pgList.totalPages) ? getShipList((pgList.totalPages), limit): ''">Last</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+</div>

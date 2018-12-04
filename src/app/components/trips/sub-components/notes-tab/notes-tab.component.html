@@ -1,0 +1,70 @@
+<div class="col-md-12">
+    <div class="col-md-12 no-padding ">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Notes</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                        <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh" (click)="noteEditor.setContent(''); currentContent=''; isEditorShow = false; refreshNotes(pageCount, limit)"></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                        <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Note" (click)="noteEditor.setContent('');currentContent=''; isEditorShow = true"></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body pad">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form>
+                                <text-editor #noteEditor
+                                [elementId]="'note-editor'" [hidden]="!isEditorShow" 
+                                (onEditorContentChange)="EditorContentChange($event)"
+                                [toolbar]="toolbarConfig"
+                                >
+                            </text-editor>
+                           
+                            <!-- [(ngModel)]="currentContent" -->
+                           <!--  <quill-editor class="rich-text-editor" [hidden]="!isEditorShow" name="editor" [(ngModel)]="currentContent" [modules]="editorOption">
+     
+                            </quill-editor>  -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer" [hidden]="!isEditorShow">
+                <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="isEditorShow = false">
+                    Close
+                    <div class="ripple-container"></div>
+                </button>
+                <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="saveNote()">
+                    Save
+                    <div class="ripple-container"></div>
+                </button>
+            </div>
+            <div class="box-body chat" id="chat-box" style="overflow: hidden; width: auto;">
+                <div class="col-md-6">
+
+                    <div *ngFor="let note of notes;let i = index" class="item">
+                        <img src="/assets/public/dist/img/user-160x160.jpg" alt="user image" class="offline">
+
+                        <div [ngClass]="{
+                            'message attachment2':i%2==0,
+                            'message attachment':i%2!=0
+                        }">
+                            
+                            <div [innerHTML]="note.note"></div>
+                        </div>
+                        <div class="upperDiv" ></div>
+                        <div class="innerDiv" >
+                           <a class="name">
+                                <small class="texttime" > <span class="text-muted">{{note.addedBy}}</span> &nbsp;<i class="fa fa-clock-o"> </i> {{note.noteDate  | date : "MMM d, y, h:mm a"}}</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+.autocomplete-ul li {
+    line-height: 1.5em;
+    height: auto;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+typeahead-container,
+.dropdown {
+    width: 62% !important;
+}
+
+.hideBookingTab {
+    display: none!important;
+}
+
+.fnt15px{
+    font-size: 15px !important;
+}

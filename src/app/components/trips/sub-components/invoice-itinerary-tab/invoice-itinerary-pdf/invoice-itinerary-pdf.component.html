@@ -1,0 +1,483 @@
+
+<div *ngIf="isLocal" class="col-md-12 no-padding " id="itineraryMainDiv" #itineraryMainDiv>
+    <div class="box box-primary" style="padding: 25px;">
+        <div style="width: 100%; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; letter-spacing: 0.5px;">
+            
+            <img alt="Image" src="http://res.cloudinary.com/jst/image/upload/v1523605442/CupcakeCastlesLogo_jeitwc.png" id='company-img' class="company-img" style="float: left; height: 85px; width: 60px;">
+
+            <h3 style="text-align: left; float: left; margin-top: 35px; font-size: 19px; color: #333; ">CupCake Castles Travel Company</h3>
+
+            <div *ngIf="tripAgentObject" class="box-tools txt-right" style="text-align: right; width: 30%; float: right; margin-top: 10px; margin-bottom: 25px;">
+                <span style="color: #000; font-weight: 300; font-size: 17px;">{{tripAgentObject.firstName}} {{tripAgentObject.lastName}}</span>
+                <br>
+                <span class="bluetxt cyan-color" style="color: #46b7c7; font-size: 17px;">{{tripAgentObject.email}}</span>
+                <br>
+                <span style="color: #000; font-weight: 300; font-size: 17px; float: right;">{{tripAgentObject.phone1}}</span>
+                <img *ngIf="tripAgentObject.phone1" src="http://res.cloudinary.com/jst/image/upload/v1523945430/cell-image_j4xzal.png" style="float: right; height: 20px;" />
+                <br *ngIf="!tripAgentObject.phone1">
+            </div>
+            <hr style="width: 100%; margin-bottom: 2px;">
+        </div>
+
+        <div class="box-body" style="margin-top: 0px;">
+            <div class="col-sm-12">
+                <h3 class="bigtxt" style="font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; color: #7b8a97; font-weight: 100; font-size: 24px; margin-left: 20px;">At a glance</h3>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table" style="width: 100%; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; letter-spacing: 0.5px;">
+                        <thead>
+                            <tr style="background-color: #F2EFEB;">
+                                <th style="border-bottom: 2px solid #ddd; text-align: left; padding-left: 5px;">Traveling Package</th>
+                                <th style="border-bottom: 2px solid #ddd; text-align: left; padding-left: 5px;">From</th>
+                                <th style="border-bottom: 2px solid #ddd; text-align: left; padding-left: 5px;">To</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let itineraryElem of itineraryFieldsArr" [class.hidden]="itineraryElem[1]['isCheckOut'] == true">
+                                <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries' && (itineraryElem[1].isCheckOut != true))">
+                                    
+                                    <td style="line-height: 30px; padding-left: 5px;">
+                                        <small></small>
+                                        <span style="font-size: 14px; color: #800000; font-weight: 100;" *ngIf="itineraryElem[0] == 'flightActivities'">{{getFlightActivityTypeAndName(itineraryElem, true)}}</span>
+
+                                        <span class="bluetxt cyan-color" *ngIf="itineraryElem[0] == 'properties' || itineraryElem[0] == 'cruises'" style="font-size: 14px; color: #46b7c7;">
+                                            {{getItineraryEmail(itineraryElem, false, 'glance', false, false)}}
+                                        </span>
+                                        
+                                        <span class="bluetxt cyan-color" *ngIf="itineraryElem[0] != 'properties' && itineraryElem[0] != 'cruises'" style="font-size: 14px;">
+                                            {{getItineraryEmail(itineraryElem, false, 'glance', false, false)}}
+                                        </span>
+
+                                        <br *ngIf="getItineraryEmail(itineraryElem, false, 'glance', false, false)!=''">
+                                        <small style="font-size: 14px;">{{getItineraryAddress(itineraryElem, false, false)}}</small>
+
+
+                                        <br *ngIf="getItineraryAddress(itineraryElem, false, false)!=''"> 
+                                        <span *ngIf="itineraryElem[0] == 'room'" style="font-size: 14px; margin-left: 25px;">
+                                            {{getItineraryText(itineraryElem, false, false)}}
+                                        </span>
+                                        
+                                        <span style="font-size: 14px;" *ngIf="itineraryElem[0] != 'room'">
+                                            {{getItineraryText(itineraryElem, false, false)}}
+                                        </span>
+
+                                    </td>
+
+                                    <td style="font-size: 14px; margin-top: 30px; padding-left: 5px;" colspan="2" class="text-center" *ngIf="itineraryElem[0] == 'flightActivities'">
+
+                                        {{getFromDate(itineraryElem, true)}} {{getFromTime(itineraryElem, true)}}
+
+                                    </td>
+
+                                    <td style="font-size: 14px; margin-top: 30px; padding-left: 5px;" *ngIf="itineraryElem[0] != 'flightActivities'">
+
+                                        {{getFromDate(itineraryElem, true)}} {{getFromTime(itineraryElem, true)}}
+
+                                    </td>
+
+                                    <td style="font-size: 14px; margin-top: 30px; padding-left: 5px;" *ngIf="itineraryElem[0] != 'flightActivities'">
+
+                                        {{getToDate(itineraryElem, true)}} {{getToTime(itineraryElem, true)}}
+
+                                    </td>
+                                </tr>
+                                <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries' && (itineraryElem[1].isCheckOut != true))">
+                                    <td colspan="3" style="padding: 0px;">
+                                        <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%;" style="margin-top: 35px;">
+            <span style="font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; font-size: 22px; color: #000; font-weight: bold; padding-left: 5px;">Itinerary</span>
+        </div>
+        <div class="box-body">
+            <div class="row custom1">
+                <div class="col-sm-12">
+                    <table class="table " style="width: 100%; table-layout: fixed; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;">
+                        <thead>
+                            <tr>
+                                <th style="font-size: 16px; border-top: 0px solid #ddd; text-align: left; padding-left: 5px; width: 170px;">Traveling Package</th>
+                                <th style="font-size: 18px; border-top: 0px solid #ddd; text-align: left; padding-left: 5px;"></th>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding: 0px;">
+                                    <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <ng-container *ngFor="let itineraryElem of itineraryFieldsArr; let idx = index;">
+                                <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries')" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <td style="width: 180px; text-align: right; margin-right: 10px; vertical-align: top;">
+                                        <div *ngIf="itineraryElem[0] != 'room'"> 
+                                        </div>
+                                        <br>
+
+                                        <div *ngIf="itineraryElem[0] != 'room'">
+                                            <img style="width: 45px; height: 40px; margin-right: 10px;" crossOrigin="Anonymous" alt="Itinerary Image" [src]="getItinerarySmallImages(itineraryElem)"><br>
+                                        </div>
+
+                                        <small style="font-size: 13px; margin-right: 10px;" *ngIf="itineraryElem[1]['isCheckOut'] != true"> {{getFromDate(itineraryElem)}}</small>
+                                        <small style="font-size: 13px; margin-right: 10px;" *ngIf="itineraryElem[1]['isCheckOut'] == true"> {{getToDate(itineraryElem)}}</small>
+                                        <br>
+                                        <small style="font-size: 13px; margin-right: 12px;" *ngIf="itineraryElem[1]['isCheckOut'] != true">{{getFromTime(itineraryElem)}}</small>
+                                        <small style="font-size: 13px; margin-right: 12px;" *ngIf="itineraryElem[1]['isCheckOut'] == true">{{getToTime(itineraryElem)}}</small>
+
+                                        <br>
+                                    </td>
+
+                                    <td style="vertical-align: top;">
+                                        <br>
+                                        <span style="font-size: 14px; color: #800000; font-weight: 100;" *ngIf="itineraryElem[0] == 'flightActivities'">{{getFlightActivityTypeAndName(itineraryElem, false)}}</span>
+                                        
+                                        <span style="font-size: 14px; color: #46b7c7; font-weight: bold;" *ngIf="itineraryElem[0] != 'flightActivities' && getItineraryEmail(itineraryElem, true, 'package', false, false)!=''"><b>{{getItineraryEmail(itineraryElem, true, 'package', false, false)}}</b></span>
+
+                                        <span style="font-size: 14px;" *ngIf="itineraryElem[0] == 'flightActivities'">
+                                            <br><span>{{getFlightActivityConfirmationDetails(itineraryElem)}}</span><br>
+                                            <span>{{getFlightActivityDesc(itineraryElem)}}</span>
+                                        </span>
+
+                                        <small style="font-size: 14px; color: #000;">{{getItineraryText(itineraryElem, false, false)}}</small>
+
+                                        <small style="font-size: 14px; color: #800000;" *ngIf="itineraryElem[0] != 'flightActivities' && itineraryElem[1]['isCheckOut'] == true">
+                                            <br>Double check you are not leaving anything behind.
+                                        </small>
+
+                                        <small style="font-size: 14px; color: #000;" *ngIf="itineraryElem[0] != 'flightActivities' && !itineraryElem[1]['isCheckOut']">
+                                            <br>{{getItineraryAddress(itineraryElem, true, false)}}
+                                        </small>
+
+                                        <br *ngIf="itineraryElem[0] == 'properties' || itineraryElem[0] == 'cruises'">
+
+                                        <img style="box-shadow: -1px -1px 8px rgba(0, 0, 0, 0.5), 6px -2px 14px rgba(0, 0, 0, 0.5); border-radius: 5px; width: 100%; height: 330px; margin-top: 10px;" *ngIf="getLandmarkImage(itineraryElem)!=''" crossOrigin="Anonymous" alt="Itinerary Image" [src]="getLandmarkImage(itineraryElem)">
+
+                                        <ng-container *ngIf="showExtraInfo(itineraryElem)">
+                                            <p style="font-size: 14px; color: #000;">
+                                                ABOUT
+                                            </p>
+                                            <p style="font-size: 14px; color: #000; text-align: justify;" *ngIf="itineraryElem != null && itineraryElem[0] == 'room' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].roomId] != null">
+                                                {{landmarkDetailInfo[itineraryElem[1].roomId].text}}
+                                            </p>
+                                            
+                                            <span *ngIf="itineraryElem != null && itineraryElem[0] == 'properties' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].propertyId] != null">
+                                                
+                                                <small style="font-size: 14px; color: #000; text-align: justify;" *ngFor="let obj of landmarkDetailInfo[itineraryElem[1].propertyId].propertyAmenities">
+                                                    {{obj.text}}
+                                                </small>
+                                            </span>
+                                            
+                                            <span *ngIf="itineraryElem!=null && itineraryElem[0]=='cruises' && landmarkDetailInfo!=null && landmarkDetailInfo[itineraryElem[1].cruiseId]!=null">
+                                                <p style="letter-spacing: 0px; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; text-align: justify;" [innerHTML]="getDescriptionHTMLLandmarkInfo(landmarkDetailInfo[itineraryElem[1].cruiseId].descriptionHTML) | safe: 'html'"></p>
+                                            </span>
+
+                                            <span *ngIf="itineraryElem!=null && (itineraryElem[0]=='cruises' || itineraryElem[0]=='properties')" style="font-size: 14px; color: #000;">
+                                                <br>
+                                                ROOM CATEGORIES</span>
+                                        </ng-container>
+                                        <br>
+                                    </td>
+                                </tr>
+
+                                <ng-container *ngFor="let subCruise of itineraryElem[1].itinerary; let idx2 = index;">
+                                    <tr *ngIf="(itineraryElem[0] == 'cruiseItineraries')" style="margin-top: 10px; margin-bottom: 10px;">
+                                        <td style="width: 180px; text-align: right; vertical-align: top;">
+                                            <br>
+                                            <small style="font-size: 13px; margin-right: 10px;">{{getCruiseData(subCruise, itineraryElem[1].cruiseDetails)}}</small>
+                                            <br>
+                                            <small style="font-size: 13px; margin-right: 12px;">{{getCruiseArrivalDepartTime(subCruise)}}</small>  
+                                            <br>
+                                        </td>
+                                        <td style="vertical-align: top;">
+                                            <br>
+                                            <small style="font-size: 14px; color: #46b7c7; font-weight: normal;">Day {{subCruise.dayNo}}</small>
+                                            <br>
+                                            <small style="font-size: 14px; color: #000; text-align: justify;">{{getCruiseAddress(subCruise)}}</small>
+                                            <p style="letter-spacing: 0px; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; text-align: justify;" [innerHTML]="getCruiseHTML(subCruise) | safe: 'html'"></p>
+                                            <br>
+                                        </td>
+                                    </tr> 
+
+                                    <tr *ngIf="(itineraryElem[0] == 'cruiseItineraries') && idx2 < itineraryElem[1].itinerary.length - 1">
+                                        <td colspan="2" style="padding: 0px;">
+                                            <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                                        </td>
+                                    </tr>
+                                    
+                                </ng-container>
+
+                                <tr *ngIf="(itineraryElem[0] != 'properties' && itineraryElem[0] != 'cruises') && (itineraryElem[0] != 'cruiseItineraries') && idx < itineraryFieldsArr.length - 1">
+                                    <td colspan="2" style="padding: 0px;">
+                                        <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+
+                    <div *ngIf="tripAgentObject" style="text-align: center; width: 100%; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important;">
+                        <br>
+                        <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                        <div style="width: 100%;">
+                            <a href="http://www.facebook.com/cupcakecastlestravelcompany">
+                                <img style="height: 20px; width: 20px; float: right; margin-top: 10px;" src="http://res.cloudinary.com/jst/image/upload/v1524126739/facebook-icon_sy9gvk.png"/>
+                                <span style="width: 3px; height: 30px; background-color: transparent; color: #fff; border-bottom: 0px solid #fff; text-decoration: none; ">f</span>
+                                 <br>
+                            </a>
+                        </div>
+                        <div style="position: absolute; bottom: -20px; text-align: center; font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; width: 87%; background-color: #fff">
+                            <span>To learn more about our services and promotions please contact us</span>
+                            <br>
+                            <b>{{tripAgentObject.firstName}} {{tripAgentObject.lastName}}</b>, <span *ngIf="tripAgentObject.phone1"> {{tripAgentObject.phone1}}, </span> <span style="color: #46b7c7;">{{tripAgentObject.email}}</span>
+                            <br>
+                            <span>CupCake Castles Travel Company</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="!isLocal" class="col-md-12 no-padding " id="itineraryMainDiv" #itineraryMainDiv style="font-family: 'sans-serif','Helvetica Neue',Helvetica,Arial,Source Sans Pro !important; letter-spacing: 0.2px !important;">
+    <div class="box box-primary" style="padding: 0px 10px;">
+        <div style="width: 100%;">
+            
+            <img alt="Image" src="http://res.cloudinary.com/jst/image/upload/v1523605442/CupcakeCastlesLogo_jeitwc.png" id='company-img' class="company-img" style="float: left; height: 60px; width: 50px; margin-bottom: 10px;">
+
+            <h3 style="text-align: left; float: left; margin-top: 20px; font-size: 12px; color: #333;">CupCake Castles Travel Company</h3>
+
+            <div *ngIf="tripAgentObject" class="box-tools txt-right" style="text-align: right; width: 30%; float: right; margin-top: 10px; margin-bottom: 25px;">
+                <span style="color: #000; font-weight: 300; font-size: 11px;">{{tripAgentObject.firstName}} {{tripAgentObject.lastName}}</span>
+                <span class="bluetxt cyan-color" style="color: #46b7c7; font-size: 11px;">{{tripAgentObject.email}}</span>
+                <span style="color: #000; font-weight: 300; font-size: 11px; float: right;">{{tripAgentObject.phone1}}</span>
+                <img *ngIf="tripAgentObject.phone1" src="http://res.cloudinary.com/jst/image/upload/v1523945430/cell-image_j4xzal.png" style="float: right; height: 15px;" />
+            </div>
+            <hr style="width: 100%; margin-bottom: 2px;">
+        </div>
+
+        <div class="box-body" style="margin-top: 0px;">
+            <div class="col-sm-12">
+                <h3 class="bigtxt" style="color: #7b8a97; font-weight: 100; font-size: 18px; margin-left: 0px;">At a glance</h3>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="table" style="width: 100%;">
+                        <thead>
+                            <tr style="background-color: #F2EFEB;">
+                                <th style="border-bottom: 2px solid #ddd; text-align: left; padding-left: 5px; font-size: 12px;">Traveling Package</th>
+                                <th style="border-bottom: 2px solid #ddd; text-align: left; padding-left: 5px; font-size: 12px;">From</th>
+                                <th style="border-bottom: 2px solid #ddd; text-align: left; padding-left: 5px; font-size: 12px;">To</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let itineraryElem of itineraryFieldsArr" [class.hidden]="itineraryElem[1]['isCheckOut'] == true">
+                                <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries' && (itineraryElem[1].isCheckOut != true))">
+                                    
+                                    <td style="line-height: 30px; padding: 0px 0px 0px 5px;">
+                                        <small></small>
+                                        <span style="font-size: 10px; color: #800000; font-weight: 100;" *ngIf="itineraryElem[0] == 'flightActivities'">{{getFlightActivityTypeAndName(itineraryElem, true)}}</span>
+
+                                        <span class="bluetxt cyan-color" *ngIf="itineraryElem[0] == 'properties' || itineraryElem[0] == 'cruises'" style="font-size: 10px; color: #46b7c7;">
+                                            {{getItineraryEmail(itineraryElem, false, 'glance', false, false)}}
+                                        </span>
+                                        
+                                        <span class="bluetxt cyan-color" *ngIf="itineraryElem[0] != 'properties' && itineraryElem[0] != 'cruises'" style="font-size: 10px;">
+                                            {{getItineraryEmail(itineraryElem, false, 'glance', false, false)}}
+                                        </span>
+
+                                        <br *ngIf="getItineraryEmail(itineraryElem, false, 'glance', false, false)!=''">
+                                        <small style="font-size: 10px;">{{getItineraryAddress(itineraryElem, false, false)}}</small>
+
+
+                                        <br *ngIf="getItineraryAddress(itineraryElem, false, false)!=''"> 
+                                        <span *ngIf="itineraryElem[0] == 'room'" style="font-size: 10px; margin-left: 25px;">
+                                            {{getItineraryText(itineraryElem, false, false)}}
+                                        </span>
+                                        
+                                        <span style="font-size: 10px;" *ngIf="itineraryElem[0] != 'room'">
+                                            {{getItineraryText(itineraryElem, false, false)}}
+                                        </span>
+                                    </td>
+
+                                    <td style="font-size: 10px; margin-top: 30px; padding: 0px 0px 0px 5px;" colspan="2" class="text-center" *ngIf="itineraryElem[0] == 'flightActivities'">
+                                        {{getFromDate(itineraryElem, true)}} {{getFromTime(itineraryElem, true)}}
+                                    </td>
+
+                                    <td style="font-size: 10px; margin-top: 30px; padding: 0px 0px 0px 5px;" *ngIf="itineraryElem[0] != 'flightActivities'">
+                                        {{getFromDate(itineraryElem, true)}} {{getFromTime(itineraryElem, true)}}
+                                    </td>
+
+                                    <td style="font-size: 10px; margin-top: 30px; padding: 0px 0px 0px 5px;" *ngIf="itineraryElem[0] != 'flightActivities'">
+                                        {{getToDate(itineraryElem, true)}} {{getToTime(itineraryElem, true)}}
+                                    </td>
+                                </tr>
+                                <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries' && (itineraryElem[1].isCheckOut != true))">
+                                    <td colspan="3" style="padding: 0px;">
+                                        <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div style="width: 100%;" style="margin-top: 35px;">
+            <span style="font-size: 14px; color: #000; font-weight: bold; padding-left: 5px;">Itinerary</span>
+        </div>
+        <div class="box-body">
+            <div class="row custom1">
+                <div class="col-sm-12">
+                    <table class="table " style="width: 100%; margin-bottom: 0px;">
+                        <thead>
+                            <tr>
+                                <th style="font-size: 12px; border-top: 0px solid #ddd; text-align: left; padding-left: 0px; width: 170px;">Traveling Package</th>
+                                <th style="font-size: 12px; border-top: 0px solid #ddd; text-align: left; padding-left: 5px;"></th>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding: 0px;">
+                                    <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <ng-container *ngFor="let itineraryElem of itineraryFieldsArr; let idx = index;">
+                                <tr *ngIf="(itineraryElem[0] != 'cruiseItineraries')" style="margin-top: 10px; margin-bottom: 10px;">
+                                    <td style="width: 160px; text-align: right; margin-right: 10px; vertical-align: top; padding-right: 0px;">
+                                        <div *ngIf="itineraryElem[0] != 'room'"> 
+                                        </div>
+                                        <br>
+
+                                        <div *ngIf="itineraryElem[0] != 'room'">
+                                            <img style="width: 45px; height: 40px; margin-right: 10px;" crossOrigin="Anonymous" alt="Itinerary Image" [src]="getItinerarySmallImages(itineraryElem)"><br>
+                                        </div>
+
+                                        <small style="font-size: 10px; margin-right: 10px;" *ngIf="itineraryElem[1]['isCheckOut'] != true"> {{getFromDate(itineraryElem)}}</small>
+                                        <small style="font-size: 10px; margin-right: 10px;" *ngIf="itineraryElem[1]['isCheckOut'] == true"> {{getToDate(itineraryElem)}}</small>
+                                        <br>
+                                        <small style="font-size: 10px; margin-right: 12px;" *ngIf="itineraryElem[1]['isCheckOut'] != true">{{getFromTime(itineraryElem)}}</small>
+                                        <small style="font-size: 10px; margin-right: 12px;" *ngIf="itineraryElem[1]['isCheckOut'] == true">{{getToTime(itineraryElem)}}</small>
+
+                                        <br>
+                                    </td>
+
+                                    <td style="vertical-align: top; padding-left: 0px;">
+                                        <br>
+                                        <span style="font-size: 10px; color: #800000; font-weight: 100;" *ngIf="itineraryElem[0] == 'flightActivities'">{{getFlightActivityTypeAndName(itineraryElem, false)}}</span>
+                                        
+                                        <span style="font-size: 10px; color: #46b7c7; font-weight: bold;" *ngIf="itineraryElem[0] != 'flightActivities' && getItineraryEmail(itineraryElem, true, 'package', false, false)!=''"><b>{{getItineraryEmail(itineraryElem, true, 'package', false, false)}}</b></span>
+
+                                        <span style="font-size: 10px;" *ngIf="itineraryElem[0] == 'flightActivities'">
+                                            <br><span>{{getFlightActivityConfirmationDetails(itineraryElem)}}</span><br>
+                                            <span>{{getFlightActivityDesc(itineraryElem)}}</span>
+                                        </span>
+
+                                        <small style="font-size: 10px; color: #000;">{{getItineraryText(itineraryElem, false, false)}}</small>
+
+                                        <small style="font-size: 10px; color: #800000;" *ngIf="itineraryElem[0] != 'flightActivities' && itineraryElem[1]['isCheckOut'] == true">
+                                            <br>Double check you are not leaving anything behind.
+                                        </small>
+
+                                        <small style="font-size: 10px; color: #000;" *ngIf="itineraryElem[0] != 'flightActivities' && !itineraryElem[1]['isCheckOut']">
+                                            <br>{{getItineraryAddress(itineraryElem, true, false)}}
+                                        </small>
+
+                                        <br *ngIf="itineraryElem[0] == 'properties' || itineraryElem[0] == 'cruises'">
+
+                                        <img style="box-shadow: -1px -1px 8px rgba(0, 0, 0, 0.5), 6px -2px 14px rgba(0, 0, 0, 0.5); border-radius: 5px; width: 100%; height: 330px; margin-top: 10px;" *ngIf="getLandmarkImage(itineraryElem)!=''" crossOrigin="Anonymous" alt="Itinerary Image" [src]="getLandmarkImage(itineraryElem)">
+
+                                        <ng-container *ngIf="showExtraInfo(itineraryElem)">
+                                            <p style="font-size: 10px; color: #000;">
+                                                ABOUT
+                                            </p>
+                                            <p style="font-size: 10px; color: #000; text-align: justify;" *ngIf="itineraryElem != null && itineraryElem[0] == 'room' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].roomId] != null">
+                                                {{landmarkDetailInfo[itineraryElem[1].roomId].text}}
+                                            </p>
+                                            
+                                            <span *ngIf="itineraryElem != null && itineraryElem[0] == 'properties' && landmarkDetailInfo != null && landmarkDetailInfo[itineraryElem[1].propertyId] != null">
+                                                
+                                                <small style="font-size: 10px; color: #000; text-align: justify;" *ngFor="let obj of landmarkDetailInfo[itineraryElem[1].propertyId].propertyAmenities">
+                                                    {{obj.text}}
+                                                </small>
+                                            </span>
+                                            
+                                            <span *ngIf="itineraryElem!=null && itineraryElem[0]=='cruises' && landmarkDetailInfo!=null && landmarkDetailInfo[itineraryElem[1].cruiseId]!=null">
+                                                <p style="font-size: 11px; text-align: justify;" [innerHTML]="getDescriptionHTMLLandmarkInfo(landmarkDetailInfo[itineraryElem[1].cruiseId].descriptionHTML) | safe: 'html'"></p>
+                                            </span>
+
+                                            <span *ngIf="itineraryElem!=null && (itineraryElem[0]=='cruises' || itineraryElem[0]=='properties')" style="font-size: 10px; color: #000;">
+                                                <br>
+                                                ROOM CATEGORIES</span>
+                                        </ng-container>
+                                        <br>
+                                    </td>
+                                </tr>
+
+                                <ng-container *ngFor="let subCruise of itineraryElem[1].itinerary; let idx2 = index;">
+                                    <tr *ngIf="(itineraryElem[0] == 'cruiseItineraries')" style="margin-top: 10px; margin-bottom: 10px;">
+                                        <td style="width: 160px; text-align: right; vertical-align: top; padding-right: 0px;">
+                                            <br>
+                                            <small style="font-size: 10px; margin-right: 10px;">{{getCruiseData(subCruise, itineraryElem[1].cruiseDetails)}}</small>
+                                            <br>
+                                            <small style="font-size: 10px; margin-right: 12px;">{{getCruiseArrivalDepartTime(subCruise)}}</small>  
+                                            <br>
+                                        </td>
+                                        <td style="vertical-align: top; padding-left: 0px;">
+                                            <br>
+                                            <small style="font-size: 14px; color: #46b7c7; font-weight: normal;">Day {{subCruise.dayNo}}</small>
+                                            <br>
+                                            <small style="font-size: 14px; color: #000; text-align: justify;">{{getCruiseAddress(subCruise)}}</small>
+                                            <p style="font-size: 10px !important; text-align: justify;" [innerHTML]="getCruiseHTML(subCruise) | safe: 'html'"></p>
+                                            <br>
+                                        </td>
+                                    </tr> 
+
+                                    <tr *ngIf="(itineraryElem[0] == 'cruiseItineraries') && idx2 < itineraryElem[1].itinerary.length - 1">
+                                        <td colspan="2" style="padding: 0px;">
+                                            <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                                        </td>
+                                    </tr>
+                                    
+                                </ng-container>
+
+                                <tr *ngIf="(itineraryElem[0] != 'properties' && itineraryElem[0] != 'cruises') && (itineraryElem[0] != 'cruiseItineraries') && idx < itineraryFieldsArr.length - 1">
+                                    <td colspan="2" style="padding: 0px;">
+                                        <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 1px; margin-top: 0px;">
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+
+                    <div *ngIf="tripAgentObject" style="text-align: center; width: 100%;">
+                        <br>
+                        <hr style="height:2px; border:none; background-color:#ddd; width: 100%; margin-bottom: 5px; margin-top: 0px;">
+                        <div style="width: 100%;">
+                            <a href="http://www.facebook.com/cupcakecastlestravelcompany">
+                                <img style="height: 20px; width: 20px; float: right; margin-top: 10px;" src="http://res.cloudinary.com/jst/image/upload/v1524126739/facebook-icon_sy9gvk.png"/>
+                                <span style="width: 3px; height: 30px; background-color: transparent; color: #fff; border-bottom: 0px solid #fff; text-decoration: none; ">f</span>
+                                 <br>
+                            </a>
+                        </div>
+                        <div style="position: absolute; bottom: -20px; text-align: center; width: 87%; background-color: #fff; font-size: 10px;">
+                            <span>To learn more about our services and promotions please contact us</span>
+                            <br>
+                            <b>{{tripAgentObject.firstName}} {{tripAgentObject.lastName}}</b>, <span *ngIf="tripAgentObject.phone1"> {{tripAgentObject.phone1}}, </span> <span style="color: #46b7c7;">{{tripAgentObject.email}}</span>
+                            <br>
+                            <span>CupCake Castles Travel Company</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

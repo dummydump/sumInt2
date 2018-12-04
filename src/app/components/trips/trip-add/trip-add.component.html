@@ -1,0 +1,1324 @@
+<div class="content-wrapper" *ngIf="currentUser">
+    <section class="content-header">
+        <ol class="breadcrumb">
+            <li>
+                <a href="#">Workspace</a>
+            </li>
+            <li class="active">
+                <a href="/trips">Trips</a>
+            </li>
+        </ol>
+        <h1>
+            <i class="fa">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 495.033 495.033" style="enable-background:new 0 0 495.033 495.033;" xml:space="preserve">
+                    <g>
+                        <g>
+                            <circle cx="305.581" cy="55.497" r="55.497" />
+                            <path d="M444.11,190.867c-49.593-5.101-97.676-58.767-109.777-66.199c-7.425-5.36-16.205-8.87-24.604-10.18
+c0,0-5.97-1.239-12.14-0.558c-5.905,0.656-14.884,0.961-28.031,10.761c-0.952,0.592-7.668,6.439-9.786,8.987
+c-16.363,16.961-61.705,67.118-84.275,123.857c-3.19,8.06-1.166,16.815,4.39,22.72l-26.506,47.23l-37.339-20.976
+c-4.457-2.508-10.114-0.942-12.618,3.521L32.751,434.91c-2.502,4.458-0.919,10.14,3.549,12.622l28.267,15.896
+c-4.5,8.01-3.417,18.372,3.381,25.26c8.197,8.367,21.664,8.469,30.017,0.248c7.764-7.659,8.398-19.82,1.819-28.205l38.59-67.704
+l27.035-48.174l33.51-58.091c7.246-1.153,13.74-5.983,16.658-13.31c9.552-24.051,24.344-47.223,38.629-66.425l6.732,77.365
+c0.78,9.088,4.566,16.712,10.178,22.73c-17.356,31.474-64.064,117.541-80.927,146.782c-7.554,13.123-3.064,29.89,10.051,37.454
+c4.924,2.822,10.373,3.985,15.65,3.604c8.777-0.635,17.082-5.484,21.801-13.67c15.711-27.236,56.688-109.896,74.661-140.967
+c14.409,23.945,38.959,68.009,70.104,138.375c4.528,10.254,14.563,16.331,25.096,16.331c3.725,0,7.479-0.749,11.095-2.354
+c13.84-6.123,20.103-22.313,13.964-36.151c-36.728-83.039-63.771-129.136-78.754-153.413c5.922-7.434,9.489-16.675,8.556-27.519
+l-6.372-73.279c18.457,14.737,42.541,27.152,83.663,31.404c0.764,0.082,1.504,0.119,2.252,0.119
+c10.892,0,20.257-8.242,21.401-19.321C464.555,202.671,455.954,192.085,444.11,190.867z M82.647,482.22
+c-4.27,0-7.733-3.462-7.733-7.729s3.463-7.729,7.733-7.729c4.265,0,7.729,3.461,7.729,7.729
+C90.374,478.761,86.913,482.22,82.647,482.22z" />
+                        </g>
+                    </g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                    <g></g>
+                </svg>
+            </i> Trips
+            <small class="label">Regular Trip {{tripPageHeadingText}} {{_tripStartDate |date :'MMMM'}} {{_tripStartDate |date :'yyyy'}}
+            </small>
+        </h1>
+    </section>
+    <section class="content">
+        <div class="row">
+            <section class="col-lg-12">
+                <!--  <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner> -->
+                <div class="col-md-12 no-padding">
+                    <div class="panel-heading custom">
+                        <ul class="nav nav-tabs ">
+
+                            <li class="active" (click)="tabSelectedEvent()">
+                                <a href="#tab1default" data-toggle="tab">Trip Information</a>
+                            </li>
+                            <li (click)="tabSelectedEvent()">
+                                <a href="#tab2default" (click)="loadBooking = true;"  #bookingTab data-toggle="tab">Bookings
+                                    <span class="badge bg-purple">{{countInfo.bookings}}</span>
+                                </a>
+                            </li>
+                            <li [class.hideBookingTab]="!showBookingTab">
+                                <a href="#tab3default" #bookingInfoTab data-toggle="tab">Bookings Information</a>
+                            </li>
+                            <!--<li (click)="tabSelectedEvent()">
+                                <a href="#tab4default" data-toggle="tab">Receipts</a>
+                            </li>-->
+                            <li [class.hideBookingTab]="!showBookingTab">
+                                <a href="#tab5default" (click)="loadPayment = true;" data-toggle="tab">Payments
+                                    <span class="badge bg-purple">{{countInfo.payments}}</span>
+                                </a>
+                            </li>
+                            <li (click)="tabSelectedEvent()">
+                                <a href="#tab6default" data-toggle="tab">Details</a>
+                            </li>
+                            <li (click)="tabSelectedEvent()">
+                                <a href="#tab7default" (click)="loadActivity = true;" data-toggle="tab">Flights & Activities</a>
+                            </li>
+                            <li (click)="tabSelectedEvent()">
+                                <a href="#tab8default" (click)="loadInvoice = true;"  data-toggle="tab">Invoice & Itinerary</a>
+                            </li>
+                            <li (click)="tabSelectedEvent()">
+                                <a href="#tab9default" (click)="loadDocuments = true;" data-toggle="tab">Documents
+                                    <span class="badge bg-purple">{{countInfo.documents}}</span>
+                                </a>
+                            </li>
+                            <li (click)="tabSelectedEvent()">
+                                <a href="#tab10default" (click)="loadNotes=true;" data-toggle="tab">Notes
+                                    <span class="badge bg-purple">{{countInfo.notes}}</span>
+                                </a>
+                            </li>
+                            <li (click)="tabSelectedEvent()">
+                                <a href="#tab11default" (click)="loadTask = true;" click data-toggle="tab">Tasks
+                                    <span class="badge bg-purple">{{countInfo.tasks}}</span>
+                                </a>
+                            </li>
+                            <li (click)="tabSelectedEvent()">
+                                <a href="#tab12default" data-toggle="tab">Timeline
+                                    <span class="badge bg-purple">0</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="panel with-nav-tabs panel-default">
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="tab1default">
+                                    <div class="col-md-6">
+                                        <div class="col-md-12 no-padding ">
+                                            <div class="box box-primary">
+                                                <div class="box-header with-border">
+                                                    <h3 class="box-title">Trip Information</h3>
+                                                    <div class="box-tools">
+                                                        <button type="button" class="btn btn-box-tool bg-blue pull-right" data-toggle="tooltip" data-placement="top" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <form role="form">
+                                                    <div class="box-body top20">
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="mdl-selectfield">
+                                                                    <label>Standard Select</label>
+                                                                    <select class="browser-default" [(ngModel)]="tripObject.tripType" name="tripType">
+                                                                        <option value="" disabled selected>Select Trip Type*</option>
+                                                                        <option value="Anniversary">Anniversary</option>
+                                                                        <option value="BusinessTrip">Business Trip</option>
+                                                                        <option value="Honeymoon">Honeymoon</option>
+                                                                        <option value="Vacation">Vacation</option>
+                                                                        <option value="Wedding">Wedding</option>
+                                                                        <option value="Other">Other</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="mdl-selectfield">
+                                                                    <ng-template #tripAgentItemTemplate let-model="item" let-index="index">
+                                                                        <ul class="autocomplete-ul" style="width: 280px; padding-left:0px;">
+                                                                            <li>
+                                                                                {{model.name}}
+                                                                            </li>
+                                                                        </ul>
+                                                                    </ng-template>
+
+                                                                    <input autocomplete="off" *ngIf="currentUser.user.roleName==='Manager' || currentUser.user.roleName==='Admin'" class="mdl-selectfield" [(ngModel)]="selectedAgent"
+                                                                        name="selectedAgentAuto" (typeaheadOnSelect)="agentSelectChange($event)"
+                                                                        [typeahead]="agentsList" typeaheadOptionField="name"
+                                                                        [typeaheadScrollable]="true" [typeaheadItemTemplate]="tripAgentItemTemplate"
+                                                                        [typeaheadOptionsInScrollableView]="5" placeholder="Search Agent">
+
+                                                                    <input *ngIf="currentUser.user.roleName==='Agent' || currentUser.user.roleName==='Assistant'" disabled type="text" [(ngModel)]="selectedAgent"
+                                                                        name="selectedAgent">
+                                                                    <!-- #selectedAgent="ngModel" -->
+                                                                    <!-- <input *ngIf="currentUser.user.roleName==='Agent'" disabled type="text" [(ngModel)]="newTask._assignedToAgentName" #_assignedToAgentName="ngModel" name="_assignedToAgentName"> -->
+                                                                    <label>Agent Select </label>
+                                                                    <!-- <select class="browser-default" name="agent" required ngModel #agent="ngModel" (change)="agentSelectChange($event.target.value)" [disabled]="this.currentUser.user && this.currentUser.user.roleName === 'Agent'">
+                                                    <option value="" disabled  selected >Select Agent*</option>
+                                                    <option *ngFor="let agent of agentsList" [value]="agent._id" [selected]="tripObject.agent && tripObject.agent.agentId == agent._id">
+                                                        {{agent.firstName}} {{agent.lastName}}
+                                                    </option>
+                                                   </select> -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+
+                                                            <div class="col-sm-6">
+                                                                <div class="group">
+                                                                    <input type="date" #startDate="ngModel" ngModel required [(ngModel)]="tripObject.startDate" name="startDate" (blur)="validateTripStartEndDate(oldVal, tripObject.startDate, tripObject.endDate, 'start');"
+                                                                        (focus)="oldVal=tripObject">
+                                                                    <span class="highlight"></span>
+                                                                    <span class="bar"></span>
+                                                                    <label>Start Date*</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="group">
+                                                                    <input type="date" #endDate="ngModel" ngModel required [(ngModel)]="tripObject.endDate" name="endDate" (blur)="validateTripStartEndDate(oldVal, tripObject.startDate, tripObject.endDate, 'end');"
+                                                                        (focus)="oldVal=tripObject">
+                                                                    <span class="highlight"></span>
+                                                                    <span class="bar"></span>
+                                                                    <label>End Date*</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-sm-6">
+                                                                <div class="mdl-selectfield">
+                                                                    <label>Trip Status</label>
+                                                                    <select class="browser-default" [(ngModel)]="tripObject.tripStatus" name="tripStatus">
+                                                                        <option value="" disabled selected>Select Trip Status*</option>
+                                                                        <option value="Active">Active</option>
+                                                                        <option value="Close">Close</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div class="group">
+                                                                    <input type="text" required [(ngModel)]="tripObject.tripDescription" name="tripDescription">
+                                                                    <span class="highlight"></span>
+                                                                    <span class="bar"></span>
+                                                                    <label>Trip Description</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row custom">
+                                                            <div *ngIf="tripObject.startDate && tripObject.endDate" class="col-sm-12">
+                                                                <h5 class="text-success">
+                                                                    <strong>Select date from {{tripObject.startDate | date : "MM/dd/yyyy"}}
+                                                                        to {{tripObject.endDate | date : "MM/dd/yyyy"}} </strong>
+                                                                </h5>
+                                                                <!-- <h5 class="text-danger"><strong> {{itineraryValidationMessage}}</strong></h5> -->
+                                                            </div>
+                                                            <div class="box-footer">
+                                                                <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="closePage()">
+                                                                    Close
+                                                                    <div class="ripple-container"></div>
+                                                                </button>
+                                                                <button type="button" class="btn bg-navy btn-flat roundbtn margin" [disabled]="isSubmitButtonDisable" (click)="tripModeCheckAndSave($event,false)">
+                                                                    Save
+                                                                    <div class="ripple-container"></div>
+                                                                </button>
+        
+                                                                <button type="button" class="btn bg-green btn-flat roundbtn margin" [disabled]="isSubmitButtonDisable" (click)="tripModeCheckAndSave($event,true)">
+                                                                    Save & Close
+                                                                    <div class="ripple-container"></div>
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-sm-12">
+                                                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" *ngIf="tripObject._id != ''">
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading" role="tab" id="headingOne">
+                                                                            <h4 class="panel-title">
+                                                                                <a class="collapsed" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="false" aria-controls="collapseOne">
+                                                                                    <!--  <a role="button" data-toggle="#collapseOne" class="collapsed" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> -->
+                                                                                    <i class="fa fa-angle-right"></i> Flight
+                                                                                    <span class="badge bg-purple">
+                                                                                        <i class="fa fa-fw fa-plane"></i> {{(flightsList)? flightsList.length
+                                                                                        : 0}}</span>
+                                                                                </a>
+                                                                                <i class="more-less glyphicon glyphicon-plus" (click)="newFlight()"></i>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="collapseOne" class="collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                                            <div class="panel-body" *ngIf="flightsList && flightsList.length > 0">
+                                                                                <table class="table">
+                                                                                    <ng-container *ngFor="let flight of flightsList; let in = index;">
+                                                                                        <ng-container *ngIf="flight">
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <i class="fa fa-plane"></i>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="flight.departureDate" name="flight.{{in}}.departureDate" [value]="flight.departureDate" (blur)="validateFlightDates('date', oldObj, oldVal, flight.departureDate, flight.departureTime, 'flights', in, 0, 0);"
+                                                                                                            (focus)="oldVal=flight.departureDate; oldObj=flight;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Departure Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="flight.departureTime" name="flight.{{in}}.departureTime" (blur)="validateFlightDates('time', oldObj, oldVal, flight.departureDate, flight.departureTime, 'flights', in, 0, 0);"
+                                                                                                            (focus)="oldVal=flight.departureTime; oldObj=flight;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Departure Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <a>
+                                                                                                        <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeFlight(in)">delete</i>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td colspan="2" class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="text" required [(ngModel)]="flight.flightNumber" name="flight.{{in}}.flightNumber" placeholder="Flight Number"
+                                                                                                            [value]="flight.flightNumber">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Flight Number</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </ng-container>
+                                                                                    </ng-container>
+                                                                                </table>
+                                                                                <div class="col-sm-12" *ngIf="flightsList && flightsList.length > 0">
+                                                                                    <button type="button"  class="pull-right btn bg-navy btn-flat roundbtn margin" (click)="saveTrip(false)"> Save
+                                                                                        <div class="ripple-container"></div>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                                                            <h4 class="panel-title">
+                                                                                <a class="collapsed" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">
+                                                                                    <!-- Toggle first element</a> -->
+                                                                                    <!--  <a class="collapsed" role="button" data-toggle="#collapseTwo" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> -->
+                                                                                    <i class="fa fa-angle-right"></i> Resort/Hotel
+                                                                                    <span class="badge bg-purple">
+                                                                                        <i class="fa fa-fw fa-bed"></i> {{(propertiesList)? propertiesList.length
+                                                                                        : 0}}</span>
+                                                                                </a>
+                                                                                <i class="more-less glyphicon glyphicon-plus" (click)="newProperty()"></i>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="collapseTwo" class="collapse in" role="tabpanel" aria-labelledby="headingTwo">
+                                                                            <div class="panel-body" *ngIf="propertiesList && propertiesList.length > 0">
+                                                                                <table class="table">
+                                                                                    <ng-container *ngFor="let property of propertiesList; let in = index;">
+                                                                                        <ng-container *ngIf="property">
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <i class="fa fa-fw fa-bed"></i>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="property.checkInDate" name="property.{{in}}.checkInDate" [value]="property.checkInDate" (blur)="validatePropertyDates('date', oldObj, oldVal, property.checkInDate, property.checkInTime, 'properties', in, 0, 1);"
+                                                                                                            (focus)="oldVal=property.checkInDate; oldObj=property;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Check-in Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="property.checkInTime" name="property.{{in}}.checkInTime" [value]="property.checkInTime" (blur)="validatePropertyDates('time', oldObj, oldVal, property.checkInDate, property.checkInTime, 'properties', in, 0, 1);"
+                                                                                                            (focus)="oldVal=property.checkInTime; oldObj=property;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <a>
+                                                                                                        <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeProperty(in)">delete</i>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="property.checkOutDate" name="property.{{in}}.checkOutDate" [value]="property.checkOutDate"
+                                                                                                            (blur)="validatePropertyDates('date', oldObj, oldVal, property.checkOutDate, property.checkOutTime, 'properties', in, 0, 1);"
+                                                                                                            (focus)="oldVal=property.checkOutDate; oldObj=property;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Check-out Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="property.checkOutTime" name="property.{{in}}.checkOutTime" [value]="property.checkOutTime"
+                                                                                                            (blur)="validatePropertyDates('time', oldObj, oldVal, property.checkOutDate, property.checkOutTime, 'properties', in, 0, 1);"
+                                                                                                            (focus)="oldVal=property.checkOutTime; oldObj=property;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="radio" (click)="radioChange(in, 'properties')">
+                                                                                                        <label>
+                                                                                                            <input type="radio" name="isPrimary-property-{{in}}" [attr.checked]="(isPrimary == 'properties'+in)?'checked' : null">
+                                                                                                            <span class="circle"></span>
+                                                                                                            <span class="check"></span>
+                                                                                                            Primary
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td colspan="2" class="bordertopn">
+                                                                                                    <div class="mdl-selectfield">
+                                                                                                        <label>Select Property</label>
+                                                                                                        <ng-template #propertyItemTemplate let-model="item" let-index="index">
+                                                                                                            <ul class="autocomplete-ul" style="width: 372px; padding-left:0px;">
+                                                                                                                <li>
+                                                                                                                    {{model.name}}
+                                                                                                                </li>
+                                                                                                            </ul>
+                                                                                                        </ng-template>
+
+                                                                                                        <input autocomplete="off" ngModel #propertyName="ngModel" class="mdl-selectfield" [(ngModel)]="property.name" [value]="property.name" name="property.{{in}}.propertyId"
+                                                                                                            (input)="onNameChange()"
+                                                                                                            (typeaheadOnSelect)="typeaHeadPropertyOnSelect($event, in)"
+                                                                                                            [typeahead]="propertyAutocompleteList"
+                                                                                                            typeaheadOptionField="name"
+                                                                                                            [typeaheadScrollable]="true"
+                                                                                                            [typeaheadItemTemplate]="propertyItemTemplate"
+                                                                                                            [typeaheadOptionsInScrollableView]="5"
+                                                                                                            placeholder="Property Name*">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+
+                                                                                                        <!--<select class="browser-default" [(ngModel)]="property.propertyId"  name="property.{{in}}.propertyId" [value]="property.propertyId">
+    <option value="" disabled selected>Select Property</option>
+    <option *ngFor="let prop of allPropertyList" value={{prop._id}}>
+        {{prop.name}}
+    </option>
+</select>-->
+                                                                                                    </div>
+                                                                                                    <!--<div class="group">      
+<input type="text" required [(ngModel)]="property.propertyName" name="property.{{in}}.propertyName" [value]="property.propertyName">
+<span class="highlight"></span>
+<span class="bar"></span>
+<label>Property Name</label>
+</div>-->
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td colspan="3" class="bordertopn">
+                                                                                                    <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="newRoomCategory(in, 'property')">
+                                                                                                        <i class="fa fa-plus"></i> Add room category
+                                                                                                        <div class="ripple-container"></div>
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <ng-container *ngFor="let room of property.roomCategories; let subin = index;">
+                                                                                                <ng-container *ngIf="room">
+                                                                                                    <tr class="custom1">
+                                                                                                        <td class="bordertopn" rowspan="2"></td>
+                                                                                                        <td class="bordertopn">
+                                                                                                            <div class="mdl-selectfield">
+                                                                                                                <label>Select Room</label>
+                                                                                                                <select class="browser-default" [(ngModel)]="room.roomId" name="property{{subin}}{{room.roomId}}" [value]="room.roomId">
+                                                                                                                    <option value="" disabled selected>Select
+                                                                                                                        Room
+                                                                                                                    </option>
+                                                                                                                    <option *ngFor="let room of propertyRoomList" value={{room._id}}>
+                                                                                                                        {{room.name}}
+                                                                                                                    </option>
+                                                                                                                </select>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td class="bordertopn">
+                                                                                                            <div class="group">
+                                                                                                                <input type="text" required [(ngModel)]="room.roomNumber" name="property{{subin}}{{room.roomNumber}}" [value]="room.roomNumber">
+                                                                                                                <span class="highlight"></span>
+                                                                                                                <span class="bar"></span>
+                                                                                                                <label>Room Number</label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td class="bordertopn" rowspan="2">
+                                                                                                            <a>
+                                                                                                                <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeRoomCategory(in, subin, 'property')">delete</i>
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr class="custom1">
+                                                                                                        <td class="bordertopn">
+                                                                                                            <div class="group">
+                                                                                                                <input type="date" [(ngModel)]="room.checkInDate" name="room.{{in}}.{{subin}}.checkInDate" [value]="room.checkInDate" (blur)="validateRoomDates('date', oldObj, oldVal, room.checkInDate, null, 'properties', in, subin, 1);"
+                                                                                                                    (focus)="oldVal=room.checkInDate; oldObj=room;">
+                                                                                                                <span class="highlight"></span>
+                                                                                                                <span class="bar"></span>
+                                                                                                                <label>Check-in
+                                                                                                                    Date
+                                                                                                                </label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td class="bordertopn">
+                                                                                                            <div class="group">
+                                                                                                                <input type="date" [(ngModel)]="room.checkOutDate" name="room.{{in}}.{{subin}}.checkOutDate" [value]="room.checkOutDate"
+                                                                                                                    (blur)="validateRoomDates('date', oldObj, oldVal, room.checkOutDate, null, 'properties', in, subin, 1);"
+                                                                                                                    (focus)="oldVal=room.checkOutDate; oldObj=room;">
+                                                                                                                <span class="highlight"></span>
+                                                                                                                <span class="bar"></span>
+                                                                                                                <label>Check-out
+                                                                                                                    Date
+                                                                                                                </label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </ng-container>
+                                                                                            </ng-container>
+                                                                                        </ng-container>
+                                                                                        <tr>
+                                                                                            <td colspan="4"></td>
+                                                                                        </tr>
+                                                                                    </ng-container>
+                                                                                </table>
+                                                                                <div class="col-sm-12" *ngIf="propertiesList && propertiesList.length > 0">
+                                                                                    <button type="button" class="pull-right btn bg-navy btn-flat roundbtn margin" (click)="checkTrip(false ,'Resort/Hotel')">
+                                                                                        Save
+                                                                                        <div class="ripple-container"></div>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading" role="tab" id="headingThree">
+                                                                            <h4 class="panel-title">
+                                                                                <!--  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> -->
+                                                                                <a class="collapsed" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">
+                                                                                    <i class="fa fa-angle-right"></i> Cruise
+                                                                                    <span class="badge bg-purple">
+                                                                                        <i class="fa fa-fw fa-ship"></i> {{(cruisesList)? cruisesList.length
+                                                                                        : 0}}</span>
+                                                                                </a>
+                                                                                <i class="more-less glyphicon glyphicon-plus" (click)="newCruise()"></i>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="collapseThree" class="collapse in" role="tabpanel" aria-labelledby="headingThree">
+                                                                            <div class="panel-body" *ngIf="cruisesList && cruisesList.length > 0">
+                                                                                <table class="table">
+                                                                                    <ng-container *ngFor="let cruise of cruisesList; let in = index;">
+                                                                                        <ng-container *ngIf="cruise">
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn">
+                                                                                                    <i class="fa fa-fw fa-ship"></i>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="cruise.departureDate" name="cruise.{{in}}.departureDate" [value]="cruise.departureDate" (blur)="validateCruiseDates('date', oldObj, oldVal, cruise.departureDate, cruise.departureTime, 'cruise', in, 0, 2);"
+                                                                                                            (focus)="oldVal=cruise.departureDate; oldObj=cruise;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Departure Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="cruise.departureTime" name="cruise.{{in}}.departureTime" [value]="cruise.departureTime" (blur)="validateCruiseDates('time', oldObj, oldVal, cruise.departureDate, cruise.departureTime, 'cruise', in, 0, 2);"
+                                                                                                            (focus)="oldVal=cruise.departureTime; oldObj=cruise;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Departure Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <a>
+                                                                                                        <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeCruise(in)">delete</i>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn"></td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="cruise.arrivalDate" name="cruise.{{in}}.arrivalDate" [value]="cruise.arrivalDate" (blur)="validateCruiseDates('date', oldObj, oldVal, cruise.arrivalDate, cruise.arrivalTime, 'cruise', in, 0, 2);"
+                                                                                                            (focus)="oldVal=cruise.arrivalDate; oldObj=cruise;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Arrival Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="cruise.arrivalTime" name="cruise.{{in}}.arrivalTime" [value]="cruise.arrivalTime" (blur)="validateCruiseDates('time', oldObj, oldVal, cruise.arrivalDate, cruise.arrivalTime, 'cruise', in, 0, 2);"
+                                                                                                            (focus)="oldVal=cruise.arrivalTime; oldObj=cruise;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Arrival Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn" (click)="radioChange(in, 'cruise')">
+                                                                                                    <div class="radio">
+                                                                                                        <label>
+                                                                                                            <input type="radio" name="isPrimary-cruise-{{in}}" [attr.checked]="(isPrimary == 'cruise'+in)?'checked' : null">
+                                                                                                            <span class="circle"></span>
+                                                                                                            <span class="check"></span>
+                                                                                                            Primary
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td colspan="2" class="bordertopn">
+                                                                                                    <!--<div class="group">      
+<input type="text" required [(ngModel)]="cruise.cruiseName" name="cruise.{{in}}.cruiseName" [value]="cruise.cruiseName">
+<span class="highlight"></span>
+<span class="bar"></span>
+<label>Cruise Name</label>
+</div>-->
+                                                                                                    <!--<label>Select Cruise</label>-->
+
+                                                                                                    <ng-template #customItemTemplate let-model="item" let-index="index">
+                                                                                                        <ul class="autocomplete-ul" style="width: 372px; padding-left:0px;">
+                                                                                                            <li>
+                                                                                                                {{model.title}}
+                                                                                                            </li>
+                                                                                                        </ul>
+                                                                                                    </ng-template>
+
+                                                                                                    <input autocomplete="off" ngModel #cruiseName="ngModel" class="mdl-selectfield" [(ngModel)]="cruise.title" [value]="cruise.title" name="cruise.{{in}}.cruiseItineraryId"
+                                                                                                        (input)="onNameChange()"
+                                                                                                        (typeaheadOnSelect)="typeaHeadCruiseOnSelect($event, in)"
+                                                                                                        [typeahead]="cruiseAutocompleteList"
+                                                                                                        typeaheadOptionField="title"
+                                                                                                        [typeaheadScrollable]="true"
+                                                                                                        [typeaheadItemTemplate]="customItemTemplate"
+                                                                                                        [typeaheadOptionsInScrollableView]="5"
+                                                                                                        placeholder="Cruise Name*">
+                                                                                                    <span class="highlight"></span>
+                                                                                                    <span class="bar"></span>
+
+
+                                                                                                    <!--<select class="browser-default" [(ngModel)]="cruise.cruiseItineraryId"  name="cruise.{{in}}.cruiseItineraryId" [value]="cruise.cruiseItineraryId" (change)="cruiseTitinerarySelectChange($event.target.value, in)">
+<option value="" disabled selected>Select Cruise Itinerary</option>
+<option *ngFor="let cru of allCruiseItinerariesTitleList" 
+value={{cru._id}}>{{cru.title}}</option>
+</select>-->
+
+
+                                                                                                </td>
+                                                                                                <td class="bordertopn"></td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td colspan="3" class="bordertopn">
+                                                                                                    <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="newRoomCategory(in, 'cruise')">
+                                                                                                        <i class="fa fa-plus"></i> Add room category
+                                                                                                        <div class="ripple-container"></div>
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <ng-container *ngFor="let room of cruise.roomCategories; let subin = index;">
+                                                                                                <ng-container *ngIf="room">
+                                                                                                    <tr class="custom1">
+                                                                                                        <td class="bordertopn" rowspan="2"></td>
+                                                                                                        <td class="bordertopn">
+                                                                                                            <div class="mdl-selectfield">
+                                                                                                                <label>Standard
+                                                                                                                    Select
+                                                                                                                </label>
+                                                                                                                <select class="browser-default" [(ngModel)]="room.roomId" name="room.{{in}}.{{subin}}.roomId" [value]="room.roomId">
+                                                                                                                    <option value="" disabled selected>Room
+                                                                                                                        Category
+                                                                                                                    </option>
+                                                                                                                    <option *ngFor="let room of cruiseRoomList" value={{room._id}}>
+                                                                                                                        {{room.name}}
+                                                                                                                    </option>
+                                                                                                                </select>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td class="bordertopn">
+                                                                                                            <div class="group">
+                                                                                                                <input type="text" required [(ngModel)]="room.roomNumber" name="room.{{in}}.{{subin}}.roomNumber" [value]="room.roomNumber">
+                                                                                                                <span class="highlight"></span>
+                                                                                                                <span class="bar"></span>
+                                                                                                                <label>Room Number</label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td class="bordertopn" rowspan="2">
+                                                                                                            <a>
+                                                                                                                <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeRoomCategory(in, subin, 'cruise')">delete</i>
+                                                                                                            </a>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                    <tr class="custom1">
+                                                                                                        <td class="bordertopn">
+                                                                                                            <div class="group">
+                                                                                                                <input type="date" [(ngModel)]="room.checkInDate" name="room.{{in}}.{{subin}}.checkInDate" [value]="room.checkInDate" (blur)="validateRoomDates('date', oldObj, oldVal, room.checkInDate, null, 'cruise', in, subin, 2);"
+                                                                                                                    (focus)="oldVal=room.checkInDate; oldObj=room;">
+                                                                                                                <span class="highlight"></span>
+                                                                                                                <span class="bar"></span>
+                                                                                                                <label>Check-in
+                                                                                                                    Date
+                                                                                                                </label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <td class="bordertopn">
+                                                                                                            <div class="group">
+                                                                                                                <input type="date" [(ngModel)]="room.checkOutDate" name="room.{{in}}.{{subin}}.checkOutDate" [value]="room.checkOutDate"
+                                                                                                                    (blur)="validateRoomDates('date', oldObj, oldVal, room.checkOutDate, null, 'cruise', in, subin, 2);"
+                                                                                                                    (focus)="oldVal=room.checkOutDate; oldObj=room;">
+                                                                                                                <span class="highlight"></span>
+                                                                                                                <span class="bar"></span>
+                                                                                                                <label>Check-out
+                                                                                                                    Date
+                                                                                                                </label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </ng-container>
+                                                                                            </ng-container>
+                                                                                        </ng-container>
+                                                                                    </ng-container>
+                                                                                    <tr>
+                                                                                        <td colspan="4"></td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                                <div class="col-sm-12" *ngIf="cruisesList && cruisesList.length > 0">
+                                                                                    <button type="button" class="pull-right btn bg-navy btn-flat roundbtn margin" (click)="checkTrip(false, 'Cruise')"> Save
+                                                                                        <div class="ripple-container"></div>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading" role="tab" id="headingThree">
+                                                                            <h4 class="panel-title">
+                                                                                <a class="collapsed" data-toggle="collapse" href="#collapseFour" role="button" aria-expanded="false" aria-controls="collapseFour">
+                                                                                    <!-- <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseThree"> -->
+                                                                                    <i class="fa fa-angle-right"></i> Tour
+                                                                                    <span class="badge bg-purple">
+                                                                                        <i class="fa fa-fw fa-circle-o-notch"></i> {{(toursList)? toursList.length
+                                                                                        : 0}}</span>
+                                                                                </a>
+                                                                                <i class="more-less glyphicon glyphicon-plus" (click)="newTour()"></i>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="collapseFour" class="collapse in" role="tabpanel" aria-labelledby="headingThree">
+                                                                            <div class="panel-body" *ngIf="toursList && toursList.length > 0">
+                                                                                <table class="table">
+                                                                                    <ng-container *ngFor="let tour of toursList; let in = index;">
+                                                                                        <ng-container *ngIf="tour">
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <i class="fa fa-fw fa-circle-o-notch"></i>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="text" required [(ngModel)]="tour.tourName" name="tour.{{in}}.tourName" [value]="tour.tourName">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Tour Name</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="tour.checkInDate" name="tour.{{in}}.checkInDate" [value]="tour.checkInDate" (blur)="validateTourDates('date', oldObj, oldVal, tour.checkInDate, tour.checkInTime, 'tour', in, 0, 3);"
+                                                                                                            (focus)="oldVal=tour.checkInDate; oldObj=tour;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Check-in Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <a>
+                                                                                                        <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeTour(in)">delete</i>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1" colspan="2">
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="tour.checkInTime" name="tour.{{in}}.checkInTime" [value]="tour.checkInTime" (blur)="validateTourDates('time', oldObj, oldVal, tour.checkInDate, tour.checkInTime, 'tour', in, 0, 3);"
+                                                                                                            (focus)="oldVal=tour.checkInDate; oldObj=tour;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Check-in Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </ng-container>
+                                                                                    </ng-container>
+                                                                                </table>
+                                                                                <div class="col-sm-12" *ngIf="toursList && toursList.length > 0">
+                                                                                    <button type="button" class="pull-right btn bg-navy btn-flat roundbtn margin" (click)="saveTrip(false)"> Save
+                                                                                        <div class="ripple-container"></div>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading" role="tab" id="headingThree">
+                                                                            <h4 class="panel-title">
+                                                                                <a class="collapsed" data-toggle="collapse" href="#collapseFive" role="button" aria-expanded="false" aria-controls="collapseFive">
+                                                                                    <!-- <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseThree"> -->
+                                                                                    <i class="fa fa-angle-right"></i> Train
+                                                                                    <span class="badge bg-purple">
+                                                                                        <i class="fa fa-fw fa-train"></i> {{(trainsList)? trainsList.length
+                                                                                        : 0}}</span>
+                                                                                </a>
+                                                                                <i class="more-less glyphicon glyphicon-plus" (click)="newTrain()"></i>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="collapseFive" class="collapse in" role="tabpanel" aria-labelledby="headingThree">
+                                                                            <div class="panel-body" *ngIf="trainsList && trainsList.length > 0">
+                                                                                <table class="table">
+                                                                                    <ng-container *ngFor="let train of trainsList; let in = index;">
+                                                                                        <ng-container *ngIf="train">
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn" rowspan="4">
+                                                                                                    <i class="fa fa-fw fa-train"></i>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="text" required [(ngModel)]="train.trainName" name="train.{{in}}.trainName" [value]="train.trainName">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Name of Train</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="train.departureDate" name="train.{{in}}.departureDate" [value]="train.departureDate" (blur)="validateTrainsDates('date', oldObj, oldVal, train.departureDate, train.departureTime, 'train', in, 0, 4);"
+                                                                                                            (focus)="oldVal=train.departureDate; oldObj=train;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Departure Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn" rowspan="4">
+                                                                                                    <a>
+                                                                                                        <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeTrain(in)">delete</i>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="train.departureTime" name="train.{{in}}.departureTime" [value]="train.departureTime" (blur)="validateTrainsDates('time', oldObj, oldVal, train.departureDate, train.departureTime, 'train', in, 0, 4);"
+                                                                                                            (focus)="oldVal=train.departureTime; oldObj=train;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Departure Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="train.estimatedArrivalDate" name="train.{{in}}.estimatedArrivalDate" [value]="train.estimatedArrivalDate"
+                                                                                                            (blur)="validateTrainsDates('date', oldObj, oldVal, train.estimatedArrivalDate, train.estimatedArrivalTime, 'train', in, 0, 4);"
+                                                                                                            (focus)="oldVal=train.estimatedArrivalDate; oldObj=train;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Estimated Arrival
+                                                                                                            Date
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="train.estimatedArrivalTime" name="train.{{in}}.estimatedArrivalTime" [value]="train.estimatedArrivalTime"
+                                                                                                            (blur)="validateTrainsDates('time', oldObj, oldVal, train.estimatedArrivalDate, train.estimatedArrivalTime, 'train', in, 0, 4);"
+                                                                                                            (focus)="oldVal=train.estimatedArrivalTime; oldObj=train;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Estimated Arrival
+                                                                                                            Time
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="text" required [(ngModel)]="train.coachNo" name="train.{{in}}.coachNo" [value]="train.coachNo">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Coach No</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn" colspan="2">
+                                                                                                    <div class="group">
+                                                                                                        <input type="text" required [(ngModel)]="train.seatNo" name="train.{{in}}.seatNo" [value]="train.seatNo">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Seat No.</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </ng-container>
+                                                                                    </ng-container>
+                                                                                </table>
+                                                                                <div class="col-sm-12" *ngIf="trainsList && trainsList.length > 0">
+                                                                                    <button type="button" class="pull-right btn bg-navy btn-flat roundbtn margin" (click)="checkTrip(false, 'Train')"> Save
+                                                                                        <div class="ripple-container"></div>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading" role="tab" id="headingThree">
+                                                                            <h4 class="panel-title">
+                                                                                <a class="collapsed" data-toggle="collapse" href="#collapseSix" role="button" aria-expanded="false" aria-controls="collapseSix">
+                                                                                    <!-- <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseThree"> -->
+                                                                                    <i class="fa fa-angle-right"></i> Car
+                                                                                    <span class="badge bg-purple">
+                                                                                        <i class="fa fa-fw fa-car"></i> {{(carRentalsList)? carRentalsList.length
+                                                                                        : 0}}</span>
+                                                                                </a>
+                                                                                <i class="more-less glyphicon glyphicon-plus" (click)="newCar()"></i>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="collapseSix" class="collapse in" role="tabpanel" aria-labelledby="headingThree">
+                                                                            <div class="panel-body" *ngIf="carRentalsList && carRentalsList.length > 0">
+                                                                                <table class="table">
+                                                                                    <ng-container *ngFor="let car of carRentalsList; let in = index;">
+                                                                                        <ng-container *ngIf="car">
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <i class="fa fa-fw fa-car"></i>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="text" required [(ngModel)]="car.location" name="car.{{in}}.location" [value]="car.location">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Location</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="car.departureDate" name="car.{{in}}.departureDate" [value]="car.departureDate" (blur)="validateCarDates('date', oldObj, oldVal, car.departureDate, car.departureTime, 'car', in, 0, 5);"
+                                                                                                            (focus)="oldVal=car.departureDate; oldObj=car;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <a>
+                                                                                                        <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeCar(in)">delete</i>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1" colspan="2">
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="car.departureTime" name="car.{{in}}.departureTime" [value]="car.departureTime" (blur)="validateCarDates('time', oldObj, oldVal, car.departureDate, car.departureTime, 'car', in, 0, 5);"
+                                                                                                            (focus)="oldVal=car.departureTime; oldObj=car;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </ng-container>
+                                                                                    </ng-container>
+                                                                                </table>
+                                                                                <div class="col-sm-12" *ngIf="carRentalsList && carRentalsList.length > 0">
+                                                                                    <button type="button" class="pull-right btn bg-navy btn-flat roundbtn margin" (click)="saveTrip(false)"> Save
+                                                                                        <div class="ripple-container"></div>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading" role="tab" id="headingThree">
+                                                                            <h4 class="panel-title">
+                                                                                <a class="collapsed" data-toggle="collapse" href="#collapseSeven" role="button" aria-expanded="false" aria-controls="collapseSeven">
+                                                                                    <!-- <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven" aria-expanded="false" aria-controls="collapseThree"> -->
+                                                                                    <i class="fa fa-angle-right"></i> Ground Transfer
+                                                                                    <span class="badge bg-purple">
+                                                                                        <i class="fa  fa-bus"></i> {{(groundTransferList)? groundTransferList.length
+                                                                                        : 0}}</span>
+                                                                                </a>
+                                                                                <i class="more-less glyphicon glyphicon-plus" (click)="newGroundTransfer()"></i>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div id="collapseSeven" class="collapse in" role="tabpanel" aria-labelledby="headingThree">
+                                                                            <div class="panel-body" *ngIf="groundTransferList && groundTransferList.length > 0">
+                                                                                <table class="table">
+                                                                                    <ng-container *ngFor="let ground of groundTransferList; let in = index;">
+                                                                                        <ng-container *ngIf="ground">
+                                                                                            <tr class="custom1">
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <i class="fa  fa-bus"></i>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="text" required [(ngModel)]="ground.location" name="car.{{in}}.location" [value]="ground.location">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Location</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="date" [(ngModel)]="ground.departureDate" name="ground.{{in}}.departureDate" [value]="ground.departureDate" (blur)="validateGroundTransferDates('date', oldObj, oldVal, ground.departureDate, ground.departureTime, 'ground', in, 0, 6);"
+                                                                                                            (focus)="oldVal=ground.departureDate; oldObj=ground;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Date</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <td class="bordertopn" rowspan="2">
+                                                                                                    <a>
+                                                                                                        <i class="material-icons delete" title="Delete" data-toggle="tooltip" data-placement="bottom" (click)="removeGroundTransfer(in)">delete</i>
+                                                                                                    </a>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                            <tr class="custom1" colspan="2">
+                                                                                                <td class="bordertopn">
+                                                                                                    <div class="group">
+                                                                                                        <input type="time" [(ngModel)]="ground.departureTime" name="ground.{{in}}.departureTime" [value]="ground.departureTime" (blur)="validateGroundTransferDates('time', oldObj, oldVal, ground.departureDate, ground.departureTime, 'ground', in, 0, 6);"
+                                                                                                            (focus)="oldVal=ground.departureTime; oldObj=ground;">
+                                                                                                        <span class="highlight"></span>
+                                                                                                        <span class="bar"></span>
+                                                                                                        <label>Time</label>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </ng-container>
+                                                                                    </ng-container>
+                                                                                </table>
+                                                                                <div class="col-sm-12" *ngIf="groundTransferList && groundTransferList.length > 0">
+                                                                                    <button type="button" class="pull-right btn bg-navy btn-flat roundbtn margin" (click)="saveTrip(false)"> Save
+                                                                                        <div class="ripple-container"></div>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- panel-group -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-12 no-padding">
+                                            <div class="box">
+                                                <div class="box-header">
+                                                    <h3 class="box-title">Workspace Extensions</h3>
+                                                    <div class="box-tools">
+                                                        <button type="button" class="btn btn-box-tool bg-blue pull-right" data-toggle="tooltip" data-placement="top" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </button>
+                                                        <button type="button" class="btn btn-box-tool bg-blue pull-right" data-toggle="tooltip" data-placement="top" title="Add Workspace">
+                                                            <i class="fa fa-plus"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <ng-container *ngIf="tripObject._id != ''">
+                                                    <h6 class="text-center">
+                                                        <i class="fa fa-warning text-yellow"></i> You will be able to
+                                                        <span class="text-danger">add extensions</span> once the trip has been saved.</h6>
+                                                </ng-container>
+                                                <ng-container *ngIf="tripObject._id == ''">
+                                                    <div class="box-body no-padding">
+                                                         <h6 class="text-center"><i class="fa fa-warning text-yellow"></i> You will be able to <span class="text-danger">add extensions</span> once the client has been saved.</h6> 
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 no-padding">
+                                            <div class="box">
+                                                <div class="box-header">
+                                                    <h3 class="box-title">Travelers</h3>
+                                                    <div class="box-tools">
+                                                        <button type="button" class="btn btn-box-tool bg-blue pull-right" data-toggle="tooltip" data-placement="top" title="Refresh">
+                                                            <i class="fa fa-refresh"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </button>
+                                                        <button type="button" class="btn btn-box-tool bg-blue pull-right" data-toggle="tooltip" data-placement="top" title="Add Traveler"
+                                                            (click)="AddNewTraveler();">
+                                                            <i class="fa fa-plus"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <ng-container *ngIf="tripObject._id == ''">
+                                                    <h6 class="text-center">
+                                                        <i class="fa fa-warning text-yellow"></i> You will be able to
+                                                        <span class="text-danger">add travelers</span> once the trip has been saved.</h6>
+                                                </ng-container>
+                                                <ng-container *ngIf="tripObject._id != ''">
+                                                    <ng-container *ngIf="tripObject.travelerDetails && tripObject.travelerDetails.length <= 0 ">
+                                                        <h6 class="text-center">
+                                                            <i class="fa fa-warning text-yellow"></i> You do not have any
+                                                            <span class="text-danger">travelers</span> associated with this trip.</h6>
+                                                        <h6 class="text-center">Let's add one by clicking the
+                                                            <span class="text-danger">Add Traveler</span> button on top right hand side.</h6>
+                                                    </ng-container>
+                                                    <div class="box-body no-padding custom">
+                                                        <ng-container *ngIf="tripNewTravelerList && tripNewTravelerList.length > 0">
+                                                            <table class="table">
+                                                                <ng-container *ngFor="let travel of tripNewTravelerList; let i = index;">
+                                                                    <tr>
+
+                                                                        <td [hidden]="travel.EmailAddress ==''">
+                                                                            <div>
+                                                                                <a href="/client/editClient/{{travel.travelerId}}" class="bluetxt">{{travel.firstName}} {{travel.lastName}}</a>
+                                                                                <small> {{travel.travelerType}} </small>
+                                                                                <i *ngIf="!_commonAppService.isUndefined(travel.formattedBirthday)" class="material-icons redicon fnt15px">cake</i>
+                                                                                <!-- <i class="fa fa-glass blueicon"></i> -->
+                                                                                <i class="material-icons blueicon fnt15px" *ngIf="!_commonAppService.isUndefined(travel.formattedAnniversaryDate)">
+                                                                                    local_bar
+                                                                                </i>
+                                                                            </div>
+                                                                            <div *ngIf="!_commonAppService.isUndefined(travel.formattedBirthday)">
+                                                                                <small> {{travel.formattedBirthday}} </small>
+                                                                                
+                                                                            </div>
+                                                                            <div *ngIf="_commonAppService.isUndefined(travel.formattedBirthday)">
+                                                                                <small> (no birth date provided) </small>
+                                                                            </div>
+                                                                            <div *ngIf="!_commonAppService.isUndefined(travel.formattedAnniversaryDate)">
+                                                                                <small> {{travel.formattedAnniversaryDate}}</small>
+                                                                                
+                                                                            </div>
+                                                                            <div *ngIf="_commonAppService.isUndefined(travel.formattedAnniversaryDate)">
+                                                                                <small> (no anniversary date provided) </small>
+                                                                            </div>
+
+                                                                            <div *ngIf="travel.emailCount > 0">
+                                                                                <i class="fa fa-envelope bg-yellow">&nbsp;</i> {{travel.EmailAddress}}
+                                                                                <span *ngIf="travel.emailCount > 0">
+                                                                                    /+ {{ travel.emailCount - 1 }} additional</span>
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td [hidden]="travel.EmailAddress ==''">
+                                                                            <a>
+                                                                                <i class="material-icons blueicon" (click)="editTraveler(travel)" data-toggle="tooltip" data-placement="top" title="Edit">edit</i>
+                                                                            </a>
+                                                                            <a>
+                                                                                <i class="material-icons delete" (click)="removeTraveler(travel,i)" data-toggle="tooltip" data-placement="top" title="Delete">delete</i>
+                                                                            </a>
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </ng-container>
+                                                            </table>
+
+                                                        </ng-container>
+                                                        <ng-container *ngIf="isAddTraveler == true">
+                                                            <table class="table">
+                                                                <tr>
+                                                                    <th colspan="5">Traveler Detail</th>
+                                                                </tr>
+                                                                <tr class="custom">
+                                                                    <td>
+                                                                        <div class="mdl-selectfield">
+                                                                            <label>Standard Select</label>
+                                                                            <select class="browser-default" [(ngModel)]="travelerObject.travelerType" name="travelerType">
+                                                                                <option value="" disabled selected>Select Type</option>
+                                                                                <option *ngFor="let type of travelerTypeList" value={{type.key}}>
+                                                                                    {{type.value}}
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td colspan="2">
+                                                                        <div class="mdl-selectfield">
+                                                                            <ng-template #customItemTemplate let-model="item" let-index="index">
+                                                                                <ul style="width: 250px; padding-left:0px;">
+                                                                                    {{model.name}}
+                                                                                </ul>
+                                                                            </ng-template>
+                                                                            <input autocomplete="off" ngModel (ngModelChange)="modelChanged($event)" name="travelerId" #travelerId="ngModel" class="mdl-selectfield" [(ngModel)]="newClientName" (typeaheadOnSelect)="typeaHeadTourOperatorOnSelect($event)"
+                                                                                [typeahead]="clientComplex" typeaheadOptionField="name"
+                                                                                [typeaheadScrollable]="true" [typeaheadItemTemplate]="customItemTemplate"
+                                                                                [typeaheadOptionsInScrollableView]="5" placeholder="Search Traveler">
+
+                                                                            <span class="highlight"></span>
+                                                                            <span class="bar"></span>
+                                                                        </div>
+                                                                        <!--  <div class="mdl-selectfield">
+                                                                            <label>Select Traveler</label>
+                                                                            <select class="browser-default" [(ngModel)]="travelerObject.travelerId" name="travelerId">
+                                                                            <option value="" disabled selected>Select Traveler</option>
+                                                                            <option *ngFor="let client of filteredClientsList" value={{client._id}}>
+                                                                                {{client.firstName}} {{client.lastName}}
+                                                                            </option>
+                                                                            </select>
+                                                                        </div> -->
+                                                                    </td>
+                                                                    <td></td>
+                                                                    <td>
+                                                                        <a>
+                                                                            <i class="material-icons delete" (click)="clearTraverler()" data-toggle="tooltip" data-placement="top" title="Cancel">cancel</i>
+                                                                        </a>
+                                                                        <a>
+                                                                            <i class="material-icons" (click)="addTraveler()" data-toggle="tooltip" data-placement="top" title="Save">save</i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </ng-container>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 no-padding ">
+                                            <div class="box box-primary">
+                                                <div class="box-header">
+                                                    <h3 class="box-title">Booking Payments</h3>
+                                                    <div class="box-tools">
+                                                        <button type="button" class="btn btn-box-tool bg-blue pull-right">
+                                                            <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                                                            <div class="ripple-container"></div>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <ng-container *ngIf="tripObject._id == ''">
+                                                    <h6 class="text-center">
+                                                        <i class="fa fa-warning text-yellow"></i>
+                                                        <span class="text-danger">Booking payments </span> will be available once the trip has been
+                                                        created.
+                                                    </h6>
+                                                </ng-container>
+                                                <ng-container *ngIf="tripObject._id != ''">
+                                                    <ng-container *ngIf="tripPayments && tripPayments.length <= 0">
+                                                        <h6 class="text-center">
+                                                            <i class="fa fa-warning text-yellow"></i> You do not have any
+                                                            <span class="text-danger">payments</span> associated with booking this trip.</h6>
+                                                        <h6 class="text-center">A payment can be added by opening a
+                                                            <span class="text-danger">Booking.</span>
+                                                        </h6>
+                                                    </ng-container>
+                                                    <ng-container *ngIf="tripPayments && tripPayments.length > 0">
+                                                        <div class="box-body ">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <table class="table">
+                                                                        <tr>
+                                                                            <th>Booking No</th>
+                                                                            <th>Type</th>
+                                                                            <th>Date</th>
+                                                                            <th>Amount</th>
+                                                                            <th>Status</th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>1.</td>
+                                                                            <td>demo</td>
+                                                                            <td>15/12/2018</td>
+                                                                            <td>8000</td>
+                                                                            <td>
+                                                                                <small class="label bg-green">Active</small>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td>1.</td>
+                                                                            <td>demo</td>
+                                                                            <td>15/12/2018</td>
+                                                                            <td>8000</td>
+                                                                            <td>
+                                                                                <small class="label bg-green">Active</small>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab2default" *ngIf="loadBooking">
+                                    <bookings-tab [tripObject]="tripObject" #bookingTabContent (showBookingTabChange)="showBookingTabChange($event)" (updateCount)="updateCount($event)"></bookings-tab>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab3default" *ngIf="loadBooking">
+                                    <bookings-info-tab [tripObject]="tripObject" [showBookingTab]="showBookingTab" (refreshBookings)="bookingTabContent.refreshBookingsTab($event)"
+                                        (showBookingTabChange)="showBookingTabChange($event)" (isReflectBooking)="isReflectBooking($events)"></bookings-info-tab>
+                                </div>
+
+                                <!--<div class="tab-pane fade" id="tab4default">
+                                    <receipts-tab></receipts-tab>
+                                </div>-->
+
+                                <div class="tab-pane fade" id="tab5default"  *ngIf="loadPayment">
+                                    <payments-tab [tripObject]="tripObject" [showBookingTab]="showBookingTab" [travelerDetails]="tripObject.travelerDetails"
+                                        (isReflectPayment)="isReflectPayment($events)"></payments-tab>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab6default">
+                                    <details-tab [tripObject]="tripObject"></details-tab>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab7default" *ngIf="loadActivity">
+                                    <flights-activity-tab [tripObject]="tripObject" (childEvent)="saveItinerary(false)" [flightListData]="flightsList" [childFlightCount]="flightsList?.length"
+                                        (onPDFAllFlightActivities)="onPDFAllFlightActivities($event)" (onSummaryAllFlightActivities)="onSummaryAllFlightActivities($event)"></flights-activity-tab>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab8default" *ngIf="loadInvoice" >
+                                    <invoice-itinerary-tab [tripAgentObject]="tripAgentObject" [tripObject]="tripObject" [itineraryObjectData]="itineraryObject"
+                                        [allFlightActivitiesSummary]="allFlightActivitiesSummary" [allFlightActivitiesPDF]="allFlightActivitiesPDF"
+                                        [filteredClientsList]="filteredClientsList" [payments]="payments" [bookings]="bookings"  [travelerDetails]="tripNewTravelerList"></invoice-itinerary-tab>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab9default" *ngIf="loadDocuments">
+                                    <documents-tab [tripObject]="tripObject" (updateCount)="updateCount($event)"></documents-tab>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab10default" *ngIf="loadNotes">
+                                    <notes-tab [tripObject]="tripObject" (updateCount)="updateCount($event)"></notes-tab>
+                                </div>
+
+                                <div class="tab-pane fade" id="tab11default" *ngIf="loadTask">
+                                    <tasks-tab [tripObject]="tripObject" (updateCount)="updateCount($event)"></tasks-tab>
+                                </div>
+                                <div class="tab-pane fade" id="tab12default">
+                                    <timeline-tab></timeline-tab>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,210 @@
+<div class="col-md-12">
+    <div class="col-md-12 no-padding ">
+        <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Payments</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" (click)="RefreshPayments()">
+                    <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh"></i>
+                    <div class="ripple-container"></div>
+                </button>
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" data-toggle="modal" data-target="#myPaymentModal" (click)="addNewPayment();">
+                    <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Payment"></i>
+                    <div class="ripple-container"></div>
+                </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <ngx-loading [show]="loading"></ngx-loading>
+                <div class="row">
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>Payment Type</th>
+                                <th>Payee Client</th>
+                                <th>Note</th>
+                                <th></th>
+                                <th>Amount</th>
+                                <th>Payment Date</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                            <tr *ngFor="let payment of payments;let i = index">
+                                <td>{{payment.paymentType}}</td>
+                                <td>{{payeeClientList[i]}}</td>
+                                <td>{{payment.description}}</td>
+                                <td></td>
+                                <td>{{payment.paymentAmount}}</td>
+                                <td>{{payment.paymentDate}}</td>
+                                <td><small class="label bg-green">{{payment.paymentStatus}}</small></td>
+                                <td align="center">
+                                    <a> <i class="material-icons blueicon" data-toggle="tooltip" data-toggle="modal" data-target="#myPaymentModal" data-placement="top" title="Edit" (click)="editPayment(payment)">edit</i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Package Price:</strong></td>
+                                <td><strong>{{packagePrice | currency:'USD'}}</strong></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Paid:</strong></td>
+                                <td class="text-orange"><strong>{{totalPaid | currency:'USD'}}</strong></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><strong>Balance:</strong></td>
+                                <td class="text-red"><strong>{{packagePrice-totalPaid | currency:'USD'}}</strong></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myPaymentModal" [hidden]="travelersList.length == 0" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Client Payment</h4>
+            </div>
+            <div class="modal-body">
+                <div class="my-container">
+                    <ngx-loading [show]="addBookingLoading"></ngx-loading>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mdl-selectfield">
+                            <label>Payee Client</label>
+                            <!-- (change)="agentSelectChange(newTask,$event.target.value)" -->
+                            <select class="browser-default" required [(ngModel)]="newPayment.payeeClientId" #payeeClientId="ngModel" name="payeeClientId">
+                                <option value="" disabled selected>Payee Client*</option>
+                                <option *ngFor="let person of travelersList" [value]="person.val">
+                                    {{person.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="group">
+                            <input type="date" [(ngModel)]="newPayment.paymentDate" #paymentDate="ngModel" name="paymentDate">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>Payment Date*</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="group">
+                            <input type="text" disabled [ngModel]="newPayment.bookingNumber" required name="bookingNumber">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label class="ngValid-label">Booking Number*</label>
+                            <!-- (change)="agentSelectChange(newTask,$event.target.value)" -->
+                            <!-- <select class="browser-default" required [(ngModel)]="newPayment.bookingNumber" #bookingNumber="ngModel" name="bookingNumber" (change)="bookingSelectChange(newPayment,$event.target.value)">
+                                <option value=""  >Booking Number*</option>
+                                <option *ngFor="let booking of bookingNumberList" [value]="booking.bookingNumber" [selected]="newPayment.bookingNumber">
+                                    {{booking.bookingNumber}}
+                                </option>
+                            </select> -->
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="group">
+
+                            <input type="text" numberOnly="true" DecimalPlaces="2" [(ngModel)]="newPayment.paymentAmount" required name="paymentAmount">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>Payment Amount*</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="mdl-selectfield">
+                            <label>Payment Type</label>
+                            <select class="browser-default" [(ngModel)]="newPayment.paymentType" name="paymentType">
+                                    <option value="" disabled selected>Choose Payment Type*</option>
+                                  <option value="Initial Deposit">Initial Deposit</option>
+                                  <option value="Regular Payment">Regular Payment</option>
+                                  <option value="Final Payment">Final Payment</option>
+                                  <option value="Miscellaneous Payment">Miscellaneous Payment</option>
+                             </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mdl-selectfield">
+                            <label>Client Credit Card</label>
+                            <select class="browser-default" name="">
+                                                   <option value="" disabled selected>Choose Credit Card</option>
+                                                   <option value="Credit Card 1">Credit Card 1</option>
+                                                   <option value="Credit Card 2">Credit Card 2</option>
+                                                   </select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="group">
+                            <input type="text" required [(ngModel)]="newPayment.description" #description="ngModel" name="description">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label>Description</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mdl-selectfield">
+                            <label>Payment Status</label>
+                            <select class="browser-default" name="paymentStatus" [(ngModel)]="newPayment.paymentStatus">
+                                <option value="" disabled selected>Choose Payment Status</option>
+                                <option value="Active">Active</option>
+                                <option value="Inctive">Inctive</option>
+                                </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-gray roundbtn btn-flat margin" id="btnPaymentModelClose" #btnPaymentModelClose data-dismiss="modal">
+                                             Close
+                                             <div class="ripple-container"></div>
+                                          </button>
+                <button type="button" class="btn bg-navy btn-flat roundbtn margin" (click)="savePayment()">
+                                             Save
+                                             <div class="ripple-container"></div>
+                                          </button>
+
+            </div>
+        </div>
+
+    </div>
+</div>

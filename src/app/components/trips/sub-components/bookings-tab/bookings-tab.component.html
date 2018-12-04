@@ -1,0 +1,74 @@
+<div class="col-md-12">
+    <div class="col-md-12 no-padding ">
+            <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Bookings</h3>
+                <div class="box-tools">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" (click)="refreshBookings(0,10)">
+                        <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh" ></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" (click)="addBooking()">
+                        <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Booking" ></i>
+                        <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>Booking Number</th>
+                                <th>Type</th>
+                                <th>Category</th>
+                                <th>Booking Date</th>
+                                <th>Tour Operator</th>
+                                <th>Package Price</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Agent</th>
+                                <th align="center">Personal travel</th>
+                                <th>Status</th>
+                            </tr>
+
+                            <ng-container *ngFor="let item of bookings; let i = index;">
+                                <tr>
+                                    <td><a class="txtlink" (click)="editBooking(item)">{{item.bookingNumber}}</a></td>
+                                    <td><small class="label bg-purple">Booking</small></td>
+                                    <td><small class="label bg-gray">Regular</small></td>
+                                    <td>{{item.bookingDate | date : "MM/dd/yyyy"}}</td>
+                                    <td>{{item.tourOperatorId}}</td>
+                                    <td>{{item.packagePrice | currency:'USD'}}</td>
+                                    <td>{{item.startDate | date : "MM/dd/yyyy"}}</td>
+                                    <td>{{item.endDate | date : "MM/dd/yyyy"}}</td>
+                                    <td>{{item.agentName}}</td>
+                                    <td align="center">
+                                        <a>
+                                            <i *ngIf="item.personalTravel===true" class="material-icons success" data-toggle="tooltip" data-placement="top" title="Yes">done</i>
+                                            <i *ngIf="item.personalTravel===false" class="material-icons delete" data-toggle="tooltip" data-placement="top" title="No">close</i>
+                                            <!-- (click)="deleteBooking(item._id) -->
+                                        </a>
+
+                                    </td>
+                                    <td><small *ngIf="item.bookingStatus==='Active'" class="label bg-green">{{item.bookingStatus}}</small>
+                                        <small *ngIf="item.bookingStatus==='Inactive'" class="label bg-red">{{item.bookingStatus}}</small>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="11" class="bordertopn">Booking Description: <strong>{{item.description}}</strong></td>
+                                </tr>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <app-pagination [paginationList]="bookings" [showLimit]="false" [totalRecords]="totalRecords" (currentPageCountEvent)="currentPageCountEvent($event)" (limitChangeEvent)="limitChangeEvent($event)">   </app-pagination>
+
+        </div>
+    </div>
+</div>

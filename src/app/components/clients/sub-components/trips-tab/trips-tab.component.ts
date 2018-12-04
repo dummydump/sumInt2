@@ -1,0 +1,41 @@
+/**
+ * Trips Tab Page Component.
+ */
+import { Component, ViewChild, NgModule, OnInit, Output, AfterViewInit, EventEmitter, OnDestroy, ElementRef, NgZone, Renderer, Directive, Inject, ViewContainerRef, Input } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormControl, Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CommonAppService, TripService, UserService } from '../../../../services/index';
+import { GlobalVariable } from '../../../../services/static-variable';
+
+@Component({
+    providers: [
+        CommonAppService,
+        TripService,
+        UserService
+    ],
+    selector: 'trips-tab',
+    styleUrls: ['./trips-tab.component.css'],
+    templateUrl: './trips-tab.component.html'
+})
+
+export class TripsTabComponent implements OnInit, AfterViewInit {
+    public currentUser: any;
+    @Input('clientObject') clientObject = {};
+
+    constructor(
+        public _route: ActivatedRoute,
+        public _router: Router,
+        public _commonAppService: CommonAppService,
+        public _tripService: TripService,
+        public _userService: UserService,
+        public _viewContainerRef: ViewContainerRef
+    ) {
+        
+    }
+
+    public ngOnInit() {
+    }
+
+    public ngAfterViewInit() {
+    }
+}

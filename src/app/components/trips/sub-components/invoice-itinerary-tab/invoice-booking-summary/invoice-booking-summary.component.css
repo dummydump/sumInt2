@@ -1,0 +1,56 @@
+.fnt13{
+    font-size: 13px
+}
+
+.padL40{
+    padding-left:30px;
+}
+
+.bor0px{
+    border: 0px;
+}
+
+.hr{
+    border-top: 1px solid;
+    width: 93%;
+    margin: 0px;
+    margin-left: 3%;
+
+}
+
+.pad0px{
+    padding: 0px
+}
+
+.fb-icon{
+    height: 20px;
+    width: 20px;
+    float: right;
+    margin-top: 10px;
+}
+
+.padT0px{
+    padding-top: 0px;
+}
+.padL8px{
+    padding-left: 8px;
+}
+
+.mail{
+    vertical-align: baseline;
+    padding-top:2%; 
+}
+
+.company-img{
+    height: 85px;
+    width: 45px;
+    float: left;
+}
+
+.company-title{
+    text-align: left; 
+    float: left; 
+    margin-top: 35px; 
+    font-size: 19px; 
+    color: #333;
+}

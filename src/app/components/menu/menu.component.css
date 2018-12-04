@@ -1,0 +1,11 @@
+.logo-img{
+    height: 38px;
+    width: auto;
+    display: inline;
+    background-color: white;
+    margin-top: 1px;
+}
+
+.mdl-button--raised.mdl-button--colored:hover{
+    background-color: rgb(26, 109, 176);
+}

@@ -1,0 +1,24 @@
+<div class="box-footer clearfix" *ngIf="pgList && pgList['pages'] && pgList['pages'].length > 0">
+    <div class="col-sm-12 no-padding txtAL" >
+        <ul *ngIf="pgList['pages'] && pgList['pages'].length" class="no-style padL0px">
+            <li [ngClass]="{disabled:pgList.pageCount  == 0}">
+                <a (click)="!(pgList.pageCount  == 0) ? currentPageCountChange((0), limit): ''" class="txtClrBlack"><h6 class="small-text">&#60;&#60;</h6> First</a>
+            </li>
+            <li [ngClass]="{disabled:pgList.pageCount === 0}">
+                <a (click)="!(pgList.pageCount === 0) ? currentPageCountChange((pgList.pageCount - 1), limit): ''" class="txtClrBlack"><h6 class="small-text">&#60;</h6>Previous</a>
+            </li>
+            <li [ngClass]="{active:(currentPageCount + 1) === page}">
+                <a>
+                    <span class="txtCActive"> {{pgList.pageCount + 1 }} </span>
+                    <span class="txtCActive"> of {{pgList.totalPages + 1 }} </span>
+                </a>
+            </li>
+            <li [ngClass]="{disabled:pgList.pageCount == pgList.totalPages}">
+                <a (click)="!(pgList.pageCount == pgList.totalPages) ? currentPageCountChange((pgList.pageCount + 1), limit): ''" class="txtClrBlack">Next <h6 class="small-text">&#62;</h6></a>
+            </li>
+            <li [ngClass]="{disabled:pgList.pageCount === pgList.totalPages}">
+                <a (click)="!(pgList.pageCount === pgList.totalPages) ? currentPageCountChange((pgList.totalPages), limit): ''" class="txtClrBlack">Last <h6 class="small-text">&#62;&#62;</h6></a>
+            </li>
+        </ul>
+    </div>
+</div>

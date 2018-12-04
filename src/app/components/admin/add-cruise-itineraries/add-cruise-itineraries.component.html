@@ -1,0 +1,340 @@
+<div class="content-wrapper" *ngIf="currentUser">
+  <!-- content wrapper-->
+  <section class="content-header">
+    <ol class="breadcrumb">
+      <li>
+        <a href="#">Workspace</a>
+      </li>
+      <li><a routerLink="/cruiseitineraries">Cruise Itinerary</a></li>
+      <li class="active">Cruise Itinerary </li>
+    </ol>
+    <h1>
+      <i class="fa">
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          viewBox="0 0 495.033 495.033" style="enable-background:new 0 0 495.033 495.033;" xml:space="preserve">
+          <g>
+            <g>
+              <circle cx="305.581" cy="55.497" r="55.497" />
+
+              <path d="M444.11,190.867c-49.593-5.101-97.676-58.767-109.777-66.199c-7.425-5.36-16.205-8.87-24.604-10.18
+                          c0,0-5.97-1.239-12.14-0.558c-5.905,0.656-14.884,0.961-28.031,10.761c-0.952,0.592-7.668,6.439-9.786,8.987
+                          c-16.363,16.961-61.705,67.118-84.275,123.857c-3.19,8.06-1.166,16.815,4.39,22.72l-26.506,47.23l-37.339-20.976
+                          c-4.457-2.508-10.114-0.942-12.618,3.521L32.751,434.91c-2.502,4.458-0.919,10.14,3.549,12.622l28.267,15.896
+                          c-4.5,8.01-3.417,18.372,3.381,25.26c8.197,8.367,21.664,8.469,30.017,0.248c7.764-7.659,8.398-19.82,1.819-28.205l38.59-67.704
+                          l27.035-48.174l33.51-58.091c7.246-1.153,13.74-5.983,16.658-13.31c9.552-24.051,24.344-47.223,38.629-66.425l6.732,77.365
+                          c0.78,9.088,4.566,16.712,10.178,22.73c-17.356,31.474-64.064,117.541-80.927,146.782c-7.554,13.123-3.064,29.89,10.051,37.454
+                          c4.924,2.822,10.373,3.985,15.65,3.604c8.777-0.635,17.082-5.484,21.801-13.67c15.711-27.236,56.688-109.896,74.661-140.967
+                          c14.409,23.945,38.959,68.009,70.104,138.375c4.528,10.254,14.563,16.331,25.096,16.331c3.725,0,7.479-0.749,11.095-2.354
+                          c13.84-6.123,20.103-22.313,13.964-36.151c-36.728-83.039-63.771-129.136-78.754-153.413c5.922-7.434,9.489-16.675,8.556-27.519
+                          l-6.372-73.279c18.457,14.737,42.541,27.152,83.663,31.404c0.764,0.082,1.504,0.119,2.252,0.119
+                          c10.892,0,20.257-8.242,21.401-19.321C464.555,202.671,455.954,192.085,444.11,190.867z M82.647,482.22
+                          c-4.27,0-7.733-3.462-7.733-7.729s3.463-7.729,7.733-7.729c4.265,0,7.729,3.461,7.729,7.729
+                          C90.374,478.761,86.913,482.22,82.647,482.22z" />
+
+            </g>
+          </g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+          <g></g>
+        </svg>
+      </i> Crusie Itinerary
+      <small class="label">
+      </small>
+    </h1>
+  </section>
+  <section class="content">
+  <form id="cruiseForm" #cruiseForm="ngForm">
+    <div class="row">
+      <section class="col-lg-12">
+        <div class="panel with-nav-tabs panel-default">
+          <div class="panel-body">
+            <div class="tab-content">
+              <div class="tab-pane fade in active" id="tab1default">
+                <div class="col-md-6">
+
+                  <div class="col-md-12 no-padding ">
+                    <div class="box box-primary">
+                      <div class="box-header with-border">
+                        <h3 class="box-title">Cruise Information</h3>
+                        <div class="box-tools">
+                        </div>
+                        <!-- box tools -->
+                      </div>
+                      <!-- end of box-header -->
+
+                        <div class="box-body top20">
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="group">
+                                <input type="text" ngModel #title="ngModel" required [(ngModel)]="cruiseItineraryObject.title" name="title" placeholder="Enter title">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <div *ngIf="title.errors && (title.dirty || title.touched)" class="small text-danger">
+                                  <div [hidden]="!title.errors.required">
+                                    Title is required
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="group">
+                                <ng-template #customCruiseLineTemplate let-model="item" let-index="index">
+                                  <ul style="width: 250px; padding-left:0px;">
+                                    {{model.name}}
+                                  </ul>
+                                </ng-template>
+                                <input autocomplete="off" required ngModel #cruiseLineId="ngModel" name="cruiseLineId" class="mdl-selectfield" (typeaheadOnSelect)="typeaheadOnCruiseLineSelect($event)"
+                                  [typeahead]="cruiseLines" typeaheadOptionField="name" [typeaheadScrollable]="true" [typeaheadItemTemplate]="customCruiseLineTemplate"
+                                  [typeaheadOptionsInScrollableView]="5" (input)="inputCruiseLine($event.target.value)" placeholder="Cruise Lines" [(ngModel)]="cruiseLineName"
+                                  [value]="cruiseLineName">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <div *ngIf="cruiseLineId.errors && (cruiseLineId.dirty || cruiseLineId.touched)" class="small text-danger">
+                                  <div [hidden]="!cruiseLineId.errors.required">
+                                    Cruise line is required
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="group">
+                                <ng-template #customShipTemplate let-model="item" let-index="index">
+                                  <ul style="width: 250px; padding-left:0px;">
+                                    {{model.name}}
+                                  </ul>
+                                </ng-template>
+
+                                <input autocomplete="off" required ngModel #shipId="ngModel" name="shipId" class="mdl-selectfield" (typeaheadOnSelect)="typeaheadOnShipSelect($event)"
+                                  [typeahead]="ships" typeaheadOptionField="name" [typeaheadScrollable]="true" [typeaheadItemTemplate]="customShipTemplate"
+                                  [typeaheadOptionsInScrollableView]="5" (input)="inputShip($event.target.value)" placeholder="Ship" [value]="shipName" [(ngModel)]="shipName">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+
+                                <div *ngIf="shipId.errors && (shipId.dirty || shipId.touched)" class="small text-danger">
+                                  <div [hidden]="!shipId.errors.required">
+                                    Ship name is required
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-6">
+                              <div class="group">
+                                <ng-template #customPortTemplate let-model="item" let-index="index">
+                                  <ul style="width: 250px; padding-left:0px;">
+                                    {{model.name}}
+                                  </ul>
+                                </ng-template>
+
+                                <input autocomplete="off" ngModel #departure_port_id="ngModel" name="departure_port_id" required class="mdl-selectfield" (typeaheadOnSelect)="typeaheadOnDeparturePortSelect($event)"
+                                  [typeahead]="ports" typeaheadOptionField="name" id="port" [typeaheadScrollable]="true" [typeaheadItemTemplate]="customPortTemplate" 
+                                  [(ngModel)]="portName"
+                                  [typeaheadOptionsInScrollableView]="5" (input)="inputPort($event.target.value)" placeholder="Departure Port">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+
+                                <div *ngIf="departure_port_id.errors && (departure_port_id.dirty || departure_port_id.touched)" class="small text-danger">
+                                  <div [hidden]="!departure_port_id.errors.required">
+                                    Departure port is required
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-sm-6">
+                              <div class="group">
+                                <input type="number" ngModel #price="ngModel" (input)="validatePrice($event.target.value)" [value]="cruiseItineraryObject.price" required [(ngModel)]="cruiseItineraryObject.price" name="price" placeholder="Price" (input)="validatePrice($event.target.value)">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+
+                                <div *ngIf="price.errors && (price.dirty || price.touched)" class="small text-danger">
+                                  <div [hidden]="!price.errors.required">
+                                    Price is required
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+
+                            <div class="col-sm-6">
+                              <div class="group">
+                                <input type="number" ngModel #no_of_day="ngModel" required [(ngModel)]="cruiseItineraryObject.no_of_day" name="no_of_day" (input)="noOfDaysChange($event.target.value)" placeholder="no of days">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+
+                                <div *ngIf="no_of_day.errors && (no_of_day.dirty || no_of_day.touched)" class="small text-danger">
+                                  <div [hidden]="!no_of_day.errors.required">
+                                    No of days is required
+                                  </div>
+                                </div>
+                              </div>
+                              <!--end of group-->
+                            </div>
+                            <!-- end of col sm-6-->
+                          </div>
+                          <!-- end of row-->
+
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <text-editor #noteEditor 
+                              [elementId]="'note-editor'" 
+                              (onEditorContentChange)="EditorContentChange($event)" 
+                              [toolbar]="toolbarConfig" 
+                              [desiredInitialText]="cruiseItineraryObject.descriptionHTML">
+                              </text-editor>
+                              <span class="highlight"></span>
+                              <span class="bar"></span>
+                            </div>
+                          </div>
+                          <!-- end of text editor row -->
+
+
+                          <div class="row">
+                            <div class="col-sm-12">
+                              <div class="box-footer">
+                                <button type="button" class="btn bg-gray roundbtn btn-flat margin" (click)="closePage()">
+                                  Close
+                                  <div class="ripple-container"></div>
+                                </button>
+                                <button type="button" [disabled]="!cruiseForm.form.valid" class="btn bg-navy btn-flat roundbtn margin"  (click)="saveCruiseItinerary(false)"
+                                 >
+                                  Save
+                                  <div class="ripple-container"></div>
+                                </button>
+
+                                <button type="button" [disabled]="!cruiseForm.form.valid" class="btn bg-green btn-flat roundbtn margin" (click)="saveCruiseItinerary(true)"
+                                 >
+                                  Save & Close
+                                  <div class="ripple-container"></div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                        <!-- end of after column 1-->
+
+
+                        
+
+                    </div>
+                    <!-- box box-primary -->
+                  </div>
+                  <!-- end of col-md-12 no-padding -->
+                </div><!-- end col-md-6 -->
+                <div class="col-md-6 no-padding">
+                          <div class="box box-primary">
+                            <div class="box-header with-border">
+                              <h3 class="box-title">Cruise Itinerary</h3>
+                              <div class="box-tools">
+                                <button type="button" class="btn btn-box-tool bg-blue pull-right" data-toggle="tooltip" data-placement="top" title="Refresh">
+                                  <i class="fa fa-refresh"></i>
+                                  <div class="ripple-container"></div>
+                                </button>
+                              </div>
+                            </div>
+                            <div class="box-body ">
+                              <div class="row top20">
+                                <div class="col-sm-12">
+                                  <div class="box-body table-responsive no-padding">
+                                    <table class="table table-striped">
+                                      <tbody>
+                                        <tr class="bg-white  box-success">
+                                          <th>Day</th>
+                                          <th>Port</th>
+                                          <th>Guest Ashore</th>
+                                          <th>Guest On Board</th>
+
+                                        </tr>
+                                        <tr *ngFor="let cruiseIti of cruiseItineraryObject.itinerary; let index = index">
+                                          <td>
+                                            {{index + 1}}
+
+                                          </td>
+                                          <td>
+                                            <ng-template #portTemplate let-model="item" let-index="index">
+                                              <ul style="width: 250px; padding-left:0px;">
+                                                {{model.name}}
+                                              </ul>
+                                            </ng-template>
+
+                                            <div class="form-group form-group-sm search is-empty">
+                                              <input autocomplete="off" (input)="inputTextAllItinerary(index,$event.target.value)" name="cruiseIti.{{index}}.port_id" [(ngModel)]="cruiseIti.port"  required (typeaheadOnSelect)="typeaheadOnPortSelect($event,index)"
+                                                [typeahead]="ports" typeaheadOptionField="name" [typeaheadScrollable]="true"
+                                                [typeaheadItemTemplate]="portTemplate" [typeaheadOptionsInScrollableView]="5"
+                                                (blur)="validateAllPorts(index,$event.target.value)"
+                                                placeholder="Departure Port" #port="ngModel" ngModel>
+
+                                              <span class="highlight"></span>
+                                              <span class="bar"></span>
+
+                                              <div *ngIf="port.errors && (port.dirty || port.touched)" class="small text-danger">
+                                                <div [hidden]="!port.errors.required">
+                                                  port name is required
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <div class="form-group form-group-sm search is-empty">
+                                              <input type="time" required [(ngModel)]="cruiseIti.depTime" name="cruiseIti.{{index}}.depTimeport" [value]="cruiseIti.depTime" #depTime="ngModel" ngModel/>
+                                              <span class="highlight"></span>
+                                              <span class="bar"></span>
+                                              <div *ngIf="depTime.errors && (depTime.dirty || depTime.touched)" class="small text-danger">
+                                                <div [hidden]="!depTime.errors.required">
+                                                  This field is required
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+                                          <td>
+                                            <div class="form-group form-group-sm search is-empty">
+                                              <input type="time" required [(ngModel)]="cruiseIti.arrivalTime" name="cruiseIti.{{index}}.arrivalTime" [value]="cruiseIti.arrivalTime" #arrivalTime="ngModel" ngModel/>
+                                              <div *ngIf="arrivalTime.errors && (arrivalTime.dirty || arrivalTime.touched)" class="small text-danger">
+                                                <div [hidden]="!arrivalTime.errors.required">
+                                                  This field is required
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+              </div>
+              <!-- end of tab-pane fade in active -->
+            </div>
+            <!-- end of tab-content -->
+          </div>
+          <!-- end of pane-body -->
+        </div>
+        <!-- end panel with-nav-tabs-->
+      </section>
+      <!-- end of col-lg-12-->
+    </div>
+    <!-- end of row -->
+            </form>
+  </section>
+  <!-- end of content -->
+</div>
+<!-- end of wrapper -->

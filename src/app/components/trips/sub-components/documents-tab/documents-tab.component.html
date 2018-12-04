@@ -1,0 +1,138 @@
+<div class="col-md-12">
+    <div class="col-md-12 no-padding ">
+        <ngx-spinner [bdColor]="spinnerConfig.bdColor" [size]="spinnerConfig.size" [color]="spinnerConfig.color"></ngx-spinner>
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Documents</h3>
+                <div class="box-tools">
+                    <input type="file" accept=".xlsx, .xls, .csv, .doc, .docx,.txt,.bmp,.jpeg,.png,.pdf" name="newFileSelect" #file (change)="selectDocument(file.files)" class="hidden">
+                    <input type="file" accept=".xlsx, .xls, .csv, .doc, .docx,.txt,.bmp,.jpeg,.png,.pdf" name="editFileSelect" #editfile (change)="selectEditDocument(editfile.files)" class="hidden">
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="">
+                       <i class="fa fa-refresh" data-toggle="tooltip" data-placement="top" title="Refresh" (click)="refresh(0,10)"></i>
+                       <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" (click)="uploadAll()">
+                       <i class="fa fa-upload" data-toggle="tooltip" data-placement="top" title="Upload All"></i>
+                       <div class="ripple-container"></div>
+                    </button>
+                    <button type="button" class="btn btn-box-tool bg-blue pull-right" title="" (click)="file.click()">
+                       <i class="fa fa-plus" data-toggle="tooltip" data-placement="top" title="Add Document"></i>
+                       <div class="ripple-container"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-sm-12 uploadf">
+                        <!-- <div id="dropzone">
+                          <div fileDrop class="uploadfile"
+                          [ngClass]="{'file-is-over': fileIsOver}"
+                          (fileOver)="fileOver($event)"
+                          (onFileDrop)="onFileDrop($event)">
+                          {{ beforeFileDrop }} <br>
+                          <i class="fa fa-cloud-upload fa-3x text-gray"></i>
+                       </div> -->
+                        <div id="dropzone" class="document-fileupload">
+                            <div fileDrop [ngClass]="{'file-is-over': fileIsOver}" (fileOver)="fileOver($event)" (onFileDrop)="onFileDrop($event)">
+                                <h6 class="text-center">
+                                    <span class="text-danger">Drag and Drop</span> documents or click the
+                                    <span class="text-danger" style="cursor:pointer" (click)="file.click()">
+                                Add Document
+                                <div class="ripple-container"></div>
+                             </span>
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>File Name</th>
+                                <th>File Size</th>
+                                <th>Shared With</th>
+                                <th>Progress</th>
+                                <th>Uploaded By</th>
+                                <th>Uploaded On</th>
+                                <th style="text-align:center;">Status</th>
+                                <th style="text-align:center;">Actions</th>
+                            </tr>
+                            <tr *ngFor="let document of newDocuments;let i = index">
+                                <td>{{document.fileName}}</td>
+                                <td>{{(document.size/1024).toFixed(2)}} KB</td>
+                                <td><small class="label bg-purple">{{document.sharedWith}}</small></td>
+                                <td>
+                                    <div class="progress progress-xs progress-striped active">
+                                        <div class="progress-bar progress-bar-success" [style.width]="document.percentDone+'%'"></div>
+                                    </div>
+                                </td>
+                                <td>{{document.uploadedBy}}</td>
+                                <td>{{document.uploadedDate|date :'medium'}}</td>
+                                <td align="center">
+                                    <a [hidden]="document.isUploaded" (click)="saveDocument(document)"> <i class="material-icons">file_upload</i></a>
+                                    <i *ngIf="document.isUploaded" class="material-icons">done</i>
+                                </td>
+                                <td align="center">
+                                    <a *ngIf="document.isUploaded"> <i class="material-icons blueicon" data-toggle="tooltip" data-placement="top" title="Edit" (click)="editDocument = document; editfile.click()">edit</i></a>
+                                    <a> <i class="material-icons delete" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteDocument(document,i,1)">delete</i></a>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let document of existingDocuments;let i = index">
+                                <td>{{document.fileName}}</td>
+                                <td>{{(document.size/1024).toFixed(2)}} KB</td>
+                                <td><small class="label bg-purple">{{(!document.sharedWith ?'Nobody': document.sharedWith) }}</small></td>
+                                <td>
+                                    <div class="progress progress-xs progress-striped active">
+                                        <div class="progress-bar progress-bar-success" [style.width]="document.percentDone+'%'"></div>
+                                    </div>
+                                </td>
+                                <td>{{document.uploadedBy}}</td>
+                                <td>{{document.uploadedDate|date :'medium'}}</td>
+                                <td align="center">
+                                    <i *ngIf="document.isUploaded" class="material-icons">done</i>
+                                    <a *ngIf="!document.isUploaded" (click)="saveEditedDocument(document)"> <i class="material-icons">file_upload</i></a>
+                                </td>
+                                <td align="center">
+                                    <a> <i class="material-icons blueicon" data-toggle="tooltip" data-placement="top" title="Edit" (click)="editDocument = document; editfile.click()">edit</i></a>
+                                    <a> <i class="material-icons delete" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteDocument(document,i,0)">delete</i></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="box-footer clearfix" *ngIf="(pgList && pgList['pages'] && pgList['pages'].length > 0)||(newDocuments.length>0)">
+
+                <!--<div class="col-sm-1  no-padding"><small class="pull-left showtxt">{{(totalRecords < limit)? totalRecords : ((clientsList && clientsList.length >= limit)? limit : clientsList.length) }} out of {{totalRecords}}</small></div>-->
+
+                <div class="col-sm-4  no-padding">
+                    <small class="pull-left showtxt">{{(pgList.pageCount * limit) + 1}} to {{((pgList.pageCount * limit) + existingDocuments.length+newDocuments.length)}} out of {{totalRecords + getNotUploadedCount()}}</small>
+                </div>
+
+                <div class="col-sm-8 no-padding">
+                    <ul class="pagination pagination-sm no-margin pull-right">
+                        <!--<ul  class="pagination">-->
+
+                        <li [ngClass]="{disabled:pgList.pageCount  == 0}">
+                            <a (click)="!(pgList.pageCount  == 0) ? refresh((0), limit): ''">First</a>
+                        </li>
+                        <li [ngClass]="{disabled:pgList.pageCount === 0}">
+                            <a (click)="!(pgList.pageCount === 0) ? refresh((pgList.pageCount - 1), limit): ''">Previous</a>
+                        </li>
+                        <li *ngFor="let page of pgList.pages" [ngClass]="{active:(pgList.pageCount + 1) === page}">
+                            <a (click)="!((pgList.pageCount + 1) === page)? refresh((page - 1)): ''">{{page}}</a>
+                        </li>
+                        <li [ngClass]="{disabled:pgList.pageCount == pgList.totalPages}">
+                            <a (click)="!(pgList.pageCount == pgList.totalPages) ? refresh((pgList.pageCount + 1), limit) : ''">Next</a>
+                        </li>
+                        <li [ngClass]="{disabled:pgList.pageCount === pgList.totalPages}">
+                            <a (click)="!(pgList.pageCount === pgList.totalPages) ?refresh((pgList.totalPages), limit) : ''">Last</a>
+                        </li>
+                        <!--</ul>-->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
